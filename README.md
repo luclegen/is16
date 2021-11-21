@@ -57,6 +57,7 @@ https://en.wikipedia.org/wiki/Bcrypt
 ### V. Advanced Encryption Standard (AES)
 
 https://en.wikipedia.org/wiki/Advanced_Encryption_Standard
+https://www.devglan.com/online-tools/aes-encryption-decryption
 
 ## F. MERN STACK
 
