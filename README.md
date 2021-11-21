@@ -4,8 +4,6 @@ IS16 project used to build IS16 web (A chat service)
 
 ## ISTeam16
 
-1. Huỳnh Tấn Lực: huynhtanluc.auto@gmail.com
-
 | STT | Fullname | Class | Email | Tasks |
 | --- | ---- | ---- | ---- | ---- |
 | 1   | Huỳnh Tấn Lực | 16CNTT1 | huynhtanluc.auto@gmail.com |   |
