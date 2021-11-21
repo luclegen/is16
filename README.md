@@ -54,11 +54,11 @@ https://vi.wikipedia.org/wiki/MVC
 
 https://en.wikipedia.org/wiki/Create,_read,_update_and_delete
 
-### III. JSON Web Token (JWT)
+### IV. JSON Web Token (JWT)
 
 https://en.wikipedia.org/wiki/JSON_Web_Token
 
-### IV. bcrypt
+### V. bcrypt
 
 https://en.wikipedia.org/wiki/Bcrypt
 
