@@ -16,6 +16,9 @@ IS16 project used to build IS16 web (A chat service)
 
 https://1drv.ms/u/s!AI3Dcwyyr9r_i5FE?e=l6ld5e
 
+### 3. Cách làm slide
+https://youtu.be/PoLi41JRRmo
+
 ## A. INSTALLATION
 
 ### I. Chrome
