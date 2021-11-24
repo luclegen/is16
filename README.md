@@ -3,6 +3,7 @@
 IS16 project used to build IS16 web (A chat service)
 
 ## ISTeam16
+### 1. Các thành viên
 
 | STT | Fullname | Class | Email | Tasks |
 | --- | ---- | ---- | ---- | ---- |
@@ -11,6 +12,9 @@ IS16 project used to build IS16 web (A chat service)
 | 3   | Đinh Vũ Việt Hoàng | 19CNTT2 | viethoang212001@gmail.com |   |
 | 4   | Lê Hạ Uyên | 19CNTT2 | lehauyen21@gmail.com |   |
 | 5   | Nguyễn Thanh Tú | 19CNTT2 | thanhtudzsd@gmail.com |   |
+### 2. Tài liệu
+
+https://1drv.ms/u/s!AI3Dcwyyr9r_i5FE?e=l6ld5e
 
 ## A. INSTALLATION
 
