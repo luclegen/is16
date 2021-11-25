@@ -1,4 +1,4 @@
-# IS16
+# ![IS16 logo](/client/public/logo64.png) IS16
 
 IS16 project used to build IS16 web (A chat service)
 
