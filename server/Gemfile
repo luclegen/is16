@@ -23,6 +23,9 @@ gem 'rack-cors'
 # Use dotenv
 gem 'dotenv-rails'
 
+# Json web token
+gem 'jwt'
+
 # Use MongoDB database
 gem 'mongoid', '~> 7.0.5'
 
