@@ -39,5 +39,6 @@ module Server
         resource '*', headers: :any, methods: [:get, :post, :options]
       end
     end
+    require Rails.root.join "lib", "regexes.rb"
   end
 end
