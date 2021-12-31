@@ -2,7 +2,6 @@ require 'bcrypt'
 
 class User
   include BCrypt
-  include CheckerHelper
   include Mongoid::Document
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
