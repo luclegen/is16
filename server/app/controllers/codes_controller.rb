@@ -15,7 +15,7 @@ class CodesController < ApplicationController
     @code.code = code
 
     if @code.save
-      render plain: (RestClient.post ENV['MAILER'], {:email => @code.email, :title => 'Verify email', :code => code}, {:Authorization => "Bearer #{ENV['TOKEN']}"}), status: :created
+      render html: (RestClient.post ENV['MAILER'], {:email => @code.email, :title => 'Verify email', :code => code}, {:Authorization => "Bearer #{ENV['TOKEN']}"}), status: :created
     else
       render json: @code.errors, status: :unprocessable_entity
     end
