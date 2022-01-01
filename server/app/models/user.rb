@@ -1,4 +1,5 @@
 require 'bcrypt'
+require 'jwt'
 
 class User
   include BCrypt
@@ -18,4 +19,8 @@ class User
   validates :password, presence: { message: 'is required' }, format: { with: STRONG_PASSWORD_REGEX, message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols (minimum is 8 characters)" }
 
   has_secure_password
+
+  def sign
+    JWT.encode({ id: self[:id], name: self[:name] }, ENV['SECRET'])
+  end
 end
