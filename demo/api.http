@@ -1,1 +1,60 @@
-@baseUrl = http://localhost:5000/
+@baseUrl = {{$dotenv API_URL}}
+@testUrl = {{$dotenv TEST_URL}}
+@email = {{$dotenv EMAIL}}
+@password = {{$dotenv PASSWORD}}
+
+# @name test
+GET {{testUrl}}/test/ HTTP/1.1
+content-type: application/x-www-form-urlencoded
+
+email={{email}}
+
+###
+
+# @name createCode
+POST {{baseUrl}}/codes/ HTTP/1.1
+content-type: application/json
+
+{
+  "email": "{{email}}"
+}
+
+###
+
+# @name createUser
+POST {{baseUrl}}/users/ HTTP/1.1
+content-type: application/json
+
+{
+  "code": "364016",
+  "name": "Luc",
+  "surname": "Huynh Tan",
+  "email": "{{email}}",
+  "password": "{{password}}",
+  "day": 29,
+  "month": 10,
+  "year": 1997,
+  "sex": "Male"
+}
+
+###
+
+# @name login
+POST {{baseUrl}}/auth/login HTTP/1.1
+content-type: application/json
+
+{
+  "email": "{{email}}",
+  "password": "{{password}}"
+}
+
+###
+
+@cookie = {{login.response.headers.set-cookie}}
+
+# @name logout
+DELETE {{baseUrl}}/auth/logout HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
+
+###
