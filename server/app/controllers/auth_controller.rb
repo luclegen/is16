@@ -1,6 +1,8 @@
 require 'json'
 
 class AuthController < ApplicationController
+  before_action :authorize, only: [:logout]
+
   def login
     @user = User.where(email: params[:email]).first
     if !@user
@@ -16,5 +18,13 @@ class AuthController < ApplicationController
         render plain: 'Wrong password!', status: :unauthorized
       end
     end
+  end
+
+  def logout
+    cookies.delete :token
+    cookies.delete :avatar
+    cookies.delete :name
+    cookies.delete :surname
+    render nothing: true
   end
 end
