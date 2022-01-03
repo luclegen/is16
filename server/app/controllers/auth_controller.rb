@@ -1,5 +1,3 @@
-require 'json'
-
 class AuthController < ApplicationController
   before_action :authorize, only: [:logout]
 
