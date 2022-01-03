@@ -10,7 +10,7 @@ class AuthController < ApplicationController
         cookies[:avatar] = @user.avatar
         cookies[:name] = @user.name
         cookies[:surname] = @user.surname
-        render status: :created
+        render nothing: true
       else
         render plain: 'Wrong password!', status: :unauthorized
       end
