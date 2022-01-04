@@ -8,6 +8,7 @@ GET {{testUrl}}/test/ HTTP/1.1
 content-type: application/x-www-form-urlencoded
 
 email={{email}}
+&code={{$dotenv CODE}}
 
 ###
 
@@ -26,7 +27,7 @@ POST {{baseUrl}}/users/ HTTP/1.1
 content-type: application/json
 
 {
-  "code": "364016",
+  "code": "{{$dotenv CODE}}",
   "name": "Luc",
   "surname": "Huynh Tan",
   "email": "{{email}}",
