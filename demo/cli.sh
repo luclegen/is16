@@ -46,7 +46,7 @@ rails g mongoid:config is16
 
 rails g scaffold User name:string surname:string email:string
 rails g scaffold Code email:string passcode:string
-rails g controller Profile firstName:string lastName:string
+rails g scaffold Message body:string
 rails g mailer Code
 rake db:migrate
 gem update
