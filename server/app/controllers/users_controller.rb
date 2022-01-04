@@ -40,8 +40,8 @@ class UsersController < ApplicationController
               else
                 render json: @user.errors, status: :unprocessable_entity
               end
-            rescue => exception
-              render plain: exception.to_s.capitalize + '!', status: :bad_request
+            rescue => e
+              render plain: e.to_s.capitalize + '!', status: :bad_request
             end
           else
             render plain: @code.attempts > 0 ? 'Wrong code! You have ' + @code.attempts.to_s + ' attempts left.' : 'Code is expired! Please try another code', status: :unauthorized
