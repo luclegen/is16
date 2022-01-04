@@ -47,7 +47,7 @@ rails g mongoid:config is16
 rails g scaffold user name:string surname:string email:string
 rails g scaffold code email:string passcode:string
 rails g scaffold Message body:string
-rails g model chat title:String messages:Array _uids:Array _mids:Array
+rails g scaffold chat title:String messages:Array _uids:Array _mids:Array
 rails g mailer code
 rake db:migrate
 gem update
