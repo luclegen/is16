@@ -29,8 +29,8 @@ content-type: application/json
 
 {
   "code": "{{$dotenv CODE}}",
-  "name": "Luc",
-  "surname": "Huynh Tan",
+  "name": "{{$dotenv NAME}}",
+  "surname": "Tester",
   "email": "{{email}}",
   "password": "{{password}}",
   "day": 29,
