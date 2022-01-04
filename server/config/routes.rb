@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  resources :chats
   resources :codes
   resources :users
   resources :profiles
