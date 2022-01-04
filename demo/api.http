@@ -60,3 +60,20 @@ content-type: application/json
 Cookie: {{cookie}}
 
 ###
+
+# @name createMessage
+POST {{baseUrl}}/messages HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
+
+# {
+#   "users": [ "{{$dotenv U1_ID}}", "{{$dotenv U2_ID}}" ],
+#   "body": "One"
+# }
+
+{
+  "id": "{{chatId}}",
+  "body": "Two"
+}
+
+###
