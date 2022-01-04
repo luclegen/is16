@@ -84,3 +84,10 @@ content-type: application/json
 Cookie: {{cookie}}
 
 ###
+
+# @name listChats
+GET {{baseUrl}}/chats HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
+
+###
