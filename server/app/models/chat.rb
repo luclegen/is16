@@ -11,5 +11,5 @@ class Chat
   validates :_mids, length: { minimum: 1, message: 'The chat must have a minimum of messages!' }
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
-  belongs_to :user, foreign_key: _cid
+  belongs_to :user, foreign_key: :_cid
 end
