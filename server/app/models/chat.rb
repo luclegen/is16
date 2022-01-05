@@ -2,6 +2,7 @@ class Chat
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  field :photo, type: String
   field :title, type: String
   field :_mids, type: Array, default: []
   field :_uids, type: Array, default: []
