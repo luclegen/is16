@@ -3,7 +3,6 @@ require 'rest-client'
 class CodesController < ApplicationController
   include GeneratorHelper
 
-  # POST /codes
   def create
     if @code = Code.where(email: params[:email]).first
       @code.destroy
