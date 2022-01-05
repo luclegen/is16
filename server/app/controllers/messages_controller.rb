@@ -48,6 +48,17 @@ class MessagesController < ApplicationController
   end
 
   private
+    def set_message
+      begin
+        @message = Message.find(params[:id])
+        if @user._id != @message._uid
+          return render status: :unauthorized
+        end
+      rescue => e
+        return render plain: 'Message not found!', status: :not_found
+      end
+    end
+
     def message_params
       params.require(:message).permit(:body)
     end
