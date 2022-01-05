@@ -1,5 +1,5 @@
 class MessagesController < ApplicationController
-  before_action :authorize, only: [:create]
+  before_action :authorize, only: [:create, :destroy]
 
   def create
     if params[:id]
