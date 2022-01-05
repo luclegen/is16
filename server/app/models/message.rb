@@ -3,6 +3,7 @@ class Message
   include Mongoid::Timestamps
 
   field :body, type: String
+  field :unsent, type: Boolean, default: false
 
   validates :body, presence: { message: 'is required' }
 
