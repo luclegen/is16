@@ -36,7 +36,7 @@ content-type: application/json
   "day": 29,
   "month": 10,
   "year": 1997,
-  "sex": "Male"
+  "sex": "{{$dotenv SEX}}"
 }
 
 ###
