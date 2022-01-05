@@ -3,6 +3,7 @@
 @email={{$dotenv EMAIL}}
 @password={{$dotenv PASSWORD}}
 @chatId={{$dotenv CHAT_ID}}
+@messageId={{$dotenv MSG_ID}}
 
 # @name test
 GET {{testUrl}}/test/ HTTP/1.1
@@ -67,14 +68,26 @@ content-type: application/json
 Cookie: {{cookie}}
 
 # {
+#   "users": [ "{{$dotenv U1_ID}}" ],
+#   "body": "Hello. How are you?"
+# }
+
+# {
 #   "users": [ "{{$dotenv U1_ID}}", "{{$dotenv U2_ID}}" ],
-#   "body": "One"
+#   "body": "Hello everyone. How are you?"
 # }
 
 {
   "id": "{{chatId}}",
-  "body": "Two"
+  "body": "I'm good. And you?"
 }
+
+###
+
+# @name deleteMessage
+DELETE {{baseUrl}}/messages/{{messageId}} HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
 
 ###
 
