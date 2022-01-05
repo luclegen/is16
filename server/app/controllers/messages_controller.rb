@@ -47,6 +47,20 @@ class MessagesController < ApplicationController
     end
   end
 
+  def destroy
+    if @message.unsent
+      return render status: :forbidden
+    else
+      @message.body = ' unsent a message'
+      @message.unsent = true
+      if @message.save
+        render nothing: true
+      else
+        render status: :expectation_failed
+      end
+    end
+  end
+
   private
     def set_message
       begin
