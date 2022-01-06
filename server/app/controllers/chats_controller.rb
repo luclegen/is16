@@ -35,6 +35,10 @@ class ChatsController < ApplicationController
 
   def update
     if params[:_uids].kind_of?(Array)
+      unless @chat._aids.include?(@user._id)
+        return render status: :unauthorized
+      end
+
       @chat._uids = params[:_uids].map { |u|
         begin
           User.find(u)._id
@@ -44,7 +48,15 @@ class ChatsController < ApplicationController
       }
     end
 
+    if !@chat._uids.include?(@chat._uid) && @user._id != @chat._uid
+      return render status: :unauthorized
+    end
+
     if params[:_aids].kind_of?(Array)
+      unless @chat._aids.include?(@user._id)
+        return render status: :unauthorized
+      end
+
       @chat._aids = params[:_aids].map { |u|
         begin
           User.find(u)._id
@@ -54,7 +66,7 @@ class ChatsController < ApplicationController
       }
     end
 
-    if !@chat._aids.include?(@chat._uid)
+    unless @chat._aids.include?(@chat._uid)
       return render status: :unauthorized
     end
 
@@ -79,7 +91,7 @@ class ChatsController < ApplicationController
     def set_chat
       begin
         @chat = Chat.find(params[:id])
-        if !@chat._uids.include?(@user._id)
+        unless @chat._uids.include?(@user._id)
           return render status: :unauthorized
         end
       rescue => e
