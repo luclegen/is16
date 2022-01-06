@@ -111,7 +111,7 @@ Cookie: {{cookie}}
   "photo": "#ff0000",
   "title": "ISTeam16",
   "_uids": [ "{{userId0}}", "{{userId1}}", "{{userId3}}" ],
-  "_aids": [ "{{userId0}}", "{{userId1}}"  ]
+  "_aids": [ "{{userId0}}", "{{userId1}}" ]
 }
 
 ###
