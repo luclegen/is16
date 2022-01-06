@@ -1,5 +1,5 @@
 class ChatsController < ApplicationController
-  before_action :authorize, only: [:show, :update]
+  before_action :authorize, only: [:show, :update, :index]
   before_action :set_chat, only: [:show, :update]
 
   def show
@@ -56,10 +56,6 @@ class ChatsController < ApplicationController
     else
       render json: @chat.errors, status: :unprocessable_entity
     end
-  end
-
-  def destroy
-    @chat.destroy
   end
 
   def index
