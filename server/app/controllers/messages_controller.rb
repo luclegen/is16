@@ -15,7 +15,9 @@ class MessagesController < ApplicationController
       end
     else
       @chat = Chat.new
+
       @chat._uids.push(@user._id)
+      @chat._aids.push(@user._id)
     end
 
     @message = Message.new(message_params)
