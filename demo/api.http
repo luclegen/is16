@@ -57,6 +57,12 @@ content-type: application/json
 
 ###
 
+# @name available
+GET {{baseUrl}}/auth/available/{{email}} HTTP/1.1
+content-type: application/json
+
+###
+
 @cookie = {{login.response.headers.set-cookie}}
 
 # @name logout
