@@ -24,15 +24,17 @@ class MessagesController < ApplicationController
     @message.user = @chat.user = @user
     @chat._mids.push(@message._id)
 
-    unless params[:id] && params[:users].kind_of?(Array)
-      params[:users].each do |u|
-        begin
-          @receiver = User.find(u)
-          unless @chat._uids.include?(@receiver._id)
-            @chat._uids.push(@receiver._id)
+    unless params[:id]
+      if params[:users].kind_of?(Array)
+        params[:users].each do |u|
+          begin
+            @receiver = User.find(u)
+            unless @chat._uids.include?(@receiver._id)
+              @chat._uids.push(@receiver._id)
+            end
+          rescue => e
+            return render plain: 'User not found!', status: :not_found
           end
-        rescue => e
-          return render plain: 'User not found!', status: :not_found
         end
       end
     end
