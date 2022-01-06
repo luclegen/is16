@@ -2,6 +2,8 @@ class Message
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include CryptoHelper
+
   field :body, type: String
   field :unsent, type: Boolean, default: false
 
@@ -9,4 +11,8 @@ class Message
 
   belongs_to :user, foreign_key: :_uid
   belongs_to :chat, foreign_key: :_cid
+
+  def body
+    decrypt(self[:body])
+  end
 end
