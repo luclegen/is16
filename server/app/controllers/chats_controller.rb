@@ -44,4 +44,8 @@ class ChatsController < ApplicationController
         return render plain: 'Chat not found!', status: :not_found
       end
     end
+
+    def chat_params
+      params.require(:chat).permit(:photo, :title)
+    end
 end
