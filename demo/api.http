@@ -7,6 +7,7 @@
 @userId0={{$dotenv U0_ID}}
 @userId1={{$dotenv U1_ID}}
 @userId2={{$dotenv U2_ID}}
+@userId3={{$dotenv U3_ID}}
 
 # @name test
 GET {{testUrl}}/test/ HTTP/1.1
@@ -98,6 +99,20 @@ Cookie: {{cookie}}
 GET {{baseUrl}}/chats/{{chatId}} HTTP/1.1
 content-type: application/json
 Cookie: {{cookie}}
+
+###
+
+# @name updateChat
+PUT {{baseUrl}}/chats/{{chatId}} HTTP/1.1
+content-type: application/json
+Cookie: {{cookie}}
+
+{
+  "photo": "#ff0000",
+  "title": "ISTeam16",
+  "_uids": [ "{{userId0}}", "{{userId1}}", "{{userId3}}" ],
+  "_aids": [ "{{userId0}}", "{{userId1}}"  ]
+}
 
 ###
 
