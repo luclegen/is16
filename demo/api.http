@@ -4,6 +4,9 @@
 @password={{$dotenv PASSWORD}}
 @chatId={{$dotenv CHAT_ID}}
 @messageId={{$dotenv MSG_ID}}
+@userId0={{$dotenv U0_ID}}
+@userId1={{$dotenv U1_ID}}
+@userId2={{$dotenv U2_ID}}
 
 # @name test
 GET {{testUrl}}/test/ HTTP/1.1
@@ -77,10 +80,10 @@ Cookie: {{cookie}}
 #   "body": "Hello everyone. How are you?"
 # }
 
-{
-  "id": "{{chatId}}",
-  "body": "I'm good. And you?"
-}
+# {
+#   "id": "{{chatId}}",
+#   "body": "I'm good. And you?"
+# }
 
 ###
 
