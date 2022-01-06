@@ -1,6 +1,6 @@
 class ChatsController < ApplicationController
-  before_action :authorize, only: [:show]
-  before_action :set_chat, only: [:show]
+  before_action :authorize, only: [:show, :update]
+  before_action :set_chat, only: [:show, :update]
 
   def show
     @users = @chat._uids
@@ -31,6 +31,41 @@ class ChatsController < ApplicationController
         end
       }
     }
+  end
+
+  def update
+    if params[:_uids] .kind_of?(Array)
+      @chat._uids = params[:_uids].map { |u|
+        begin
+          User.find(u)._id
+        rescue => e
+          return render plain: 'User not found!', status: :not_found
+        end
+      }
+
+      @chat._aids = params[:_aids].map { |u|
+        begin
+          User.find(u)._id
+        rescue => e
+          return render plain: 'User not found!', status: :not_found
+        end
+      }
+    end
+    if @chat.update(chat_params)
+      render json: @chat
+    else
+      render json: @chat.errors, status: :unprocessable_entity
+    end
+  end
+
+  def destroy
+    @chat.destroy
+  end
+
+  def index
+    @chats = Chat.where(_uids: { '$in': [@user._id] })
+
+    render json: @chats
   end
 
   private
