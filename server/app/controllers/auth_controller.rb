@@ -18,6 +18,10 @@ class AuthController < ApplicationController
     end
   end
 
+  def available
+    render status: @user ? :conflict : :ok
+  end
+
   def logout
     cookies.delete :token
     cookies.delete :avatar
