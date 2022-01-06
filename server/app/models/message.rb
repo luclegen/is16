@@ -15,4 +15,8 @@ class Message
   def body
     decrypt(self[:body])
   end
+
+  def body=body
+    self[:body] = encrypt(body)
+  end
 end
