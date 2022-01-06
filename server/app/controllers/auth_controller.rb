@@ -2,7 +2,7 @@ class AuthController < ApplicationController
   before_action :authorize, only: [:logout]
 
   def login
-    if !(@user = User.where(email: params[:email]).first)
+    unless @user = User.where(email: params[:email]).first
       render plain: 'Email not registered!', status: :not_found
     else
       if @user.authenticate(params[:password])
