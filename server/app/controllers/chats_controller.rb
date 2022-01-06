@@ -58,6 +58,10 @@ class ChatsController < ApplicationController
     end
   end
 
+  def destroy
+    @chat.destroy
+  end
+
   def index
     @chats = Chat.where(_uids: { '$in': [@user._id] })
 
