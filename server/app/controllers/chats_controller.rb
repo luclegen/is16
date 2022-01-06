@@ -34,7 +34,7 @@ class ChatsController < ApplicationController
   end
 
   def update
-    if params[:_uids] .kind_of?(Array)
+    if params[:_uids].kind_of?(Array)
       @chat._uids = params[:_uids].map { |u|
         begin
           User.find(u)._id
@@ -42,7 +42,9 @@ class ChatsController < ApplicationController
           return render plain: 'User not found!', status: :not_found
         end
       }
+    end
 
+    if params[:_aids].kind_of?(Array)
       @chat._aids = params[:_aids].map { |u|
         begin
           User.find(u)._id
@@ -51,6 +53,11 @@ class ChatsController < ApplicationController
         end
       }
     end
+
+    if !@chat._aids.include?(@chat._uid)
+      return render status: :unauthorized
+    end
+
     if @chat.update(chat_params)
       render json: @chat
     else
