@@ -14,7 +14,12 @@ class CodesController < ApplicationController
     @code.code = code
 
     if @code.save
-      render html: (RestClient.post ENV['MAILER'], {:email => @code.email, :title => 'Verify email', :code => code}, {:Authorization => "Bearer #{ENV['TOKEN']}"}), status: :created
+      begin
+        render html: (RestClient.post ENV['MAILER'], {:email => @code.email, :title => 'Verify email', :code => code}, {:Authorization => "Bearer #{ENV['TOKEN']}"}), status: :created
+      rescue => e
+        @code.destroy
+        render plain: 'Mailer server not started or crashed!', status: :service_unavailable
+      end
     else
       render json: @code.errors, status: :unprocessable_entity
     end
