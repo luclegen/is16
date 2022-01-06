@@ -1,8 +1,9 @@
 class AuthController < ApplicationController
+  before_action :verify, only: [:login, :available]
   before_action :authorize, only: [:logout]
 
   def login
-    if (@user = User.where(email: params[:email]).first)
+    if @user
       if @user.authenticate(params[:password])
         cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true, secure: ENV['RAILS_ENV'] == 'production' }
         cookies[:avatar] = @user.avatar
