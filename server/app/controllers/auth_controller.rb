@@ -2,9 +2,7 @@ class AuthController < ApplicationController
   before_action :authorize, only: [:logout]
 
   def login
-    unless @user = User.where(email: params[:email]).first
-      render plain: 'Email not registered!', status: :not_found
-    else
+    if (@user = User.where(email: params[:email]).first)
       if @user.authenticate(params[:password])
         cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true, secure: ENV['RAILS_ENV'] == 'production' }
         cookies[:avatar] = @user.avatar
@@ -14,6 +12,8 @@ class AuthController < ApplicationController
       else
         render plain: 'Wrong password!', status: :unauthorized
       end
+    else
+      render plain: 'Email not registered!', status: :not_found
     end
   end
 
