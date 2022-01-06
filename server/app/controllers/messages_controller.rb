@@ -10,7 +10,7 @@ class MessagesController < ApplicationController
         return render plain: 'Chat not found!', status: :not_found
       end
 
-      if !@chat._uids.include?(@user._id)
+      unless @chat._uids.include?(@user._id)
         return render nothing: true, status: :unauthorized
       end
     else
@@ -24,11 +24,11 @@ class MessagesController < ApplicationController
     @message.user = @chat.user = @user
     @chat._mids.push(@message._id)
 
-    if !params[:id] && params[:users].kind_of?(Array)
+    unless params[:id] && params[:users].kind_of?(Array)
       params[:users].each do |u|
         begin
           @receiver = User.find(u)
-          if !@chat._uids.include?(@receiver._id)
+          unless @chat._uids.include?(@receiver._id)
             @chat._uids.push(@receiver._id)
           end
         rescue => e
