@@ -24,4 +24,9 @@ class AuthController < ApplicationController
     cookies.delete :surname
     render nothing: true
   end
+
+  private
+   def verify
+     @user = User.where(email: params[:email]).first
+   end
 end
