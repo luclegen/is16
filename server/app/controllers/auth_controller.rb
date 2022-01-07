@@ -19,7 +19,7 @@ class AuthController < ApplicationController
   end
 
   def available
-    render status: @user ? :conflict : :ok
+    render status: @user ? :non_authoritative_information : :ok
   end
 
   def logout
