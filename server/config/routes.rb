@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :codes
   resources :users
   resources :profiles
-  post 'auth/login', to: 'auth#login'
-  get 'auth/*email', to: 'auth#available'
-  delete 'auth/logout', to: 'auth#logout'
+  post 'auth/', to: 'auth#login'
+  get 'auth/', to: 'auth#available'
+  delete 'auth/', to: 'auth#logout'
 end
