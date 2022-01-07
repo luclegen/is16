@@ -61,7 +61,7 @@ class ChatsController < ApplicationController
         begin
           User.find(u)._id
         rescue => e
-          return render plain: 'User not found!', status: :not_found
+          return render plain: 'Admin not found!', status: :not_found
         end
       }
     end
@@ -78,13 +78,15 @@ class ChatsController < ApplicationController
   end
 
   def destroy
+    unless @chat._aids.include?(@chat._uid)
+      return render status: :unauthorized
+    end
+
     @chat.destroy
   end
 
   def index
-    @chats = Chat.where(_uids: { '$in': [@user._id] })
-
-    render json: @chats
+    render json: Chat.where(_uids: { '$in': [@user._id] })
   end
 
   private
