@@ -78,11 +78,19 @@ class ChatsController < ApplicationController
   end
 
   def destroy
-    unless @chat._aids.include?(@chat._uid)
-      return render status: :unauthorized
+    if @chat._aids.include?(@chat._uid)
+      if @user._id == @chat._uid
+        @chat.destroy
+      else
+        render status: :unauthorized
+      end
+    else
+      if @chat._aids.include?(@user._id)
+        @chat.destroy
+      else
+        render status: :unauthorized
+      end
     end
-
-    @chat.destroy
   end
 
   def index
