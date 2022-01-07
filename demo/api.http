@@ -47,7 +47,7 @@ content-type: application/json
 ###
 
 # @name login
-POST {{baseUrl}}/auth/login HTTP/1.1
+POST {{baseUrl}}/auth HTTP/1.1
 content-type: application/json
 
 {
@@ -58,7 +58,7 @@ content-type: application/json
 ###
 
 # @name available
-GET {{baseUrl}}/auth/{{email}} HTTP/1.1
+GET {{baseUrl}}/auth/?email={{email}} HTTP/1.1
 content-type: application/json
 
 ###
@@ -66,7 +66,7 @@ content-type: application/json
 @cookie = {{login.response.headers.set-cookie}}
 
 # @name logout
-DELETE {{baseUrl}}/auth/logout HTTP/1.1
+DELETE {{baseUrl}}/auth HTTP/1.1
 content-type: application/json
 Cookie: {{cookie}}
 
