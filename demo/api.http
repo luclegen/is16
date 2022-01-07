@@ -58,7 +58,7 @@ content-type: application/json
 ###
 
 # @name available
-GET {{baseUrl}}/auth/available/{{email}} HTTP/1.1
+GET {{baseUrl}}/auth/{{email}} HTTP/1.1
 content-type: application/json
 
 ###
