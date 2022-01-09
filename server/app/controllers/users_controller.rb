@@ -34,7 +34,7 @@ class UsersController < ApplicationController
             render plain: @code.attempts > 0 ? 'Wrong code! You have ' + @code.attempts.to_s + ' attempts left.' : 'Code is expired! Please try another code', status: :unauthorized
           end
         else
-          render plain: 'Code is expired! Please try another code', status: :unauthorized
+          render plain: 'Code is expired! Please try another code', status: :gone
         end
       else
         render plain: 'Code must be generated before registration!', status: :not_found
