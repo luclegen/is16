@@ -5,7 +5,7 @@ class AuthController < ApplicationController
   def login
     if @user
       if @user.authenticate(params[:password])
-        cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true, secure: ENV['RAILS_ENV'] == 'production' }
+        cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true }
         cookies[:avatar] = @user.avatar
         cookies[:name] = @user.name
         cookies[:surname] = @user.surname
