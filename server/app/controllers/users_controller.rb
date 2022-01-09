@@ -31,7 +31,7 @@ class UsersController < ApplicationController
               render plain: e.to_s.capitalize + '!', status: :bad_request
             end
           else
-            render plain: @code.attempts > 0 ? 'Wrong code! You have ' + @code.attempts.to_s + ' attempts left.' : 'Code is expired! Please try another code', status: :unauthorized
+            render plain: @code.attempts > 0 ? 'Wrong code! You have ' + @code.attempts.to_s + ' attempts left.' : 'Code is expired! Please try another code', status: @code.attempts > 0 ? :unauthorized : :gone
           end
         else
           render plain: 'Code is expired! Please try another code', status: :gone
