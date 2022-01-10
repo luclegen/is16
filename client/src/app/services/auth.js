@@ -7,6 +7,8 @@ class AuthService {
   login = user => PU.post(URL, user)
 
   available = email => PU.get(`${URL}?email=${email}`)
+
+  logout = () => PR.delete(URL)
 }
 
 export default new AuthService()
