@@ -3,8 +3,8 @@ import axios from 'axios'
 const API = axios.create({
   withCredentials: true,
   credentials: "include",
-  timeout: 10000,
   mode: 'cors',
+  timeout: 10000,
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
