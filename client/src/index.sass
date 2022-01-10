@@ -1,8 +1,338 @@
-body
-  margin: 0
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif
-  -webkit-font-smoothing: antialiased
-  -moz-osx-font-smoothing: grayscale
+@import '~bootstrap/scss/bootstrap.scss'
 
-code
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace
+$spacer: 16px
+
+// Bootstrap
+
+.section-files
+  @extend .container-fluid
+
+header
+  @extend .navbar
+
+.form-search
+  @extend .input-group
+
+.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder
+  @extend .btn
+
+.btn-get-code
+  @extend .btn-secondary
+
+.btn-create-account, .btn-sign-up
+  @extend .btn-success
+
+.logo, .search-from
+  @extend .card-link
+
+.row-name, .row-password, .row-dob, .row-gender, .row-code
+  @extend .row
+  @extend .g-2
+
+.input-group-email, .input-group-password, .input-group-password-strength
+  @extend .input-group
+
+.form-floating-name, .form-floating-surname, .form-floating-email, .form-floating-password, .form-floating-confirm, .form-floating-day, .form-floating-month, .form-floating-year
+  @extend .form-floating
+
+.input-search, .input-email, .input-password, .input-digit
+  @extend .form-control
+
+.form-check-female, .form-check-male, .form-check-other
+  @extend .form-check
+
+.form-check-female, .form-check-male, .form-check-other
+  @extend .form-check-inline
+
+.label-female, .label-male, .label-other
+  @extend .form-check-label
+
+.input-female, .input-male, .input-other
+  @extend .form-check-input
+
+.label-group
+  @extend .text-muted
+
+.dropdown-item-danger, .dropdown-item-delete
+  @extend .text-white
+
+.section-register
+  @extend .position-absolute
+
+.logo, .avatar, .btn-search, .btn-input, .section-only, .form-only, .input-group-email, .input-group-password, .section-register, .form-row-sign-up, .input-group-password-strength, .dropdown-item-normal, .dropdown-item-danger, .top-left-nav, .list-group-item, .section-files, .dir, .dropdown-item, .section-loader, .link-find-account, .form-check-female, .form-check-male, .form-check-other
+  @extend .d-flex
+
+.form-only, .section-loader
+  @extend .flex-xl-column
+
+.logo, .avatar, .form-only, .section-register, .top-left-nav, .section-loader, .form-check-female, .form-check-male, .form-check-other
+  @extend .align-items-center
+
+.list-group-item
+  @extend .align-items-end
+
+.avatar, .section-only, .form-only, .section-register, .form-row-sign-up, .input-group-password-strength
+  @extend .justify-content-center
+
+.text-profile, .text-help, .text-logout, .label-female, .label-male, .label-other
+  @extend .flex-fill
+
+.section-only, .section-register
+
+  h1
+    @extend .text-center
+
+.input-digit
+  @extend .text-center
+
+.search-bar, .input-group-email, .input-group-password, .form-check-female, .form-check-male, .form-check-other, .input-digit
+  @extend .border
+
+.input-group-password
+  @extend .border-top-0
+
+.input-search, .avatar, .input-email, .input-password
+  @extend .border-0
+
+header, .form-check
+  @extend .border-bottom
+
+.logo, .input-digit
+  @extend .rounded
+
+.form-register, .form-check-female, .form-check-male, .form-check-other
+  @extend .rounded
+
+.input-group-password
+  @extend .rounded-bottom
+
+.avatar
+  @extend .rounded-circle
+
+.search-bar
+  @extend .rounded-pill
+
+.form-register
+  @extend .shadow
+
+.input-search, .btn-search, .avatar, .input-email, .input-password, .btn-input, select
+  @extend .shadow-none
+
+header
+  @extend .shadow-sm
+
+.input-search
+  @extend .bg-transparent
+
+.dropdown-item-danger, .dropdown-item-delete
+  @extend .bg-danger
+
+.input-group-email, .form-check-female, .form-check-male, .form-check-other, .password-strength, .text-profile, .text-help, .text-logout, .input-female, .input-male, .input-other
+  @extend .m-0
+
+.dropdown-menu-avatar
+  @extend .mt-2
+
+.btn-create-account
+  @extend .mt-1
+
+.row-name, .form-floating-email, .row-dob, .row-gender, .row-code
+  @extend .mb-2
+
+.h1-only, .h1-register
+  @extend .mb-3
+
+.avatar, .section-files, .right-content, .form-check-female, .form-check-male, .form-check-other
+  @extend .p-0
+
+header, .surname label
+  @extend .p-1
+
+.form-register
+  @extend .p-3
+
+.logo
+  @extend .px-1
+
+.dropdown-item-normal, .dropdown-item-danger
+  @extend .px-3
+
+.label-female, .label-male, .label-other
+  @extend .py-3
+
+// .input-search
+//   @extend .pl-1
+
+// .input-search
+//   @extend .pr-3
+
+// .form-check
+//   @extend .pb-3
+
+// Custom
+.input-group
+  z-index: 0 !important
+
+.text-primary
+  color: blue !important
+
+.text-secondary
+  color: navy !important
+
+.btn
+  display: flex
+  font-weight: 700
+  align-items: center
+
+  i
+    margin-right: 5px
+
+.input-group-email, .input-group-password
+
+  &:focus-within
+    border: 2px solid blue !important
+
+.dropdown-item
+  cursor: pointer
+
+  i
+    margin-right: 5px
+
+.dropdown-item-danger, .dropdown-item-delete
+
+  &:hover
+    background: #bd2130 !important
+
+// New
+
+.section-loader
+  cursor: wait
+
+.search-bar
+  background: #e1dfdd
+
+  form
+
+    button
+      color: blue
+
+      &:hover
+        color: navy
+
+.avatar
+  // border: 1px solid blue !important
+
+  &:hover
+    border: 1px solid blue !important
+
+.btn-input
+
+  &:hover
+    color: blue
+
+meter
+
+  &[value="1"]::-webkit-meter-optimum-value
+    background: red
+  &[value="2"]::-webkit-meter-optimum-value
+    background: yellow
+  &[value="3"]::-webkit-meter-optimum-value
+    background: orange
+  &[value="4"]::-webkit-meter-optimum-value
+    background: green
+
+  &[value="1"]::-moz-meter-bar
+    background: red
+  &[value="2"]::-moz-meter-bar
+    background: yellow
+  &[value="3"]::-moz-meter-bar
+    background: orange
+  &[value="4"]::-moz-meter-bar
+    background: green
+
+.form-check-female, .form-check-male, .form-check-other
+
+  &.is-valid
+    border-color: #198754 !important
+
+  &.is-invalid
+    border-color: #dc3545 !important
+
+.label-group
+
+  &.is-valid
+    padding-right: calc(1.5em + 0.75rem)
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath fill='%2328a745' d='M2.3 6.73L.6 4.53c-.4-1.04.46-1.4 1.1-.8l1.1 1.4 3.4-3.8c.6-.63 1.6-.27 1.2.7l-4 4.6c-.43.5-.8.4-1.1.1z'/%3e%3c/svg%3e")
+    background-repeat: no-repeat
+    background-position: right calc(0.375em + 0.1875rem) center
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)
+
+  &.is-invalid
+    padding-right: calc(1.5em + 0.75rem)
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='none' stroke='%23dc3545' viewBox='0 0 12 12'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e")
+    background-repeat: no-repeat
+    background-position: right calc(0.375em + 0.1875rem) center
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem)
+
+.form-select-day, .form-select-month, .form-select-year
+  @extend .form-select
+
+.link-help
+  @extend .text-primary
+
+  &:hover
+    @extend .text-secondary
+
+.dropdown-menu-avatar
+  position: relative
+
+  &:before, &:after
+    content: ''
+    display: block
+    position: absolute
+    bottom: 100%
+    width: 0
+    height: 0
+
+  &:before
+    right: 10px
+    border: 12px solid transparent
+    border-bottom-color: rgba(0, 0, 0, 0.15)
+
+  &:after
+    right: 12px
+    border: 10px solid transparent
+    border-bottom-color: white
+
+.dropdown-item-normal
+
+  &:hover
+    text-decoration: none
+
+.input-digit
+
+  &::-webkit-inner-spin-button
+    -moz-appearance: none
+    -webkit-appearance: none
+    -ms-progress-appearance: none
+    appearance: none
+
+.left-nav
+  background: #f3f2f1
+
+.list-group-item
+
+  &.active
+    background: none
+    font-weight: 700
+    background-color: #e1dfdd
+    color: black
+    border: none
+
+  i
+    margin-right: 5px
+
+.btn-new-folder
+
+  &:hover
+    background: #f3f2f1
