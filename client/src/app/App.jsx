@@ -3,19 +3,33 @@ import { Component, Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/header/Header'
 import Loader from './components/others/Loader'
-// import Home from './components/home/Home'
-// import FindAccount from './components/others/FindAccount'
 
 const Home = lazy(() => import('./components/home/Home'))
-// const FindAccount = lazy(() => import('./components/others/FindAccount'))
 
 export default class App extends Component {
+  constructor(props) {
+    super(props)
+
+    this.state = {
+      ready: false
+    }
+  }
+
+  componentDidMount = () => {
+    var request = new XMLHttpRequest()
+    request.open('GET', process.env.REACT_APP_API_URL, true)
+    request.onreadystatechange = () => this.setState({ ready: request.readyState === 4 && request.status === 200 })
+    request.send()
+  }
+
   render = () => <BrowserRouter>
     <Header />
     <Suspense fallback={<Loader />}>
-      <Routes>
-        <Route exact path="/" element={<Home />} />
-      </Routes>
+      {this.state.ready ?
+        <Routes>
+          <Route exact path="/" element={<Home />} />
+        </Routes>
+        : <Loader />}
     </Suspense>
   </BrowserRouter>
 }
