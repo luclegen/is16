@@ -1,10 +1,14 @@
 import axios from 'axios'
 
 const API = axios.create({
+  withCredentials: true,
+  credentials: "include",
   timeout: 10000,
+  mode: 'cors',
   headers: {
-    'Content-Type': 'application/json',
-  }
+    "Content-Type": "application/json",
+    "Accept": "application/json",
+  },
 })
 
 API.interceptors.response.use(res => res, err => {
