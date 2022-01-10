@@ -7,7 +7,7 @@ class User
   include Mongoid::Timestamps
   include ActiveModel::SecurePassword
 
-  field :avatar, type: String, default: '#ffffff'
+  field :avatar, type: String, default: '#000000'
   field :name, type: String
   field :surname, type: String
   field :email, type: String
