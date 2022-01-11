@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
 
+  def index
+    render plain: 'Server started.'
+  end
+
   def authorize
     if cookies.encrypted.signed[:token]
       begin
