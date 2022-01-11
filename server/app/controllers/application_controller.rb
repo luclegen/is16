@@ -2,7 +2,7 @@ class ApplicationController < ActionController::API
   include ActionController::Cookies
 
   def index
-    render plain: 'Server started.'
+    redirect_to ENV['WEB']
   end
 
   def authorize
