@@ -3,6 +3,7 @@ import { Component, Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Header from './components/header/Header'
 import Loader from './components/others/Loader'
+import indexService from './services/index'
 
 const Home = lazy(() => import('./components/home/Home'))
 
@@ -15,12 +16,10 @@ export default class App extends Component {
     }
   }
 
-  componentDidMount = () => {
-    var request = new XMLHttpRequest()
-    request.open('GET', process.env.REACT_APP_API, true)
-    request.onreadystatechange = () => this.setState({ ready: request.readyState === 4 && request.status === 200 })
-    request.send()
-  }
+  componentDidMount = () =>
+    indexService
+      .index()
+      .then(res => this.setState({ ready: res.status === 200 }))
 
   render = () => <BrowserRouter>
     <Header />
