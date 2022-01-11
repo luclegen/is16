@@ -1,6 +1,6 @@
 import API from '../apis/api'
 
-const URL = `${process.env.REACT_APP_API_URL}codes/`
+const URL = `${process.env.REACT_APP_API}codes/`
 
 class CodeService {
   create = email => API.post(URL, email)

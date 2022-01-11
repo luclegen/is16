@@ -1,6 +1,6 @@
 import API from '../apis/api'
 
-const URL = `${process.env.REACT_APP_API_URL}auth/`
+const URL = `${process.env.REACT_APP_API}auth/`
 
 class AuthService {
   login = user => API.post(URL, user)

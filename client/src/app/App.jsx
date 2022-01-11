@@ -17,7 +17,7 @@ export default class App extends Component {
 
   componentDidMount = () => {
     var request = new XMLHttpRequest()
-    request.open('GET', process.env.REACT_APP_API_URL, true)
+    request.open('GET', process.env.REACT_APP_API, true)
     request.onreadystatechange = () => this.setState({ ready: request.readyState === 4 && request.status === 200 })
     request.send()
   }
