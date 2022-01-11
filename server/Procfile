@@ -1,1 +1,1 @@
-server: rails s
+api: rails s
