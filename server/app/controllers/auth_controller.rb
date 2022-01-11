@@ -26,9 +26,6 @@ class AuthController < ApplicationController
 
   def logout
     cookies.delete :token
-    cookies.delete :avatar
-    cookies.delete :name
-    cookies.delete :surname
     render nothing: true
   end
 
