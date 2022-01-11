@@ -26,6 +26,8 @@ gem 'dotenv-rails'
 # Json web token
 gem 'jwt'
 
+gem 'rails_same_site_cookie'
+
 # Use MongoDB database
 gem 'mongoid', '~> 7.0.5'
 
