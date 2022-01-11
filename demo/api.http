@@ -1,5 +1,5 @@
-@baseUrl={{$dotenv API_URL}}
-@testUrl={{$dotenv TEST_URL}}
+@baseUrl={{$dotenv API}}
+@testUrl={{$dotenv TEST}}
 @email={{$dotenv EMAIL}}
 @password={{$dotenv PASSWORD}}
 @chatId={{$dotenv CHAT_ID}}
