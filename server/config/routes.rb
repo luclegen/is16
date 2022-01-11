@@ -6,4 +6,5 @@ Rails.application.routes.draw do
   post 'auth/', to: 'auth#login'
   get 'auth/', to: 'auth#available'
   delete 'auth/', to: 'auth#logout'
+  get '/', to: 'application#index'
 end
