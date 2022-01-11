@@ -5,11 +5,13 @@ class AuthController < ApplicationController
   def login
     if @user
       if @user.authenticate(params[:password])
-        cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true }
-        cookies[:avatar] = @user.avatar
-        cookies[:name] = @user.name
-        cookies[:surname] = @user.surname
-        render nothing: true
+        cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true, same_site: :strict }
+
+        render json: {
+          avatar: @user.avatar,
+          name: @user.name,
+          surname: @user.surname
+        }
       else
         render plain: 'Wrong password!', status: :unauthorized
       end
