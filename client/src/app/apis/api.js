@@ -4,7 +4,7 @@ const API = axios.create({
   withCredentials: true,
   credentials: "include",
   mode: 'cors',
-  timeout: 10000,
+  timeout: 20000,
   headers: {
     "Content-Type": "application/json",
     "Accept": "application/json",
@@ -13,9 +13,11 @@ const API = axios.create({
 
 API.interceptors.response.use(res => res, err => {
   err.response
-    ? err.response.status === 401
-      ? alert(err.response.statusText)
-      : alert(err.response.data)
+    ? alert(err.response.status === 500
+      ? err.response.data.error
+      : err.response.data?.trim()
+        ? err.response.data
+        : err.response.statusText)
     : console.error(err)
 
   return Promise.reject(err)
