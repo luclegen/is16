@@ -31,7 +31,10 @@ export default class Header extends Component {
     if (this.state.opened) this.open()
   }
 
-  logout = () => authService.logout().then(() => window.location.href = '/')
+  logout = () => authService.logout().then(() => {
+    helper.clearCookies()
+    window.location.href = '/'
+  })
 
   render = () => <header>
     <a className="logo" href="/" onMouseEnter={this.toggle} onMouseLeave={this.toggle}>
