@@ -51,7 +51,7 @@ class Helper {
 
   deleteCookie = key => document.cookie = key + '= Max-Age=0'
 
-  clearCookies = () => document.cookie.split(' ').map(c => c.split('=')).forEach(c => document.cookie = c[0] + '= Max-Age=0')
+  clearCookies = () => document.cookie.split(' ').map(c => c.split('=')).forEach(c => document.cookie = c[0] + '=; Max-Age=0')
 
   loggedIn = () => Boolean(this.getCookie('name'))
 }
