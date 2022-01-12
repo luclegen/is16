@@ -65,7 +65,7 @@ export default class Login extends Component {
         if (this.state.password)
           authService
             .login(this.state)
-            .then(res => helper.setCookie(res.data) && (this.state = state) && setTimeout(() => window.location.reload(), 500))
+            .then(res => helper.setCookie(res.data) && (this.state = state) && setTimeout(() => window.location.reload()))
       })
     }
   }
