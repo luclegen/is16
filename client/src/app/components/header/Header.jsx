@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
 import helper from '../../services/helper'
-import authService from '../../services/auth'
 import Avatar from '../user/Avatar'
 
 export default class Header extends Component {
@@ -31,10 +30,10 @@ export default class Header extends Component {
     if (this.state.opened) this.open()
   }
 
-  logout = () => authService.logout().then(() => {
+  logout = () => {
     helper.clearCookies()
     window.location.href = '/'
-  })
+  }
 
   render = () => <header>
     <a className="logo" href="/" onMouseEnter={this.toggle} onMouseLeave={this.toggle}>
