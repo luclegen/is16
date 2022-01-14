@@ -1,9 +1,9 @@
-import API from '../apis/api'
+import PU from '../apis/public'
 
 const URL = `${process.env.REACT_APP_API}users/`
 
 class UserService {
-  create = user => API.post(URL, user)
+  create = user => PU.post(URL, user)
 }
 
 export default new UserService()

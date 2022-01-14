@@ -1,9 +1,9 @@
-import API from '../apis/api'
+import PU from '../apis/public'
 
 const URL = `${process.env.REACT_APP_API}codes/`
 
 class CodeService {
-  create = email => API.post(URL, email)
+  create = email => PU.post(URL, email)
 }
 
 export default new CodeService()

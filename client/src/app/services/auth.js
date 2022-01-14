@@ -1,13 +1,11 @@
-import API from '../apis/api'
+import PU from '../apis/public'
 
 const URL = `${process.env.REACT_APP_API}auth/`
 
 class AuthService {
-  login = user => API.post(URL, user)
+  login = user => PU.post(URL, user)
 
-  available = email => API.get(`${URL}?email=${email}`)
-
-  logout = () => API.delete(URL)
+  available = email => PU.get(`${URL}?email=${email}`)
 }
 
 export default new AuthService()
