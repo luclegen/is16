@@ -52,7 +52,7 @@ export default class Login extends Component {
 
   close = () => this.setState({ opened: false })
 
-  onSubmit = e => {
+  submit = e => {
     e.preventDefault()
 
     if (this.state.email) {
@@ -73,7 +73,7 @@ export default class Login extends Component {
   componentDidUpdate = () => window.onbeforeunload = () => this.state.email || this.password ? true : undefined
 
   render = () => <section className="section-only">
-    <form className="form-only" onSubmit={this.onSubmit}>
+    <form className="form-only" onSubmit={this.submit}>
       <img className='logo-img' src="/logo.svg" alt={process.env.REACT_APP_NAME + ' logo'} />
       <h1 className="h1-only">Sign in to {process.env.REACT_APP_NAME}</h1>
       <div className={`input-group-email ${this.state.visible ? 'rounded-top' : 'rounded'}`}>
