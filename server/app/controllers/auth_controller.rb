@@ -5,9 +5,8 @@ class AuthController < ApplicationController
   def login
     if @user
       if @user.authenticate(params[:password])
-        cookies.encrypted.signed[:token] = { value: @user.sign, httponly: true }
-
         render json: {
+          token: @user.sign,
           avatar: @user.avatar,
           name: @user.name,
           surname: @user.surname
