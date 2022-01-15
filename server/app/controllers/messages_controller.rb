@@ -3,6 +3,10 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:destroy]
 
   def create
+    if params[:users].length < 1
+      return render plain: 'Nobody to chat!', status: :not_found
+    end
+
     if params[:id]
       begin
         @chat = Chat.find(params[:id])
@@ -31,7 +35,8 @@ class MessagesController < ApplicationController
           begin
             @receiver = User.find(u)
             unless @chat._uids.include?(@receiver._id)
-              @chat.title = params[:users].length == 1 ? @receiver.name : @user.name.concat("'s group")
+              @chat.photo = params[:users].length === 1 ? @receiver.avatar : @user.avatar
+              @chat.title = params[:users].length === 1 ? @receiver.name : @user.name + "'s group"
               @chat._uids.push(@receiver._id)
             end
           rescue => e
