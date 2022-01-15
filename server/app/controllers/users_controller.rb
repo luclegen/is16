@@ -57,7 +57,7 @@ class UsersController < ApplicationController
   end
 
   def index
-    render json: Profile.where(name: Regexp.new(params[:name], Regexp::IGNORECASE))
+    render json: Profile.where(name: Regexp.new(params[:name], Regexp::IGNORECASE)).map { |p| { _id: p._uid, name: p.name } }
   end
 
   private
@@ -65,7 +65,7 @@ class UsersController < ApplicationController
       begin
         @user = User.find(params[:id])
       rescue => e
-        render json: { err: 'User not found!' }, status: :not_found
+        render plain: 'User not found!', status: :not_found
       end
     end
 
