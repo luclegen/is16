@@ -4,10 +4,12 @@ class Chat
 
   field :photo, type: String, default: '#0000ff'
   field :title, type: String
+  field :message, type: String
   field :_mids, type: Array, default: []
   field :_uids, type: Array, default: []
   field :_aids, type: Array, default: []
 
+  validates :message, uniqueness: true, presence: { message: 'is required' }
   validates :_mids, length: { minimum: 1, message: 'The chat must have a minimum of messages!' }
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
