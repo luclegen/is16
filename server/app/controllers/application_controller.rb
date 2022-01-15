@@ -6,13 +6,9 @@ class ApplicationController < ActionController::API
   end
 
   def authorize
-    if cookies.encrypted.signed[:token]
-      begin
-        @user = User.find(JWT.decode(cookies.encrypted.signed[:token], ENV['SECRET'], true)[0]['id'])
-      rescue => e
-        render status: :unauthorized
-      end
-    else
+    begin
+        @user = User.find(JWT.decode(request.headers[:Authorization].split(' ')[1], ENV['SECRET'], true)[0]['id'])
+    rescue => e
       render status: :unauthorized
     end
   end
