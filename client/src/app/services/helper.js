@@ -54,6 +54,13 @@ class Helper {
   clearCookies = () => document.cookie.split(' ').map(c => c.split('=')).forEach(c => document.cookie = c[0] + '=; Max-Age=0')
 
   loggedIn = () => Boolean(this.getCookie('name'))
+
+  getOffset = element => {
+    const rect = element.getBoundingClientRect(),
+      scrollLeft = window.pageXOffset || document.documentElement.scrollLeft,
+      scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    return { top: rect.top + scrollTop, left: rect.left + scrollLeft }
+  }
 }
 
 export default new Helper()
