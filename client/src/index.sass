@@ -4,7 +4,7 @@ $spacer: 16px
 
 // Bootstrap
 
-.section-chats
+.section-chats, .container-message
   @extend .container-fluid
 
 header
@@ -13,7 +13,7 @@ header
 .form-search, .input-group-user
   @extend .input-group
 
-.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder, .btn-write, .btn-send, .btn-tag-close
+.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder, .btn-write, .btn-send, .btn-tag-close, .btn-delete
   @extend .btn
 
 .btn-get-code, .btn-write
@@ -133,6 +133,12 @@ header, .chat-header
 .col-chats, .chat-body, .col-info
   @extend .overflow-auto
 
+.box-message
+  @extend .text-white
+
+.box-message
+  @extend .bg-primary
+
 .input-search
   @extend .bg-transparent
 
@@ -151,7 +157,7 @@ header, .chat-header
 .form-message
   @extend .w-100
 
-.input-group-email, .form-check-female, .form-check-male, .form-check-other, .password-strength, .text-profile, .text-help, .text-logout, .input-female, .input-male, .input-other, .btn-send
+.input-group-email, .form-check-female, .form-check-male, .form-check-other, .password-strength, .text-profile, .text-help, .text-logout, .input-female, .input-male, .input-other, .btn-send, .row
   @extend .m-0
 
 .dropdown-menu-avatar
@@ -175,16 +181,16 @@ header, .chat-header
 .tag
   @extend .me-2
 
-.avatar, .section-chats, .right-content, .form-check-female, .form-check-male, .form-check-other, .btn-write, .btn-send, .btn-tag-close
+.avatar, .section-chats, .right-content, .form-check-female, .form-check-male, .form-check-other, .btn-write, .btn-send, .btn-tag-close, .container-message, .btn-delete
   @extend .p-0
 
 header, .surname label
   @extend .p-1
 
-.tag
+.tag, .box-message
   @extend .p-2
 
-.form-register
+.form-register, .chat-body
   @extend .p-3
 
 .form-control-user
@@ -193,7 +199,7 @@ header, .surname label
 .logo
   @extend .px-1
 
-.dropdown-item-normal, .dropdown-item-danger, .chat-header, .chat-body, .chat-footer
+.dropdown-item-normal, .dropdown-item-danger, .chat-header, .chat-footer
   @extend .px-3
 
 .label-female, .label-male, .label-other
