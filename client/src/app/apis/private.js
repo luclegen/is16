@@ -20,7 +20,11 @@ API.interceptors.response.use(res => res, async err => {
     helper.logout()
     window.location.pathname !== '/' && window.open('/')
   } else err.response
-    ? alert(typeof err.response.data === 'object' ? err.response.data?.error : err.response.data)
+    ? alert(typeof err.response.data === 'object'
+      ? err.response.data?.error
+      : err.response.data.trim()
+        ? err.response.data
+        : err.response.statusText)
     : console.error(err)
   return Promise.reject(err)
 })
