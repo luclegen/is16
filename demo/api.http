@@ -1,6 +1,7 @@
 @baseUrl={{$dotenv API}}
 @testUrl={{$dotenv TEST}}
 @email={{$dotenv EMAIL}}
+@name={{$dotenv NAME}}
 @password={{$dotenv PASSWORD}}
 @chatId={{$dotenv CHAT_ID}}
 @messageId={{$dotenv MSG_ID}}
@@ -34,7 +35,7 @@ content-type: application/json
 
 {
   "code": "{{$dotenv CODE}}",
-  "name": "{{$dotenv NAME}}",
+  "name": "{{name}}",
   "surname": "Tester",
   "email": "{{email}}",
   "password": "{{password}}",
@@ -43,6 +44,12 @@ content-type: application/json
   "year": 1997,
   "sex": "{{$dotenv SEX}}"
 }
+
+###
+
+# @name listUser
+GET {{baseUrl}}/users/?name={{name}} HTTP/1.1
+content-type: application/json
 
 ###
 
@@ -57,30 +64,30 @@ content-type: application/json
 
 ###
 
+@token = {{login.response.body.token}}
+
 # @name available
 GET {{baseUrl}}/auth/?email={{email}} HTTP/1.1
 content-type: application/json
 
 ###
 
-@cookie = {{login.response.headers.set-cookie}}
-
 # @name logout
 DELETE {{baseUrl}}/auth HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
 ###
 
 # @name createMessage
 POST {{baseUrl}}/messages HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
-# {
-#   "users": [ "{{$dotenv U1_ID}}" ],
-#   "body": "Hello. How are you?"
-# }
+{
+  "users": [ "{{$dotenv U1_ID}}" ],
+  "body": "Hello. How are you?"
+}
 
 # {
 #   "users": [ "{{$dotenv U1_ID}}", "{{$dotenv U2_ID}}" ],
@@ -97,21 +104,21 @@ Cookie: {{cookie}}
 # @name deleteMessage
 DELETE {{baseUrl}}/messages/{{messageId}} HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
 ###
 
 # @name readChat
 GET {{baseUrl}}/chats/{{chatId}} HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
 ###
 
 # @name updateChat
 PUT {{baseUrl}}/chats/{{chatId}} HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
 {
   "photo": "#ff0000",
@@ -125,6 +132,6 @@ Cookie: {{cookie}}
 # @name listChats
 GET {{baseUrl}}/chats HTTP/1.1
 content-type: application/json
-Cookie: {{cookie}}
+Authorization: Bearer {{token}}
 
 ###
