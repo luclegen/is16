@@ -22,6 +22,7 @@ class MessagesController < ApplicationController
 
     @message = Message.new(message_params)
     @message.user = @chat.user = @user
+    @chat.message = params[:body]
     @chat._mids.push(@message._id)
 
     unless params[:id]
@@ -30,6 +31,7 @@ class MessagesController < ApplicationController
           begin
             @receiver = User.find(u)
             unless @chat._uids.include?(@receiver._id)
+              @chat.title = params[:users].length == 1 ? @receiver.name : @user.name.concat("'s group")
               @chat._uids.push(@receiver._id)
             end
           rescue => e
