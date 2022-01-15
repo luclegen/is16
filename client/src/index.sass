@@ -4,19 +4,19 @@ $spacer: 16px
 
 // Bootstrap
 
-.section-files
+.section-chats
   @extend .container-fluid
 
 header
   @extend .navbar
 
-.form-search
+.form-search, .input-group-user
   @extend .input-group
 
-.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder
+.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder, .btn-write, .btn-send, .btn-tag-close
   @extend .btn
 
-.btn-get-code
+.btn-get-code, .btn-write
   @extend .btn-secondary
 
 .btn-create-account, .btn-sign-up
@@ -35,7 +35,7 @@ header
 .form-floating-name, .form-floating-surname, .form-floating-email, .form-floating-password, .form-floating-confirm, .form-floating-day, .form-floating-month, .form-floating-year
   @extend .form-floating
 
-.input-search, .input-email, .input-password, .input-digit
+.input-search, .input-email, .input-password, .input-digit, .form-control-message, .form-control-user
   @extend .form-control
 
 .form-check-female, .form-check-male, .form-check-other
@@ -50,6 +50,9 @@ header
 .input-female, .input-male, .input-other
   @extend .form-check-input
 
+.list-group-users
+  @extend .list-group
+
 .label-group
   @extend .text-muted
 
@@ -59,22 +62,25 @@ header
 .section-register
   @extend .position-absolute
 
-.logo, .avatar, .btn-search, .btn-input, .section-only, .form-only, .input-group-email, .input-group-password, .section-register, .form-row-sign-up, .input-group-password-strength, .dropdown-item-normal, .dropdown-item-danger, .top-left-nav, .list-group-item, .section-files, .dir, .dropdown-item, .section-loader, .link-find-account, .form-check-female, .form-check-male, .form-check-other
+.list-group-users
+  @extend .d-none
+
+.logo, .avatar, .btn-search, .btn-input, .section-only, .form-only, .input-group-email, .input-group-password, .section-register, .form-row-sign-up, .input-group-password-strength, .dropdown-item-normal, .dropdown-item-danger, .top-left-nav, .list-group-item, .section-chats, .dir, .dropdown-item, .section-loader, .link-find-account, .form-check-female, .form-check-male, .form-check-other, .chats-bar, .btn-write, .col-chat, .chat-header, .chat-footer, .input-group-user, .tag
   @extend .d-flex
 
-.form-only, .section-loader
+.form-only, .section-loader, .col-chat
   @extend .flex-xl-column
 
-.logo, .avatar, .form-only, .section-register, .top-left-nav, .section-loader, .form-check-female, .form-check-male, .form-check-other
+.logo, .avatar, .form-only, .section-register, .top-left-nav, .section-loader, .form-check-female, .form-check-male, .form-check-other, .list-group-item, .btn-write, .chat-header, .chat-footer, .input-group-user
   @extend .align-items-center
 
 .list-group-item
   @extend .align-items-end
 
-.avatar, .section-only, .form-only, .section-register, .form-row-sign-up, .input-group-password-strength
+.avatar, .section-only, .form-only, .section-register, .form-row-sign-up, .input-group-password-strength, .btn-write
   @extend .justify-content-center
 
-.text-profile, .text-help, .text-logout, .label-female, .label-male, .label-other
+.text-profile, .text-help, .text-logout, .label-female, .label-male, .label-other, .h2-chat, .chat-body
   @extend .flex-fill
 
 .section-only, .section-register
@@ -91,43 +97,61 @@ header
 .input-group-password
   @extend .border-top-0
 
-.input-search, .avatar, .input-email, .input-password
+.input-search, .avatar, .input-email, .input-password, .btn-send, .form-control-user
   @extend .border-0
 
-header, .form-check
+header, .form-check, .chat-header
   @extend .border-bottom
 
-.logo, .input-digit
-  @extend .rounded
-
-.form-register, .form-check-female, .form-check-male, .form-check-other
+.form-register, .form-check-female, .form-check-male, .form-check-other, .logo, .input-digit
   @extend .rounded
 
 .input-group-password
   @extend .rounded-bottom
 
-.avatar
+.avatar, .btn-write
   @extend .rounded-circle
 
-.search-bar
+.search-bar, .form-control-message, .tag
   @extend .rounded-pill
 
 .form-register
   @extend .shadow
 
-.input-search, .btn-search, .avatar, .input-email, .input-password, .btn-input, select
+.input-search, .btn-search, .avatar, .input-email, .input-password, .btn-input, select, .form-control-message, .form-control-user
   @extend .shadow-none
 
-header
+header, .chat-header
   @extend .shadow-sm
+
+.col-chats,.col-info
+  @extend .col-md-3
+
+.col-chat
+  @extend .col-md-6
+
+.col-chats, .chat-body, .col-info
+  @extend .overflow-auto
 
 .input-search
   @extend .bg-transparent
 
+.tag
+  @extend .bg-info
+
 .dropdown-item-danger, .dropdown-item-delete
   @extend .bg-danger
 
-.input-group-email, .form-check-female, .form-check-male, .form-check-other, .password-strength, .text-profile, .text-help, .text-logout, .input-female, .input-male, .input-other
+.list-group-users
+  @extend .position-absolute
+
+.user-info
+  @extend .overflow-hidden
+
+.form-message
+  @extend .w-100
+
+.input-group-email, .form-check-female, .form-check-male, .form-check-other, .password-strength, .text-profile, .text-help, .text-logout, .input-female, .input-male, .input-other, .btn-send
   @extend .m-0
 
 .dropdown-menu-avatar
@@ -136,29 +160,47 @@ header
 .btn-create-account
   @extend .mt-1
 
+.chat-name
+  @extend .mb-0
+
 .row-name, .form-floating-email, .row-dob, .row-gender, .row-code
   @extend .mb-2
 
-.h1-only, .h1-register
+.h1-only, .h1-register, .search-bar
   @extend .mb-3
 
-.avatar, .section-files, .right-content, .form-check-female, .form-check-male, .form-check-other
+.user-info
+  @extend .ms-2
+
+.tag
+  @extend .me-2
+
+.avatar, .section-chats, .right-content, .form-check-female, .form-check-male, .form-check-other, .btn-write, .btn-send, .btn-tag-close
   @extend .p-0
 
 header, .surname label
   @extend .p-1
 
+.tag
+  @extend .p-2
+
 .form-register
   @extend .p-3
+
+.form-control-user
+  @extend .px-0
 
 .logo
   @extend .px-1
 
-.dropdown-item-normal, .dropdown-item-danger
+.dropdown-item-normal, .dropdown-item-danger, .chat-header, .chat-body, .chat-footer
   @extend .px-3
 
 .label-female, .label-male, .label-other
   @extend .py-3
+
+.chat-name
+  @extend .ms-2
 
 // .input-search
 //   @extend .pl-1
@@ -204,6 +246,18 @@ header, .surname label
     background: #bd2130 !important
 
 // New
+::-webkit-scrollbar
+  width: 10px
+
+::-webkit-scrollbar-track
+  background: #dcdcdc
+
+::-webkit-scrollbar-thumb
+  background: silver
+  @extend .rounded-3
+
+  &:hover
+    background: gray
 
 .section-loader
   cursor: wait
