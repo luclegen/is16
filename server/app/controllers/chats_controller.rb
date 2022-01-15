@@ -5,6 +5,7 @@ class ChatsController < ApplicationController
   def show
     @users = @chat._uids
     render json: {
+      _id: @chat._id,
       photo: @chat.photo,
       title: @chat.title ? @chat.title : @users
         .map { |u| User.find(u).name }
@@ -16,13 +17,13 @@ class ChatsController < ApplicationController
           @message = Message.find(m)
           begin
             @sender = User.find(@message._uid)
-            { _uid: @sender._id,
-              _mid: @message._id,
+            { _id: @message._id,
               avatar: @sender.avatar,
               name: @sender.name,
               unsent: @message.unsent,
               body: @message.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @message.body : @message.body,
-              time: @message.created_at }
+              time: @message.created_at,
+              _uid: @sender._id }
           rescue => e
             return render plain: 'Sender not found!', status: :not_found
           end
