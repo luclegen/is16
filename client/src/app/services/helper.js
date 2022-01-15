@@ -53,6 +53,11 @@ class Helper {
 
   clearCookies = () => document.cookie.split(' ').map(c => c.split('=')).forEach(c => document.cookie = c[0] + '=; Max-Age=0')
 
+  getId = () =>
+    this.loggedIn()
+      ? JSON.parse(atob(this.getCookie('token')?.split('.')[1])).id['$oid']
+      : null
+
   loggedIn = () => Boolean(this.getCookie('name'))
 
   getOffset = element => {
