@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import helper from '../../services/helper'
 import authService from '../../services/auth'
 import codeService from '../../services/code'
-import userService from '../../services/user'
+import usersService from '../../services/users'
 
 const Sex = Object.freeze({
   FEMALE: 'Female',
@@ -236,7 +236,7 @@ export default class Register extends Component {
             ? ''
             : 'You must be 5 years or older')
 
-      userService.create(this.state)
+      usersService.create(this.state)
         .then(res => {
           alert(res.data)
           document.querySelector('.form-register').reset()
