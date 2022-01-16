@@ -11,17 +11,15 @@ class Chat
   field :_uids, type: Array, default: []
   field :_aids, type: Array, default: []
 
-  validates :message, uniqueness: true, presence: { message: 'is required' }
-  validates :_mids, length: { minimum: 1, message: 'The chat must have a minimum of messages!' }
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
   belongs_to :user, foreign_key: :_uid
 
   def message
-    decrypt(self[:message])
+    self[:message] ? decrypt(self[:message]) : nil
   end
 
   def message=message
-    self[:message] = encrypt(message)
+    self[:message] = message ? encrypt(message) : nil
   end
 end
