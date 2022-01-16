@@ -109,7 +109,21 @@ class ChatsController < ApplicationController
   end
 
   def index
-    render json: Chat.where(_uids: { '$in': [@user._id] })
+    @chats = Array(Chat.where(_uids: { '$in': [@user._id] }))
+    @chats = @chats.map do |c|
+      if c._uids.length > 0
+        begin
+          @receiver = User.find(c._uids.length == 1 ? c._uids.first : (c._uids - [@user._id]).first)
+          @profile = Profile.where(_uid: @receiver).first
+          c.photo = c.photo || @receiver.avatar
+          c.title = c.title || @profile.name
+        rescue => e
+          return render plain: 'Receiver not found!', status: :not_found
+        end
+      end
+      c
+    end
+    render json: @chats
   end
 
   private
