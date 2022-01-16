@@ -4,15 +4,29 @@ class ChatsController < ApplicationController
 
   def show
     @users = @chat._uids
+
+    if @users.length < 3
+      @users.delete(@user._id)
+      @receivers = @users - [@user._id]
+      if @receivers.length == 1
+        begin
+          @receiver = User.find(@receivers.first.to_s)
+        rescue => e
+          return render plain: 'Receiver not found!', status: :not_found
+        end
+        begin
+          @profile = Profile.where(_uid: @receivers.first.to_s).first
+        rescue => e
+          return render plain: "Receiver's profile not found!", status: :not_found
+        end
+      end
+    end
+
     render json: {
       _id: @chat._id,
-      photo: @chat.photo,
-      title: @chat.title ? @chat.title : @users
-        .map { |u| User.find(u).name }
-        .uniq
-        .sort_by { |k, v| -k }
-        .join(', '),
-      messages: @chat._mids.map { |m|
+      photo: @chat.photo || @receiver.avatar,
+      title: @chat.title || @profile.name,
+      messages: @chat._mids.map do |m|
         begin
           @message = Message.find(m)
           begin
@@ -30,7 +44,7 @@ class ChatsController < ApplicationController
         rescue => e
           return render plain: 'Message not found!', status: :not_found
         end
-      }
+      end
     }
   end
 
@@ -40,13 +54,13 @@ class ChatsController < ApplicationController
         return render status: :unauthorized
       end
 
-      @chat._uids = params[:_uids].map { |u|
+      @chat._uids = params[:_uids].map do |u|
         begin
           User.find(u)._id
         rescue => e
           return render plain: 'User not found!', status: :not_found
         end
-      }
+      end
     end
 
     if !@chat._uids.include?(@chat._uid) && @user._id != @chat._uid
@@ -58,13 +72,13 @@ class ChatsController < ApplicationController
         return render status: :unauthorized
       end
 
-      @chat._aids = params[:_aids].map { |u|
+      @chat._aids = params[:_aids].map do |u|
         begin
           User.find(u)._id
         rescue => e
           return render plain: 'Admin not found!', status: :not_found
         end
-      }
+      end
     end
 
     unless @chat._aids.include?(@chat._uid)
