@@ -3,7 +3,7 @@ class MessagesController < ApplicationController
   before_action :set_message, only: [:destroy]
 
   def create
-    if params[:users].length < 1
+    if params[:users] && params[:users].length < 1
       return render plain: 'Nobody to chat!', status: :not_found
     end
 
@@ -35,8 +35,8 @@ class MessagesController < ApplicationController
           begin
             @receiver = User.find(u)
             unless @chat._uids.include?(@receiver._id)
-              @chat.photo = params[:users].length === 1 ? @receiver.avatar : @user.avatar
-              @chat.title = params[:users].length === 1 ? @receiver.name : @user.name + "'s group"
+              @chat.photo = params[:users].length === 1 ? nil : @user.avatar
+              @chat.title = params[:users].length === 1 ? nil : @user.name + "'s group"
               @chat._uids.push(@receiver._id)
             end
           rescue => e
@@ -49,7 +49,7 @@ class MessagesController < ApplicationController
     if @chat.save
       @message.chat = @chat
       if @message.save
-        render status: :created
+        render plain: @chat._id.to_s, status: :created
       else
         render json: @message.errors, status: :unprocessable_entity
       end
