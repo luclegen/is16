@@ -15,7 +15,7 @@ class MessagesController < ApplicationController
       end
 
       unless @chat._uids.include?(@user._id)
-        return render nothing: true, status: :unauthorized
+        return render status: :unauthorized
       end
     else
       @chat = Chat.new
