@@ -60,16 +60,36 @@ class MessagesController < ApplicationController
   end
 
   def destroy
-    if @message.unsent
-      return render status: :forbidden
-    else
-      @message.body = ' unsent a message'
-      @message.unsent = true
-      if @message.save
-        render nothing: true
+    if (@chat = Chat.find(@message._cid.to_s))
+      if @message.unsent
+        @chat._mids.delete(@message._id)
+
+        if @chat._mids.last
+          if (@chat_message = Message.find(@chat._mids.last.to_s))
+            @chat.message = @chat_message.body
+          else
+            @chat.message = nil
+          end
+        else
+          @chat.message = nil
+        end
+
+        if @chat.save && @message.destroy
+          render nothing: true
+        else
+          render json: @chat.errors, status: :unprocessable_entity
+        end
       else
-        render status: :expectation_failed
+        @chat.message = @message.body = ' unsent a message'
+        @message.unsent = true
+        if @chat.save && @message.save
+          render nothing: true
+        else
+          render status: :expectation_failed
+        end
       end
+    else
+      render plain: 'Chat not found!', status: :not_found
     end
   end
 
