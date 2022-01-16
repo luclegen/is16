@@ -6,8 +6,7 @@ class ChatsController < ApplicationController
     @users = @chat._uids
 
     if @users.length < 3
-      @users.delete(@user._id)
-      @receivers = @users - [@user._id]
+      @receivers = @users.length == 1 ? @users : @users - [@user._id]
       if @receivers.length == 1
         begin
           @receiver = User.find(@receivers.first.to_s)
@@ -129,7 +128,11 @@ class ChatsController < ApplicationController
   private
     def set_chat
       begin
-        @chat = Chat.find(params[:id])
+        if Chat.all.length.zero?
+          return render json: nil
+        end
+
+        @chat = params[:id] == 'null' ? Chat.all.first : Chat.find(params[:id])
         unless @chat._uids.include?(@user._id)
           return render status: :unauthorized
         end
