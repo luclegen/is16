@@ -4,7 +4,7 @@ $spacer: 16px
 
 // Bootstrap
 
-.section-chats, .container-message
+.section-chats, .container-message, .section-chats
   @extend .container-fluid
 
 header
@@ -13,7 +13,7 @@ header
 .form-search, .input-group-user
   @extend .input-group
 
-.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder, .btn-write, .btn-send, .btn-tag-close, .btn-delete
+.btn-search, .btn-input, .btn-create-account, .btn-sign-up, .btn-get-code, .btn-new-folder, .btn-write, .btn-send, .btn-tag-close, .btn-delete, .btn-chat-info
   @extend .btn
 
 .btn-get-code, .btn-write
@@ -35,7 +35,7 @@ header
 .form-floating-name, .form-floating-surname, .form-floating-email, .form-floating-password, .form-floating-confirm, .form-floating-day, .form-floating-month, .form-floating-year
   @extend .form-floating
 
-.input-search, .input-email, .input-password, .input-digit, .form-control-message, .form-control-user
+.input-search, .input-email, .input-password, .input-digit, .form-control-message, .form-control-user, .input-title
   @extend .form-control
 
 .form-check-female, .form-check-male, .form-check-other
@@ -62,16 +62,16 @@ header
 .section-register
   @extend .position-absolute
 
-.list-group-users
+.list-group-users, .btn-delete
   @extend .d-none
 
-.logo, .avatar, .btn-search, .btn-input, .section-only, .form-only, .input-group-email, .input-group-password, .section-register, .form-row-sign-up, .input-group-password-strength, .dropdown-item-normal, .dropdown-item-danger, .top-left-nav, .list-group-item, .section-chats, .dir, .dropdown-item, .section-loader, .link-find-account, .form-check-female, .form-check-male, .form-check-other, .chats-bar, .btn-write, .col-chat, .chat-header, .chat-footer, .input-group-user, .tag
+.logo, .avatar, .btn-search, .btn-input, .section-only, .form-only, .input-group-email, .input-group-password, .section-register, .form-row-sign-up, .input-group-password-strength, .dropdown-item-normal, .dropdown-item-danger, .top-left-nav, .list-group-item, .section-chats, .dir, .dropdown-item, .section-loader, .link-find-account, .form-check-female, .form-check-male, .form-check-other, .chats-bar, .btn-write, .col-chat, .chat-header, .chat-footer, .input-group-user, .tag, .col-message, .col-info
   @extend .d-flex
 
-.form-only, .section-loader, .col-chat
+.form-only, .section-loader, .col-chat, .col-info
   @extend .flex-xl-column
 
-.logo, .avatar, .form-only, .section-register, .top-left-nav, .section-loader, .form-check-female, .form-check-male, .form-check-other, .list-group-item, .btn-write, .chat-header, .chat-footer, .input-group-user
+.logo, .avatar, .form-only, .section-register, .top-left-nav, .section-loader, .form-check-female, .form-check-male, .form-check-other, .list-group-item, .btn-write, .chat-header, .chat-footer, .input-group-user, .col-info
   @extend .align-items-center
 
 .list-group-item
@@ -80,7 +80,7 @@ header
 .avatar, .section-only, .form-only, .section-register, .form-row-sign-up, .input-group-password-strength, .btn-write
   @extend .justify-content-center
 
-.text-profile, .text-help, .text-logout, .label-female, .label-male, .label-other, .h2-chat, .chat-body
+.text-profile, .text-help, .text-logout, .label-female, .label-male, .label-other, .h2-chat, .chat-body, .chat-name
   @extend .flex-fill
 
 .section-only, .section-register
@@ -100,6 +100,9 @@ header
 .input-search, .avatar, .input-email, .input-password, .btn-send, .form-control-user
   @extend .border-0
 
+.col-chats, .col-chat
+  @extend .border-end
+
 header, .form-check, .chat-header
   @extend .border-bottom
 
@@ -109,7 +112,7 @@ header, .form-check, .chat-header
 .input-group-password
   @extend .rounded-bottom
 
-.avatar, .btn-write
+.avatar, .btn-write, .btn-chat-info
   @extend .rounded-circle
 
 .search-bar, .form-control-message, .tag
@@ -124,20 +127,23 @@ header, .form-check, .chat-header
 header, .chat-header
   @extend .shadow-sm
 
-.col-chats,.col-info
-  @extend .col-md-3
-
-.col-chat
-  @extend .col-md-6
+.col-chats
+  @extend .col-3
 
 .col-chats, .chat-body, .col-info
   @extend .overflow-auto
 
-.box-message
+.box-sender-message
   @extend .text-white
 
-.box-message
+.box-receiver-message
+  @extend .text-dark
+
+.box-sender-message
   @extend .bg-primary
+
+.box-receiver-message
+  background: gainsboro !important
 
 .input-search
   @extend .bg-transparent
@@ -163,11 +169,14 @@ header, .chat-header
 .dropdown-menu-avatar
   @extend .mt-2
 
-.btn-create-account
+.btn-create-account, .input-title
   @extend .mt-1
 
 .chat-name
   @extend .mb-0
+
+.input-title
+  @extend .mb-1
 
 .row-name, .form-floating-email, .row-dob, .row-gender, .row-code
   @extend .mb-2
@@ -181,13 +190,13 @@ header, .chat-header
 .tag
   @extend .me-2
 
-.avatar, .section-chats, .right-content, .form-check-female, .form-check-male, .form-check-other, .btn-write, .btn-send, .btn-tag-close, .container-message, .btn-delete
+.avatar, .section-chats, .right-content, .form-check-female, .form-check-male, .form-check-other, .btn-write, .btn-send, .btn-tag-close, .container-message, .btn-delete, .col-message, .btn-chat-info
   @extend .p-0
 
 header, .surname label
   @extend .p-1
 
-.tag
+.tag, .col-chats, .col-info
   @extend .p-2
 
 .form-register, .chat-body
@@ -202,7 +211,7 @@ header, .surname label
 .dropdown-item-normal, .dropdown-item-danger, .chat-header, .chat-footer
   @extend .px-3
 
-.box-message
+.box-sender-message, .box-receiver-message
   @extend .py-2
 
 .label-female, .label-male, .label-other
@@ -283,7 +292,6 @@ header, .surname label
         color: navy
 
 .avatar
-  // border: 1px solid blue !important
 
   &:hover
     border: 1px solid blue !important
@@ -340,7 +348,7 @@ meter
 .form-select-day, .form-select-month, .form-select-year
   @extend .form-select
 
-.link-help
+.link-help, .btn-chat-info
   @extend .text-primary
 
   &:hover
@@ -393,7 +401,7 @@ meter
     border: none
 
   i
-    margin-right: 5px
+    margin-right: 5px !important
 
 .btn-new-folder
 

@@ -142,13 +142,22 @@ meter
   height: 60px
   margin: 13px 0 0 15px
 
-.box-message
+.box-sender-message, .box-receiver-message,
   --bs-text-opacity: 0.9 !important
   border-radius: 25px
   width: fit-content
   padding-left: 12px
   padding-right: 12px
   margin-bottom: 2px
+
+.col-message
+
+  &:hover button
+    display: inline-block !important
+
+.input-title
+  width: auto !important
+  block-size: fit-content
 
 @media (max-width: 1024px)
   .search-bar
