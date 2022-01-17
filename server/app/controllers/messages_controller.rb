@@ -18,10 +18,17 @@ class MessagesController < ApplicationController
         return render status: :unauthorized
       end
     else
-      @chat = Chat.new
+      @chats = Array(Chat.where(_uids: { '$in': params[:users].push(@user._id.to_s).map { |id| BSON::ObjectId(id) } }))
+      @chat = @chats.find { |c| c._uids.length == params[:users].length }
+      params[:users].pop
+      is_new = !@chat
 
-      @chat._uids.push(@user._id)
-      @chat._aids.push(@user._id)
+      if is_new
+        @chat = Chat.new
+
+        @chat._uids.push(@user._id)
+        @chat._aids.push(@user._id)
+      end
     end
 
     @message = Message.new(message_params)
@@ -29,7 +36,7 @@ class MessagesController < ApplicationController
     @chat.message = params[:body]
     @chat._mids.push(@message._id)
 
-    unless params[:id]
+    if is_new
       if params[:users].kind_of?(Array)
         params[:users].each do |u|
           begin
