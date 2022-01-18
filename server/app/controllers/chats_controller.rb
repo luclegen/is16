@@ -25,9 +25,9 @@ class ChatsController < ApplicationController
       _id: @chat._id,
       photo: @chat.photo || @receiver.avatar,
       title: @chat.title || @profile.name,
-      messages: @chat._mids.map do |m|
+      messages: @chat._mids.map do |mid|
         begin
-          @message = Message.find(m)
+          @message = Message.find(mid)
           begin
             @sender = User.find(@message._uid)
             { _id: @message._id,
@@ -42,6 +42,19 @@ class ChatsController < ApplicationController
           end
         rescue => e
           return render plain: 'Message not found!', status: :not_found
+        end
+      end,
+      members: @chat._uids.map do |uid|
+        begin
+          @member = User.find(uid.to_s)
+          {
+            _id: @member._id,
+            avatar: @member.avatar,
+            name: (@member.name + ' ' + @member.surname),
+            role: @member._id.to_s == @chat._uid.to_s ? 'Creator' : @chat._aids.include?(@member._id) ? 'Admin' : '',
+          }
+        rescue => e
+          return render plain: 'Member not found!', status: :not_found
         end
       end
     }
