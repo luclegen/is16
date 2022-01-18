@@ -46,6 +46,7 @@ class MessagesController < ApplicationController
               @chat.title = params[:users].length === 1 ? nil : @user.name + "'s group"
               @chat._uids.push(@receiver._id)
             end
+            @chat.group = @chat._uids.length > 2
           rescue => e
             return render plain: 'User not found!', status: :not_found
           end

@@ -23,6 +23,7 @@ class ChatsController < ApplicationController
 
     render json: {
       _id: @chat._id,
+      group: @chat.group,
       photo: @chat.photo || @receiver.avatar,
       title: @chat.title || @profile.name,
       messages: @chat._mids.map do |mid|
