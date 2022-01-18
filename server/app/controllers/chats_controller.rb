@@ -61,12 +61,12 @@ class ChatsController < ApplicationController
   end
 
   def update
-    if params[:_uids].kind_of?(Array)
+    if params[:users].kind_of?(Array)
       unless @chat._aids.include?(@user._id)
         return render status: :unauthorized
       end
 
-      @chat._uids = params[:_uids].map do |u|
+      @chat._uids = params[:users].map do |u|
         begin
           User.find(u)._id
         rescue => e
@@ -79,12 +79,12 @@ class ChatsController < ApplicationController
       return render status: :unauthorized
     end
 
-    if params[:_aids].kind_of?(Array)
+    if params[:admins].kind_of?(Array)
       unless @chat._aids.include?(@user._id)
         return render status: :unauthorized
       end
 
-      @chat._aids = params[:_aids].map do |u|
+      @chat._aids = params[:admins].map do |u|
         begin
           User.find(u)._id
         rescue => e
