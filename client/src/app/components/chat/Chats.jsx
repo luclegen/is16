@@ -285,9 +285,9 @@ export default class Chats extends Component {
                 <DropdownMenu className="dropdown-menu-more">
                   <DropdownItem className="dropdown-item-normal"><p className="text-profile" onClick={this.send}>Message</p><i className="material-icons">chat</i></DropdownItem>
                   <DropdownItem className="dropdown-item-normal" tag="a" href={'/' + v._id?.['$oid']} target="_blank" rel="noopener noreferrer"><p className="text-help">View profile</p><i className="material-icons">info</i></DropdownItem>
-                  {this.admin() && <DropdownItem divider />}
+                  {this.admin() && v.role !== 'Creator' && <DropdownItem divider />}
                   {v.role !== 'Creator' && this.admin() && <DropdownItem className="dropdown-item-normal" onClick={v.role ? this.removeAdmin : this.make}><p className="text-help">{`${v.role ? 'Remove as A' : 'Make a'}dmin`}</p><i className="material-icons">{`${v.role ? 'remove' : 'add'}_moderator`}</i></DropdownItem>}
-                  {(v._id?.['$oid'] === helper.getId() || this.admin()) && <DropdownItem className="dropdown-item-danger" onClick={this.removeMember}><p className="text-logout">{v._id?.['$oid'] === helper.getId() ? 'Leave group' : this.admin() && 'Remove'}</p><i className="material-icons">{v._id?.['$oid'] === helper.getId() ? 'logout' : this.admin() && 'person_remove'}</i></DropdownItem>}
+                  {(v._id?.['$oid'] === helper.getId() || (this.admin() && v.role !== 'Creator')) && <DropdownItem className="dropdown-item-danger" onClick={this.removeMember}><p className="text-logout">{v._id?.['$oid'] === helper.getId() ? 'Leave group' : this.admin() && 'Remove'}</p><i className="material-icons">{v._id?.['$oid'] === helper.getId() ? 'logout' : this.admin() && 'person_remove'}</i></DropdownItem>}
                 </DropdownMenu>
               </Dropdown>
             </li>)}
