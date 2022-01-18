@@ -62,16 +62,16 @@ class ChatsController < ApplicationController
 
   def update
     if params[:users].kind_of?(Array)
-      unless @chat._aids.include?(@user._id)
-        return render status: :unauthorized
-      end
-
-      @chat._uids = params[:users].map do |u|
-        begin
-          User.find(u)._id
-        rescue => e
-          return render plain: 'User not found!', status: :not_found
+      if (@chat._uids - params[:users].map { |u| BSON::ObjectId(u) }).include?(@user._id) || @chat._aids.include?(@user._id)
+        @chat._uids = params[:users].map do |u|
+          begin
+            User.find(u)._id
+          rescue => e
+            return render plain: 'User not found!', status: :not_found
+          end
         end
+      else
+        return render status: :unauthorized
       end
     end
 
@@ -97,7 +97,12 @@ class ChatsController < ApplicationController
       return render status: :unauthorized
     end
 
-    if @chat.update(chat_params)
+    if params[:photo] && params[:title]
+      @chat.photo = params[:photo]
+      @chat.title = params[:title]
+    end
+
+    if @chat.update
       render json: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity
