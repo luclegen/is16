@@ -58,7 +58,7 @@ export default class Chats extends Component {
       ? this.setChats(e.target.closest('button')?.id) && this.setState({ new: false })
       : window.confirm('Discard?\nChanges you made may not be saved.') && this.setChats(e.target.closest('button')?.id) && this.setState({ new: false })
 
-  create = () => this.setState({ new: true })
+  create = () => this.setState({ new: true, chat: null })
 
   edit = () => setTimeout((titleWith = (document.querySelector('.box-title').clientWidth + 26) + 'px') => setTimeout(() => document.querySelector('.input-title').style.setProperty('width', titleWith, 'important'))
     && this.setState({ edit: !this.state.edit }))
@@ -88,7 +88,7 @@ export default class Chats extends Component {
             && (list.style.left = (input.left - label.left) + 'px'))))
       && usersService.list(e.target.value).then(res => this.setState({ name: e.target.value, foundUsers: res.data })))
 
-  add = e => setTimeout((input = document.querySelector('.input-user')) => (input.value = '') || input.focus())
+  add = e => setTimeout((input = document.querySelector('.input-user')) => (input.value = '') || input?.focus())
     && !this.state.users?.find(u => u.id === e.target.id)
     && this.state.users?.push({ id: e.target.id, name: e.target.name })
     && this.setState({ users: this.state.users, prename: '', name: '', foundUsers: [] })
@@ -105,7 +105,7 @@ export default class Chats extends Component {
       .then(() => this.setChats())
 
   send = (e, user = e.target?.closest('.list-group-item')) =>
-    setTimeout(() => document.querySelector('.input-user').focus())
+    setTimeout(() => document.querySelector('.input-user')?.focus())
     && this.setState({ users: [{ id: user?.id, name: user?.getAttribute('name') }], new: true })
 
   make = (e, user = e.target?.closest('.list-group-item')) =>
@@ -179,9 +179,9 @@ export default class Chats extends Component {
         })
       .then(res => this.setChats(res.data) && e.target.reset()))
 
-  componentDidMount = () => this.setChats() && setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`).focus(), 500)
+  componentDidMount = () => this.setChats() && setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 500)
 
-  componentDidUpdate = () => setTimeout(() => this.setChats(), 10000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+  componentDidUpdate = () => setTimeout(() => !this.state.new && this.setChats(), 10000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
 
   render = () => <section className="section-chats">
     <div className="col-chats">
@@ -254,7 +254,7 @@ export default class Chats extends Component {
         </form>
       </div>}
     </div>
-    <div className={`col-info ${this.state.info ? 'd-flex' : 'd-none'} col-md-${this.state.new || !this.state.info ? '0' : '3'}`}>
+    <div className={`col-info ${this.state.new || !this.state.info ? 'd-none' : 'd-flex'} col-md-${this.state.new || !this.state.info ? '0' : '3'}`}>
       <Avatar avatar={this.state.photo || this.state.chat?.photo} name={this.state.chat?.title} width="80px" height="80px" fontSize="60px" />
       <form className="form-only" onSubmit={e => e.preventDefault() || this.state.edit ? this.save(e) : this.edit(e)}>
         {this.state.edit ? <input className="input-title" value={this.state.title} type="text" name="Title input" onChange={this.setTitle} /> : <div className="box-title"><strong>{this.state.chat?.group ? this.state.chat?.title : <a href={'/' + this.state.chat?.members?.find(m => helper.getId() !== m._id?.['$oid'])?._id?.['$oid']} target="_blank" rel="noopener noreferrer">{this.state.chat?.title}</a>}</strong></div>}
