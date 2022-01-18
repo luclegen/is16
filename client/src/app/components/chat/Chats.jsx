@@ -54,11 +54,13 @@ export default class Chats extends Component {
   setPhoto = e => this.setState({ photo: e.target.value })
 
   choose = e =>
-    !this.state.photo && !this.state.title
-      ? this.setChats(e.target.closest('button')?.id) && this.setState({ new: false })
-      : window.confirm('Discard?\nChanges you made may not be saved.') && this.setChats(e.target.closest('button')?.id) && this.setState({ new: false })
+    (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+      : this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
 
-  create = () => this.setState({ new: true, chat: null })
+  create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+    ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
+    : (this.reset() || this.setState({ chat: null, new: true }))
 
   edit = () => setTimeout((titleWith = (document.querySelector('.box-title').clientWidth + 26) + 'px') => setTimeout(() => document.querySelector('.input-title').style.setProperty('width', titleWith, 'important'))
     && this.setState({ edit: !this.state.edit }))
@@ -165,6 +167,8 @@ export default class Chats extends Component {
   toggle = () => this.setState({ info: !this.state.info })
 
   toggleDropdown = e => this.setState({ open: !this.state.open, id: e.target.closest('.list-group-item')?.id })
+
+  reset = () => this.setState({ edit: false, name: '', users: [], photo: '', title: '' })
 
   submit = e =>
     e.preventDefault() || (this.state.message && messagesService
