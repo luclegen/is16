@@ -123,8 +123,8 @@ Authorization: Bearer {{token}}
 {
   "photo": "#ff0000",
   "title": "ISTeam16",
-  "_uids": [ "{{userId0}}", "{{userId1}}", "{{userId3}}" ],
-  "_aids": [ "{{userId0}}", "{{userId1}}" ]
+  "users": [ "{{userId0}}", "{{userId1}}", "{{userId3}}" ],
+  "admins": [ "{{userId0}}", "{{userId1}}" ]
 }
 
 ###
