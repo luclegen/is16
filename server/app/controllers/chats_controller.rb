@@ -63,8 +63,8 @@ class ChatsController < ApplicationController
 
   def update
     if params[:users].kind_of?(Array)
-      if (@chat._uids - params[:users].map { |u| BSON::ObjectId(u) }).include?(@user._id) || @chat._aids.include?(@user._id)
-        @chat._uids = params[:users].map do |u|
+      if (@chat._uids - params[:users].uniq.map { |u| BSON::ObjectId(u) }).include?(@user._id) || @chat._aids.include?(@user._id)
+        @chat._uids = params[:users].uniq.map do |u|
           begin
             User.find(u)._id
           rescue => e
@@ -85,7 +85,7 @@ class ChatsController < ApplicationController
         return render status: :unauthorized
       end
 
-      @chat._aids = params[:admins].map do |u|
+      @chat._aids = params[:admins].uniq.map do |u|
         begin
           User.find(u)._id
         rescue => e
@@ -98,7 +98,7 @@ class ChatsController < ApplicationController
       return render status: :unauthorized
     end
 
-    if params[:photo] && params[:title]
+    if !params[:photo].to_s.strip.empty? && !params[:title].to_s.strip.empty?
       @chat.photo = params[:photo]
       @chat.title = params[:title]
     end
