@@ -154,7 +154,7 @@ export default class Chats extends Component {
           .map(m => m._id?.['$oid'])
           .concat(this.state.users.map(m => m.id))
       })
-      .then(() => this.setChats())
+      .then(() => this.setChats() && this.setState({ name: '', users: [] }))
 
   admin = () =>
     this.state.chat?.members
@@ -168,7 +168,7 @@ export default class Chats extends Component {
 
   toggleDropdown = e => this.setState({ open: !this.state.open, id: e.target.closest('.list-group-item')?.id })
 
-  reset = () => this.setState({ edit: false, name: '', users: [], photo: '', title: '' })
+  reset = () => this.setState({ edit: false, photo: '', title: '', name: '', users: [] })
 
   submit = e =>
     e.preventDefault() || (this.state.message && messagesService
