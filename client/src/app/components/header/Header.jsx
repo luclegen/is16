@@ -11,7 +11,6 @@ export default class Header extends Component {
       avatar: '',
       role: '',
       selected: false,
-      opened: false,
       keyword: '',
       width: window.innerWidth,
       dropdownOpened: false,
@@ -25,15 +24,9 @@ export default class Header extends Component {
 
   componentDidMount = () => helper.loggedIn()
 
-  componentDidUpdate = () => window.onresize = () => {
-    this.setState({ width: window.innerWidth })
-    if (this.state.opened) this.open()
-  }
+  componentDidUpdate = () => window.onresize = () => this.setState({ width: window.innerWidth })
 
-  logout = () => {
-    helper.clearCookies()
-    window.location.href = '/'
-  }
+  logout = () => helper.clearCookies() || (window.location.href = '/')
 
   render = () => <header>
     <a className="logo" href="/" onMouseEnter={this.toggle} onMouseLeave={this.toggle}>
