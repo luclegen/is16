@@ -24,8 +24,8 @@ class ChatsController < ApplicationController
     render json: {
       _id: @chat._id,
       group: @chat.group,
-      photo: @chat.photo || @receiver.nil? ? nil : @receiver.avatar,
-      title: @chat.title || @profile.nil? ? nil : @profile.name,
+      photo: @chat.photo || (@receiver.nil? ? nil : @receiver.avatar),
+      title: @chat.title || (@profile.nil? ? nil : @profile.name),
       messages: @chat._mids.map do |mid|
         begin
           @message = Message.find(mid)
