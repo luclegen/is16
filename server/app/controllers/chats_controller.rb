@@ -66,7 +66,7 @@ class ChatsController < ApplicationController
       @users = params[:users].uniq.map { |u| BSON::ObjectId(u) }
       @outsiders = @users.length > @chat._uids.length ? @users - @chat._uids : @chat._uids - @users
 
-      if @outsiders.include?(@user._id) && @outsiders.length == 1 || @chat._aids.include?(@user._id) && (@users.length > @chat._uids.length && @outsiders.include?(@chat._uid) || @users.length < @chat._uids.length && !@outsiders.include?(@chat._uid))
+      if (@outsiders.include?(@user._id) && @outsiders.length == 1) || @chat._aids.include?(@user._id) && !@outsiders.include?(@chat._uid)
         @chat._uids = params[:users].uniq.map do |u|
           begin
             User.find(u)._id
@@ -148,11 +148,16 @@ class ChatsController < ApplicationController
   private
     def set_chat
       begin
-        if Chat.all.length.zero?
+        @chats = Chat.where(_uids: { '$in': [@user._id] })
+        if @chats.length.zero?
           return render json: nil
         end
 
-        @chat = params[:id] == 'null' ? Chat.all.first : Chat.find(params[:id])
+        @chat = params[:id] == 'null' ? @chats.first : Chat.find(params[:id])
+
+        unless @chat._uids.include?(@user._id)
+          return render status: :unauthorized
+        end
       rescue => e
         return render plain: 'Chat not found!', status: :not_found
       end
