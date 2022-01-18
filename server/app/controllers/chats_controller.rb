@@ -24,8 +24,8 @@ class ChatsController < ApplicationController
     render json: {
       _id: @chat._id,
       group: @chat.group,
-      photo: @chat.photo || @receiver.avatar,
-      title: @chat.title || @profile.name,
+      photo: @chat.photo || @receiver.nil? ? nil : @receiver.avatar,
+      title: @chat.title || @profile.nil? ? nil : @profile.name,
       messages: @chat._mids.map do |mid|
         begin
           @message = Message.find(mid)
@@ -63,7 +63,10 @@ class ChatsController < ApplicationController
 
   def update
     if params[:users].kind_of?(Array)
-      if (@chat._uids - params[:users].uniq.map { |u| BSON::ObjectId(u) }).include?(@user._id) || @chat._aids.include?(@user._id)
+      @users = params[:users].uniq.map { |u| BSON::ObjectId(u) }
+      @outsiders = @users.length > @chat._uids.length ? @users - @chat._uids : @chat._uids - @users
+
+      if @outsiders.include?(@user._id) && @outsiders.length == 1 || @chat._aids.include?(@user._id) && (@users.length > @chat._uids.length && @outsiders.include?(@chat._uid) || @users.length < @chat._uids.length && !@outsiders.include?(@chat._uid))
         @chat._uids = params[:users].uniq.map do |u|
           begin
             User.find(u)._id
@@ -76,31 +79,29 @@ class ChatsController < ApplicationController
       end
     end
 
-    if !@chat._uids.include?(@chat._uid) && @user._id != @chat._uid
-      return render status: :unauthorized
-    end
-
     if params[:admins].kind_of?(Array)
-      unless @chat._aids.include?(@user._id)
+      @outsiders = @chat._aids - params[:admins].uniq.map { |a| BSON::ObjectId(a) }
+
+      if @chat._aids.include?(@user._id) && !@outsiders.include?(@chat._uid)
+        @chat._aids = params[:admins].uniq.map do |u|
+          begin
+            User.find(u)._id
+          rescue => e
+            return render plain: 'Admin not found!', status: :not_found
+          end
+        end
+      else
         return render status: :unauthorized
       end
-
-      @chat._aids = params[:admins].uniq.map do |u|
-        begin
-          User.find(u)._id
-        rescue => e
-          return render plain: 'Admin not found!', status: :not_found
-        end
-      end
-    end
-
-    unless @chat._aids.include?(@chat._uid)
-      return render status: :unauthorized
     end
 
     if !params[:photo].to_s.strip.empty? && !params[:title].to_s.strip.empty?
-      @chat.photo = params[:photo]
-      @chat.title = params[:title]
+      if @chat._aids.include?(@user._id)
+        @chat.photo = params[:photo]
+        @chat.title = params[:title]
+      else
+        return render status: :unauthorized
+      end
     end
 
     if @chat.update
@@ -152,9 +153,6 @@ class ChatsController < ApplicationController
         end
 
         @chat = params[:id] == 'null' ? Chat.all.first : Chat.find(params[:id])
-        unless @chat._uids.include?(@user._id)
-          return render status: :unauthorized
-        end
       rescue => e
         return render plain: 'Chat not found!', status: :not_found
       end
