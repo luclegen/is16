@@ -6,6 +6,7 @@ class Chat
 
   field :photo, type: String, default: '#0000ff'
   field :title, type: String
+  field :group, type: Boolean, default: false
   field :message, type: String
   field :_mids, type: Array, default: []
   field :_uids, type: Array, default: []
