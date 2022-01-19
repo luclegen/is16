@@ -1,14 +1,10 @@
 import React, { Component } from 'react'
 import helper from '../../services/helper'
+import Sex from '../../models/sex'
 import authService from '../../services/auth'
 import codeService from '../../services/code'
 import usersService from '../../services/users'
 
-const Sex = Object.freeze({
-  FEMALE: 'Female',
-  MALE: 'Male',
-  OTHER: 'Other'
-})
 const state = {
   name: '',
   surname: '',
