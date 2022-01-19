@@ -13,10 +13,11 @@ class User
   field :email, type: String
   field :password_digest, type: String
 
-  validates :name, presence: { message: 'is required' }, format: { with: NAME_REGEX, message: "Invalid first name" }
-  validates :surname, presence: { message: 'is required' }, format: { with: SURNAME_REGEX, message: "Invalid last name" }
-  validates :email, uniqueness: true, presence: { message: 'is required' }, format: { with: EMAIL_REGEX, message: "Invalid email" }
-  validates :password, presence: { message: 'is required' }, format: { with: STRONG_PASSWORD_REGEX, message: "Please choose a stronger password. Try a mix of letters, numbers, and symbols (minimum is 8 characters)" }
+  validates :avatar, format: { with: COLOR_REGEX, message: 'Invalid avatar' }
+  validates :name, presence: { message: 'is required' }, format: { with: NAME_REGEX, message: 'Invalid first name' }
+  validates :surname, presence: { message: 'is required' }, format: { with: SURNAME_REGEX, message: 'Invalid last name' }
+  validates :email, uniqueness: true, presence: { message: 'is required' }, format: { with: EMAIL_REGEX, message: 'Invalid email' }
+  validates :password, presence: { message: 'is required' }, format: { with: STRONG_PASSWORD_REGEX, message: 'Please choose a stronger password. Try a mix of letters, numbers, and symbols (minimum is 8 characters)' }
 
   has_secure_password
 
