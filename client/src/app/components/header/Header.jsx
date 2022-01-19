@@ -38,7 +38,7 @@ export default class Header extends Component {
         ? <DropdownToggle className="dropdown-toggle-avatar" title={helper.getCookie('name') + ' ' + helper.getCookie('surname')}><Avatar avatar={decodeURIComponent(helper.getCookie('avatar'))} name={helper.getCookie('name')} width="44px" height="44px" fontSize="33px" /></DropdownToggle>
         : <a className="link-help" href="/help" target="_blank"><i className="material-icons">help_outline</i></a>}
       <DropdownMenu className="dropdown-menu-avatar">
-        <DropdownItem className="dropdown-item-normal" tag="a" href="/profile"><p className="text-profile">My profile</p><i className="material-icons">info</i></DropdownItem>
+        <DropdownItem className="dropdown-item-normal" tag="a" href={`${helper.getId()}`}><p className="text-profile">My profile</p><i className="material-icons">info</i></DropdownItem>
         <DropdownItem divider />
         <DropdownItem className="dropdown-item-normal" tag="a" href="/help"><p className="text-help">Help</p><i className="material-icons">help_outline</i></DropdownItem>
         <DropdownItem divider />
