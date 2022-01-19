@@ -2,23 +2,6 @@
 
 IS16 project used to build IS16 web (A chat service)
 
-## ISTeam16
-### 1. Các thành viên
-
-| STT | Fullname | Class | Email | Tasks |
-| --- | ---- | ---- | ---- | ---- |
-| 1   | Huỳnh Tấn Lực | 16CNTT1 | huynhtanluc.auto@gmail.com |   |
-| 2   | Nguyễn Khánh Chi | 19CNTT2 | trangihi208@gmail.com |   |
-| 3   | Đinh Vũ Việt Hoàng | 19CNTT2 | viethoang212001@gmail.com |   |
-| 4   | Lê Hạ Uyên | 19CNTT2 | lehauyen21@gmail.com |   |
-| 5   | Nguyễn Thanh Tú | 19CNTT2 | thanhtudzsd@gmail.com |   |
-### 2. Tài liệu
-
-https://1drv.ms/u/s!AI3Dcwyyr9r_i5FE?e=l6ld5e
-
-### 3. Cách làm slide
-https://youtu.be/PoLi41JRRmo
-
 ## A. INSTALLATION
 
 ### I. Chrome
