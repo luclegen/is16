@@ -3,12 +3,12 @@
 @email={{$dotenv EMAIL}}
 @name={{$dotenv NAME}}
 @password={{$dotenv PASSWORD}}
-@chatId={{$dotenv CHAT_ID}}
-@messageId={{$dotenv MSG_ID}}
-@userId0={{$dotenv U0_ID}}
-@userId1={{$dotenv U1_ID}}
-@userId2={{$dotenv U2_ID}}
-@userId3={{$dotenv U3_ID}}
+@chatId={{$dotenv CID}}
+@messageId={{$dotenv MID}}
+@userId0={{$dotenv UID0}}
+@userId1={{$dotenv UID1}}
+@userId2={{$dotenv UID2}}
+@userId3={{$dotenv UID3}}
 
 # @name test
 GET {{testUrl}}/test/ HTTP/1.1
@@ -44,6 +44,12 @@ content-type: application/json
   "year": 1997,
   "sex": "{{$dotenv SEX}}"
 }
+
+###
+
+# @name readUser
+GET {{baseUrl}}/users/?name={{name}} HTTP/1.1
+content-type: application/json
 
 ###
 
@@ -85,12 +91,12 @@ content-type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "users": [ "{{$dotenv U1_ID}}" ],
+  "users": [ "{{$dotenv UID1}}" ],
   "body": "Hello. How are you?"
 }
 
 # {
-#   "users": [ "{{$dotenv U1_ID}}", "{{$dotenv U2_ID}}" ],
+#   "users": [ "{{$dotenv UID1}}", "{{$dotenv UID2}}" ],
 #   "body": "Hello everyone. How are you?"
 # }
 
