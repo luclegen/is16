@@ -48,7 +48,7 @@ content-type: application/json
 ###
 
 # @name readUser
-GET {{baseUrl}}/users/?name={{name}} HTTP/1.1
+GET {{baseUrl}}/users/{{userId0}} HTTP/1.1
 content-type: application/json
 
 ###
