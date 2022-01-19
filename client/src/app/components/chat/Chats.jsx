@@ -185,7 +185,7 @@ export default class Chats extends Component {
 
   componentDidMount = () => this.setChats() && setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 500)
 
-  componentDidUpdate = () => setTimeout(() => !this.state.new && this.setChats(), 10000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+  componentDidUpdate = () => setTimeout(() => !this.state.new && this.setChats(), 20000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
 
   render = () => <section className="section-chats">
     <div className="col-chats">
