@@ -12,6 +12,7 @@ class Chat
   field :_uids, type: Array, default: []
   field :_aids, type: Array, default: []
 
+  validates :photo, format: { with: COLOR_REGEX, message: 'Invalid photo' }
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
   belongs_to :user, foreign_key: :_uid
