@@ -1,4 +1,4 @@
-HEX_COLOR_REGEX=/\A#(?:[0-9a-fA-F]{3}){1,2}\z/
+COLOR_REGEX=/\A#(?:[0-9a-fA-F]{3}){1,2}\z/
 NAME_REGEX = /\A[A-Z]{1}[a-z]*\z/
 SURNAME_REGEX = /\A[A-Z]{1}[a-z]*(?: [A-Z]{1}[a-z]*)*(?: [A-Z]{1}[a-z]*)?\z/
 EMAIL_REGEX = /\A[\w+\-.]+@[a-z\d\-]+(\.[a-z\d\-]+)*\.[a-z]+\z/
