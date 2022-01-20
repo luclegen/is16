@@ -179,7 +179,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => this.setChats(res.data) && e.target.reset() && this.reset()))
+      .then(res => this.setChats(res.data) && this.reset() && e.target.reset()))
 
   componentDidMount = () => this.setChats() && setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 500)
 
