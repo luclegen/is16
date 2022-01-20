@@ -284,9 +284,13 @@ export default class Register extends Component {
           </div>
         </div>
       </div>
-      <div className="form-floating-email">
-        <input className={`form-control ${this.state.email && (helper.isEmail(this.state.email) && this.state.available ? 'is-valid' : 'is-invalid')}`} id="addressRegister" type="email" placeholder="Email" pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setEmail} required />
-        <label htmlFor="addressRegister">Email</label>
+      <div className="row-email">
+        <div className="col-md">
+          <div className="form-floating-email">
+            <input className={`form-control ${this.state.email && (helper.isEmail(this.state.email) && this.state.available ? 'is-valid' : 'is-invalid')}`} id="addressRegister" type="email" placeholder="Email" pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setEmail} required />
+            <label htmlFor="addressRegister">Email</label>
+          </div>
+        </div>
       </div>
       <div className="row-password">
         <div className="col-md">
