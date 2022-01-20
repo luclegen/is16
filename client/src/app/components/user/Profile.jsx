@@ -95,14 +95,14 @@ export default class Profile extends Component {
                 <option value="Other">Other</option>
               </select> : this.state.sex}</td>
             </tr>
-            <tr>
+            {window.location.pathname?.split('/')?.[1] === helper.getId() && <tr>
               <td colSpan={2}>
                 <div className="container-only">
                   <button className={`btn-profile text-${this.state.edit ? 'warning' : 'info'}`} title={this.state.edit ? 'Save' : 'Edit'} type="submit"><i className="material-icons">{this.state.edit ? 'save' : 'edit'}</i></button>
                   {this.state.edit && <button className={`btn-profile text-danger`} title="Cancel" type="button" onClick={this.cancel}><i className="material-icons">cancel</i></button>}
                 </div>
               </td>
-            </tr>
+            </tr>}
           </tbody>
         </table>
       </form>
