@@ -47,8 +47,6 @@ class UsersController < ApplicationController
   end
 
   def show
-    @profile = Profile.where(_uid: @user).first
-
     if @profile
       @dob = Date.parse(@profile.dob.to_s)
 
@@ -66,8 +64,21 @@ class UsersController < ApplicationController
   end
 
   def update
-    if @user.update(user_params)
-      render json: @user
+    @user.avatar = params[:avatar]
+    @user.name = params[:name]
+    @user.surname = params[:surname]
+    @user.email = params[:email]
+    @user.password = params[:password]
+    @profile.name = params[:name] + ' ' + params[:surname]
+    @profile.dob = Date.parse(params[:dob])
+    @profile.sex = params[:sex]
+
+    if @user.save && @profile.save
+      render json: {
+        avatar: @user.avatar,
+        name: @user.name,
+        surname: @user.surname
+      }
     else
       render json: @user.errors, status: :unprocessable_entity
     end
@@ -81,6 +92,7 @@ class UsersController < ApplicationController
     def set_user
       begin
         @user = User.find(params[:id])
+        @profile = Profile.where(_uid: @user).first
       rescue => e
         render plain: 'User not found!', status: :not_found
       end
