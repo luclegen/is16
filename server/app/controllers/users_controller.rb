@@ -68,7 +68,15 @@ class UsersController < ApplicationController
     @user.name = params[:name]
     @user.surname = params[:surname]
     @user.email = params[:email]
-    @user.password = params[:password]
+
+    if !params[:password].to_s.strip.empty? && !params[:new_password].to_s.strip.empty?
+      if @user.authenticate(params[:password])
+        @user.password = params[:new_password]
+      else
+        return render plain: 'Wrong password!', status: :unauthorized
+      end
+    end
+
     @profile.name = params[:name] + ' ' + params[:surname]
     @profile.dob = Date.parse(params[:dob])
     @profile.sex = params[:sex]
