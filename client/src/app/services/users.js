@@ -8,6 +8,8 @@ class usersService {
 
   read = id => PU.get(`${URL}${id}`)
 
+  update = user => PR.put(`${URL}${user.id}`, user)
+
   list = name => PR.get(`${URL}?name=${name}`)
 }
 
