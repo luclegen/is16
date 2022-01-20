@@ -1,3 +1,4 @@
+require 'date'
 class UsersController < ApplicationController
   before_action :set_user, only: [:show, :update]
   before_action :authorize, only: [:update]
@@ -46,7 +47,22 @@ class UsersController < ApplicationController
   end
 
   def show
-    render json: @user
+    @profile = Profile.where(_uid: @user).first
+
+    if @profile
+      @dob = Date.parse(@profile.dob.to_s)
+
+      render json: {
+        id: @user._id.to_s,
+        avatar: @user.avatar,
+        fullName: @profile.name,
+        email: @user.email,
+        dob: @dob,
+        sex: @profile.sex
+      }
+    else
+      render plain: 'Profile not found!', status: :not_found
+    end
   end
 
   def update
