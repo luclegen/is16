@@ -15,7 +15,6 @@ export default class Profile extends Component {
       sex: '',
       name: '',
       surname: '',
-      password: '',
       edit: false,
     }
   }
