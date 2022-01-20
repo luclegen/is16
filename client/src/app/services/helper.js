@@ -41,6 +41,8 @@ class Helper {
     }
   }
 
+  toCapitalize = text => text.length > 0 ? text[0].toUpperCase() + text.slice(1) : text
+
   getCookie = key => {
     const cookie = document.cookie.split('; ').map(c => c.split('=')).find(c => c[0] === key)
 
