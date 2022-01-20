@@ -289,7 +289,7 @@ export default class Chats extends Component {
                 </DropdownMenu>
               </Dropdown>
             </li>)}
-          <button type="button" className="list-group-item list-group-item-action" onClick={this.addMember}>
+          <button type="button" className="list-group-item list-group-item-action" onClick={this.addMember} disabled={this.state.users.length === 0}>
             <i className="add-member material-icons">person_add</i>
             <p className="list-group-item-name">Add</p>
           </button>
