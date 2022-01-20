@@ -21,7 +21,7 @@ API.interceptors.response.use(res => res, async err => {
     window.location.pathname !== '/' && window.open('/')
   } else err.response
     ? alert(typeof err.response.data === 'object'
-      ? err.response.data?.error || Object.entries(err.response.data).map((v, i) => (i + 1) + '. ' + v[1]).join('\n')
+      ? err.response.data?.error || Object.entries(err.response.data).map((v, i) => (i + 1) + '. ' + helper.toCapitalize(v[0] + ' ' + v[1])).join('\n')
       : err.response.data.trim() || err.response.statusText)
     : console.error(err)
   return Promise.reject(err)
