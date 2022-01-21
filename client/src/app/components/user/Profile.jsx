@@ -5,7 +5,7 @@ import helper from '../../services/helper';
 
 export default class Profile extends Component {
   constructor(props) {
-    super(props);
+    super(props)
 
     this.setValue = this.setValue.bind(this)
 
