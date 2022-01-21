@@ -47,7 +47,7 @@ export default class Chats extends Component {
   setChats = id =>
     chatsService.list()
       .then(chats => this.setState({ chats: chats.data }) || chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
-        .then(chat => (!this.state.chat || helper.getQuery('id') === chat.data?._id?.['$oid'])
+        .then(chat => (!this.state.chat || chat.data?._id?.['$oid'] === helper.getQuery('id'))
           && setTimeout(() => this.scroll())
           && this.setState({ chat: chat.data })))
 
