@@ -31,9 +31,14 @@ export default class Chats extends Component {
     }
   }
 
-  componentDidMount = () => (this.setChats() && setTimeout(() => this.setState({ new: !this.state.chat }) || setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000), 500))
+  componentDidMount = () => (this.setChats()
+    && setTimeout(() =>
+      this.setState({ new: !this.state.chat })
+      || (this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid']))
+      || setTimeout(() =>
+        document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000), 500))
 
-  componentDidUpdate = () => setTimeout(() => this.setChats(), 3000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+  componentDidUpdate = () => setTimeout(() => this.setChats()) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
 
   setMessage = e => this.setState({ message: e.target.value })
 
@@ -41,12 +46,10 @@ export default class Chats extends Component {
 
   setChats = id =>
     chatsService.list()
-      .then(chats => chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
-        .then(chat => setTimeout(() => this.scroll())
-          && this.setState({
-            chat: chat.data,
-            chats: chats.data,
-          })))
+      .then(chats => this.setState({ chats: chats.data }) || chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
+        .then(chat => (!this.state.chat || helper.getQuery('id') === chat.data?._id?.['$oid'])
+          && setTimeout(() => this.scroll())
+          && this.setState({ chat: chat.data })))
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
@@ -55,7 +58,8 @@ export default class Chats extends Component {
   setPhoto = e => this.setState({ photo: e.target.value })
 
   choose = e =>
-    (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+    helper.setQuery('id', e.target.closest('button')?.id)
+      && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
       ? window.confirm('Discard?\nChanges you made may not be saved.') && this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
       : this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
 
@@ -182,7 +186,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => this.setChats(res.data) && (this.reset() || e.target.reset())))
+      .then(res => helper.setQuery('id', res.data) || (this.setChats(res.data) && (this.reset() || e.target.reset()))))
 
   render = () => <section className="section-chats">
     <div className="col-chats">
