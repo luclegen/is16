@@ -31,16 +31,19 @@ export default class Chats extends Component {
     }
   }
 
+  componentDidMount = () => (this.setChats() && setTimeout(() => this.setState({ new: !this.state.chat }) || setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000), 500))
+
+  componentDidUpdate = () => setTimeout(() => this.setChats(), 3000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+
   setMessage = e => this.setState({ message: e.target.value })
 
   setName = e => this.setState({ name: e.target.value })
 
-  setChats = (id) =>
+  setChats = id =>
     chatsService.list()
       .then(chats => chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
         .then(chat => setTimeout(() => this.scroll())
           && this.setState({
-            new: !chat.data,
             chat: chat.data,
             chats: chats.data,
           })))
@@ -166,7 +169,7 @@ export default class Chats extends Component {
 
   toggleDropdown = e => this.setState({ open: !this.state.open, id: e.target.closest('.list-group-item')?.id })
 
-  reset = () => this.setState({ message: '', edit: false, photo: '', title: '', name: '', users: [] })
+  reset = () => this.setState({ message: '', new: false, edit: false, photo: '', title: '', name: '', users: [] })
 
   submit = e =>
     e.preventDefault() || (this.state.message && messagesService
@@ -180,10 +183,6 @@ export default class Chats extends Component {
           body: this.state.message
         })
       .then(res => this.setChats(res.data) && (this.reset() || e.target.reset())))
-
-  componentDidMount = () => this.setChats() && setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
-
-  componentDidUpdate = () => setTimeout(() => !this.state.new && this.setChats(), 3000) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
 
   render = () => <section className="section-chats">
     <div className="col-chats">
