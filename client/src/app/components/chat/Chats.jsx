@@ -143,7 +143,7 @@ export default class Chats extends Component {
       })
       .then(() => this.setChats())
 
-  addMember = e =>
+  addMember = () =>
     window.confirm(`Add?\n${this.state.users?.map(u => u.name).join(', ')} was added to ${this.state.chat?.title}.`)
     && chatsService
       .update({
@@ -166,7 +166,7 @@ export default class Chats extends Component {
 
   toggleDropdown = e => this.setState({ open: !this.state.open, id: e.target.closest('.list-group-item')?.id })
 
-  reset = () => this.setState({ edit: false, photo: '', title: '', name: '', users: [] })
+  reset = () => this.setState({ message: '', edit: false, photo: '', title: '', name: '', users: [] })
 
   submit = e =>
     e.preventDefault() || (this.state.message && messagesService
