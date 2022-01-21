@@ -55,6 +55,20 @@ class Helper {
 
   clearCookies = () => document.cookie.split(' ').map(c => c.split('=')).forEach(c => document.cookie = c[0] + '=; Max-Age=0')
 
+  getQuery = name => (new URLSearchParams(window.location.search)).get(name)
+
+  setQuery = (name, value) => {
+    const params = new URLSearchParams(window.location.search)
+    params.set(name, value)
+    window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`))
+  }
+
+  deleteQuery = name => {
+    const params = new URLSearchParams(window.location.search)
+    params.delete(name)
+    window.history.replaceState({}, "", decodeURIComponent(`${window.location.pathname}?${params}`))
+  }
+
   getId = () =>
     this.loggedIn()
       ? JSON.parse(atob(this.getCookie('token')?.split('.')[1])).id['$oid']
