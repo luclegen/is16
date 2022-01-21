@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Avatar from '../user/Avatar'
 import usersService from '../../services/users'
-import helper from '../../services/helper';
+import helper from '../../services/helper'
 
 export default class Profile extends Component {
   constructor(props) {
