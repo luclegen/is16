@@ -28,7 +28,7 @@ export default class Profile extends Component {
       .read(window.location.pathname?.split('/')?.[1])
       .then(res => this.setState({ name: helper.getCookie('name'), surname: helper.getCookie('surname') }) || this.setState(res.data))
 
-  setValue = e => this.setState(Object.fromEntries(new Map([[e.target.getAttribute('name'), e.target.value]])))
+  setValue = e => this.setState({ [e.target.getAttribute('name')]: e.target.value })
 
   cancel = () => this.setProfile() && this.setState({ edit: false })
 
