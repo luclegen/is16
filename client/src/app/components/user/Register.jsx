@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import helper from '../../services/helper'
-import Sex from '../../models/sex'
+import Sex from '../../models/Sex'
 import authService from '../../services/auth'
 import codeService from '../../services/code'
 import usersService from '../../services/users'
