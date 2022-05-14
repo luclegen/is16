@@ -1,6 +1,6 @@
 # ![IS16 logo](/client/public/logo64.png) IS16
 
-IS16 project used to build IS16 web (A chat service)
+IS16 project used to build IS16 web (A chat service). The project used [MongoDB](https://en.wikipedia.org/wiki/MongoDB), [Ruby on Rails](https://en.wikipedia.org/wiki/Ruby_on_Rails), [React.js](https://en.wikipedia.org/wiki/React_(JavaScript_library)),
 
 ## A. INSTALLATION
 
