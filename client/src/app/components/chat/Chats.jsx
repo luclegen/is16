@@ -10,9 +10,6 @@ export default class Chats extends Component {
   constructor(props) {
     super(props)
 
-    this.setMessage = this.setMessage.bind(this)
-    this.setName = this.setName.bind(this)
-
     this.state = {
       users: [],
       foundUsers: [],
@@ -57,9 +54,7 @@ export default class Chats extends Component {
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
 
-  setMessage = e => this.setState({ message: e.target.value })
-
-  setName = e => this.setState({ name: e.target.value })
+  setValue = e => this.setState({ [e.target.name]: e.target.value })
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
@@ -236,7 +231,7 @@ export default class Chats extends Component {
               {v.name}
               <button className="btn-tag-close" type="button" onClick={this.remove}><i className="material-icons">close</i></button>
             </span>)}
-            <input type="text" className="input-user" id="userInput" onInput={this.enter} onKeyUp={this.enter} onChange={this.setName} />
+            <input type="text" className="input-user" id="userInput" name="name" onInput={this.enter} onKeyUp={this.enter} onChange={this.setValue} />
           </div>
         </div>
         : <div className="chat-header">
@@ -261,7 +256,7 @@ export default class Chats extends Component {
       {(this.state.users?.length > 0 || this.state.chat) && <div className="chat-footer">
         <form className="form-message" onSubmit={this.submit}>
           <div className="input-group flex-nowrap">
-            <input className="input-message" type="text" placeholder="Aa" onChange={this.setMessage} />
+            <input className="input-message" type="text" name="message" placeholder="Aa" onChange={this.setValue} />
             <button className="btn-send" type="submit" disabled={!this.state.message}>
               <i className="material-icons">send</i>
             </button>
