@@ -58,11 +58,16 @@ export default class Chats extends Component {
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
-  choose = e =>
-    helper.setQuery('id', e.target.closest('button')?.id)
-      && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
-      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+  choose = e => (helper.setQuery('id', e.target.closest('button')?.id)
+    && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+    ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+    : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false })))
+    || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+      channel: 'ChatsChannel',
+      cid: helper.getQuery('id')
+    }, {
+      received: chat => this.refresh(chat.id)
+    }))
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
