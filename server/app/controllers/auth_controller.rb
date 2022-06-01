@@ -6,6 +6,7 @@ class AuthController < ApplicationController
     if @user
       if @user.authenticate(params[:password])
         render json: {
+          id: @user._id.to_s,
           token: @user.sign,
           avatar: @user.avatar,
           name: @user.name,
