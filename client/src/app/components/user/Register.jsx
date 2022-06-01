@@ -25,36 +25,12 @@ export default class Register extends Component {
   constructor(props) {
     super(props)
 
-    this.setName = this.setName.bind(this)
-    this.setSurname = this.setSurname.bind(this)
-    this.setEmail = this.setEmail.bind(this)
-    this.setPassword = this.setPassword.bind(this)
-    this.setConfirm = this.setConfirm.bind(this)
-    this.setDay = this.setDay.bind(this)
-    this.setMonth = this.setMonth.bind(this)
-    this.setYear = this.setYear.bind(this)
-    this.setSex = this.setSex.bind(this)
-
     this.state = state
   }
 
-  setName = e => this.setState({ name: e.target.value })
+  setValue = e => this.setState({ [e.target.name]: e.target.value })
 
-  setSurname = e => this.setState({ surname: e.target.value })
-
-  setEmail = e => this.setState({ email: e.target.value })
-
-  setPassword = e => this.setState({ password: e.target.value })
-
-  setConfirm = e => this.setState({ confirm: e.target.value })
-
-  setDay = e => this.setState({ day: parseInt(e.target.value) })
-
-  setMonth = e => this.setState({ month: parseInt(e.target.value) })
-
-  setYear = e => this.setState({ year: parseInt(e.target.value) })
-
-  setSex = e => this.setState({ sex: e.target.value })
+  setInt = e => this.setState({ [e.target.name]: parseInt(e.target.value) })
 
   isCode = () => '0'.repeat(6).split('').map((v, i) => v = document.querySelectorAll('.input-digit')[i].value).filter(v => helper.isDigit(v)).length === 6
 
@@ -273,13 +249,13 @@ export default class Register extends Component {
       <div className="row-name">
         <div className="col-md">
           <div className="form-floating-name">
-            <input className={`form-control ${this.state.name && (helper.isName(this.state.name) ? 'is-valid' : 'is-invalid')}`} id="nameRegister" type="text" placeholder="Name" value={this.state.name} pattern={helper.namePattern} onInput={this.enterName} onInvalid={this.enterName} onChange={this.setName} required />
+            <input className={`form-control ${this.state.name && (helper.isName(this.state.name) ? 'is-valid' : 'is-invalid')}`} id="nameRegister" name="name" type="text" placeholder="Name" value={this.state.name} pattern={helper.namePattern} onInput={this.enterName} onInvalid={this.enterName} onChange={this.setValue} required />
             <label htmlFor="nameRegister">Name</label>
           </div>
         </div>
         <div className="col-md">
           <div className="form-floating-surname">
-            <input className={`form-control ${this.state.surname && (helper.isSurname(this.state.surname) ? 'is-valid' : 'is-invalid')}`} id="surnameRegister" type="text" placeholder="Surname" pattern={helper.surnamePattern} onInput={this.enterSurname} onInvalid={this.enterSurname} onChange={this.setSurname} required />
+            <input className={`form-control ${this.state.surname && (helper.isSurname(this.state.surname) ? 'is-valid' : 'is-invalid')}`} id="surnameRegister" name="surname" type="text" placeholder="Surname" pattern={helper.surnamePattern} onInput={this.enterSurname} onInvalid={this.enterSurname} onChange={this.setValue} required />
             <label htmlFor="surnameRegister">Surname</label>
           </div>
         </div>
@@ -287,7 +263,7 @@ export default class Register extends Component {
       <div className="row-email">
         <div className="col-md">
           <div className="form-floating-email">
-            <input className={`form-control ${this.state.email && (helper.isEmail(this.state.email) && this.state.available ? 'is-valid' : 'is-invalid')}`} id="addressRegister" type="email" placeholder="Email" pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setEmail} required />
+            <input className={`form-control ${this.state.email && (helper.isEmail(this.state.email) && this.state.available ? 'is-valid' : 'is-invalid')}`} id="addressRegister" name="email" type="email" placeholder="Email" pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setValue} required />
             <label htmlFor="addressRegister">Email</label>
           </div>
         </div>
@@ -295,13 +271,13 @@ export default class Register extends Component {
       <div className="row-password">
         <div className="col-md">
           <div className="form-floating-password">
-            <input className={`form-control ${this.state.password && (helper.checkPassword(this.state.password).isStrong ? 'is-valid' : 'is-invalid')}`} id="passwordRegister" type="password" placeholder="Password" minLength="8" onInput={this.enterPassword} onChange={this.setPassword} required />
+            <input className={`form-control ${this.state.password && (helper.checkPassword(this.state.password).isStrong ? 'is-valid' : 'is-invalid')}`} id="passwordRegister" name="password" type="password" placeholder="Password" minLength="8" onInput={this.enterPassword} onChange={this.setValue} required />
             <label htmlFor="passwordRegister">Password</label>
           </div>
         </div>
         <div className="col-md">
           <div className="form-floating-confirm">
-            <input className={`form-control ${this.state.confirm && (this.state.confirm === this.state.password ? 'is-valid' : 'is-invalid')}`} id="confirmRegister" type="password" placeholder="Confirm" onInput={this.enterConfirm} onInvalid={this.enterConfirm} onChange={this.setConfirm} required />
+            <input className={`form-control ${this.state.confirm && (this.state.confirm === this.state.password ? 'is-valid' : 'is-invalid')}`} id="confirmRegister" name="confirm" type="password" placeholder="Confirm" onInput={this.enterConfirm} onInvalid={this.enterConfirm} onChange={this.setValue} required />
             <label htmlFor="confirmRegister">Confirm</label>
           </div>
         </div>
@@ -314,7 +290,7 @@ export default class Register extends Component {
       <div className="row-dob" id="dobRegister">
         <div className="col-md">
           <div className="form-floating-day">
-            <select className={`form-select-day ${this.getIsValidDob()}`} id="dayRegister" placeholder="Day" value={this.state.day} onInput={this.chooseDob} onChange={this.setDay} required >
+            <select className={`form-select-day ${this.getIsValidDob()}`} id="dayRegister" name="day" placeholder="Day" value={this.state.day} onInput={this.chooseDob} onChange={this.setInt} required >
               {'0'.repeat(31).split('').map((v, i) => <option key={i} value={i + 1} >{i + 1}</option>)}
             </select>
             <label htmlFor="dayRegister">Day</label>
@@ -322,7 +298,7 @@ export default class Register extends Component {
         </div>
         <div className="col-md">
           <div className="form-floating-month">
-            <select className={`form-select-month ${this.getIsValidDob()}`} id="monthRegister" placeholder="Month" value={this.state.month} onInput={this.chooseDob} onChange={this.setMonth} required >
+            <select className={`form-select-month ${this.getIsValidDob()}`} id="monthRegister" name="month" placeholder="Month" value={this.state.month} onInput={this.chooseDob} onChange={this.setInt} required >
               {["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"].map((v, i) => <option key={i} value={i + 1} >{v}</option>)}
             </select>
             <label htmlFor="monthRegister">Month</label>
@@ -330,7 +306,7 @@ export default class Register extends Component {
         </div>
         <div className="col-md">
           <div className="form-floating-year">
-            <select className={`form-select-year ${this.getIsValidDob()}`} id="yearRegister" placeholder="Year" value={this.state.year} aria-describedby="validationDob" onInput={this.chooseDob} onChange={this.setYear} required >
+            <select className={`form-select-year ${this.getIsValidDob()}`} id="yearRegister" name="year" placeholder="Year" value={this.state.year} aria-describedby="validationDob" onInput={this.chooseDob} onChange={this.setInt} required >
               {'0'.repeat(200).split('').map((v, i) => <option key={i} value={(new Date()).getFullYear() - i} >{(new Date()).getFullYear() - i}</option>)}
             </select>
             <label htmlFor="yearRegister">Year</label>
@@ -342,19 +318,19 @@ export default class Register extends Component {
         <div className="col-md">
           <div className={`form-check-female ${this.state.sex ? 'is-valid' : this.state.submitted && !this.state.sex && 'is-invalid'}`} onClick={this.checkSex}>
             <label className="label-female" htmlFor="femaleRegister">Female</label>
-            <input className="input-female" id="femaleRegister" type="radio" name="sex" value={Sex.FEMALE} checked={this.state.sex === Sex.FEMALE} onInput={this.chooseSex} onChange={this.setSex} />
+            <input className="input-female" id="femaleRegister" type="radio" name="sex" value={Sex.FEMALE} checked={this.state.sex === Sex.FEMALE} onInput={this.chooseSex} onChange={this.setValue} />
           </div>
         </div>
         <div className="col-md">
           <div className={`form-check-male ${this.state.sex ? 'is-valid' : this.state.submitted && !this.state.sex && 'is-invalid'}`} onClick={this.checkSex}>
             <label className="label-male" htmlFor="maleRegister">Male</label>
-            <input className="input-male" id="maleRegister" type="radio" name="sex" value={Sex.MALE} checked={this.state.sex === Sex.MALE} onInput={this.chooseSex} onChange={this.setSex} />
+            <input className="input-male" id="maleRegister" type="radio" name="sex" value={Sex.MALE} checked={this.state.sex === Sex.MALE} onInput={this.chooseSex} onChange={this.setValue} />
           </div>
         </div>
         <div className="col-md">
           <div className={`form-check-other ${this.state.sex ? 'is-valid' : this.state.submitted && !this.state.sex && 'is-invalid'}`} onClick={this.checkSex}>
             <label className="label-other" htmlFor="otherRegister">Other</label>
-            <input className="input-other" id="otherRegister" type="radio" name="sex" value={Sex.OTHER} checked={this.state.sex === Sex.OTHER} onInput={this.chooseSex} onChange={this.setSex} />
+            <input className="input-other" id="otherRegister" type="radio" name="sex" value={Sex.OTHER} checked={this.state.sex === Sex.OTHER} onInput={this.chooseSex} onChange={this.setValue} />
           </div>
         </div>
       </div>
