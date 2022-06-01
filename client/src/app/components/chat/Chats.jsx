@@ -35,12 +35,13 @@ export default class Chats extends Component {
           && setTimeout(() => this.scroll())
           && this.setState({ chat: chat.data })))
 
-  connect = (id = helper.getQuery('id')) => this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
-    channel: 'MessagesChannel',
-    cid: id
-  }, {
-    received: chat => this.refresh(chat.id)
-  })
+  connect = (id = helper.getQuery('id')) => helper.setQuery('id', id)
+    || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+      channel: 'MessagesChannel',
+      cid: id
+    }, {
+      received: chat => this.refresh(chat.id)
+    }))
 
   componentDidMount = () => (this.refresh()
     && setTimeout(() => {
