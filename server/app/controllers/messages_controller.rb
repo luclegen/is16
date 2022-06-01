@@ -58,7 +58,8 @@ class MessagesController < ApplicationController
     if @chat.save
       @message.chat = @chat
       if @message.save
-        render plain: @chat._id.to_s, status: :created
+        # render plain: @chat._id.to_s, status: :created
+        ChatsChannel.broadcast_to(@chat, { id: @chat._id.to_s })
       else
         render json: @message.errors, status: :unprocessable_entity
       end
