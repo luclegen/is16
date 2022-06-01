@@ -1,7 +1,7 @@
 import { Component } from 'react'
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem } from 'reactstrap'
-import helper from '../../services/helper'
-import Avatar from '../user/Avatar'
+import helper from '../../../services/helper'
+import Avatar from '../../user/Avatar'
 
 export default class Header extends Component {
   constructor(props) {
