@@ -12,7 +12,7 @@ export default class App extends Component {
     <Header />
     <Suspense fallback={<Loader />}>
       <Routes>
-        <Route exact path="/" element={<Home />} />
+        <Route exact path="/" element={<Home cableApp={this.props.cableApp} />} />
         <Route path="/:id" element={<Profile />} />
       </Routes>
     </Suspense>
