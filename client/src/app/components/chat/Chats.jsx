@@ -39,13 +39,23 @@ export default class Chats extends Component {
           && this.setState({ chat: chat.data })))
 
   componentDidMount = () => (this.refresh()
-    && setTimeout(() =>
+    && setTimeout(() => {
       this.setState({ new: !this.state.chat })
-      || (this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid']))
-      || setTimeout(() =>
-        document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000), 500))
+      this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid'])
 
-  componentDidUpdate = () => setTimeout(() => this.refresh()) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+      setTimeout(() => {
+        document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus()
+
+        this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+          channel: 'ChatsChannel',
+          cid: helper.getQuery('id')
+        }, {
+          received: chat => this.refresh(chat.id)
+        })
+      }, 1000)
+    }, 500))
+
+  componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
 
   setMessage = e => this.setState({ message: e.target.value })
 
