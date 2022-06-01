@@ -16,18 +16,10 @@ export default class Login extends Component {
   constructor(props) {
     super(props)
 
-    this.setEmail = this.setEmail.bind(this)
-    this.setPassword = this.setPassword.bind(this)
-    this.setRemembered = this.setRemembered.bind(this)
-
     this.state = state
   }
 
-  setEmail = e => this.setState({ email: e.target.value })
-
-  setPassword = e => this.setState({ password: e.target.value })
-
-  setRemembered = e => this.setState({ remembered: e.target.checked })
+  setValue = e => this.setState({ [e.target.name]: e.target.value })
 
   enterEmail = async e => {
     if (e.target.value) {
@@ -77,14 +69,14 @@ export default class Login extends Component {
       <img className='logo-img' src="/logo.svg" alt={process.env.REACT_APP_NAME + ' logo'} />
       <h1 className="h1-only">Sign in to {process.env.REACT_APP_NAME}</h1>
       <div className={`input-group-email ${this.state.visible ? 'rounded-top' : 'rounded'}`}>
-        <input className="input-email" type="email" name="email" placeholder="Email" value={this.state.email} pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setEmail} title="Please fill out this field." required />
+        <input className="input-email" type="email" name="email" placeholder="Email" value={this.state.email} pattern={helper.emailPattern} onInput={this.enterEmail} onInvalid={this.enterEmail} onChange={this.setValue} title="Please fill out this field." required />
         {!this.state.visible && <button className="btn-input" type="submit" disabled={!this.state.email} hidden={true}>
           <i className="material-icons">input</i>
         </button>}
       </div>
       <div className="input-group-container">
         {this.state.visible && this.state.email && <div className="input-group-password">
-          <input className="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.setPassword} required />
+          <input className="input-password" type="password" name="password" placeholder="Password" value={this.state.password} onChange={this.setValue} required />
           <button className="btn-input" type="submit" disabled={!this.state.password}>
             <i className="material-icons">input</i>
           </button>
