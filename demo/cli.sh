@@ -29,18 +29,22 @@ rails new server --api --skip-bundle --skip-active-record --skip-test --skip-sys
 # ...
 
 cd server; bundle install
-# server/config/application.rb
-# config.middleware.insert_before 0, Rack::Cors do
+# server/config/initializers/cors.rb
+
+# Rails.application.config.middleware.insert_before 0, Rack::Cors do
 #   allow do
-#     origins '*'
-#     resource '*', headers: :any, methods: [:get, :post, :options]
+#     origins ENV['WEB']
+#     resource '*', headers: :any, methods: [:get, :post, :put, :patch, :delete, :options, :head], credentials: true
 #   end
 # end
+
 rails g mongoid:config is16
+# server/config/mongoid.yml
+
 # development:
 #   clients:
 #     default:
-#       uri: <%= ENV['MONGODB_URI'] %>
+#       uri: <%= ENV['MONGODB'] %>
 #       options:
 #         server_selection_timeout: 5
 
