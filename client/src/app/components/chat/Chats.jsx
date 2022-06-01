@@ -62,12 +62,7 @@ export default class Chats extends Component {
     && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
     : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false })))
-    || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
-      channel: 'ChatsChannel',
-      cid: helper.getQuery('id')
-    }, {
-      received: chat => this.refresh(chat.id)
-    }))
+    || this.connect()
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
