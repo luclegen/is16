@@ -58,10 +58,6 @@ export default class Chats extends Component {
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
-  setTitle = e => this.setState({ title: e.target.value })
-
-  setPhoto = e => this.setState({ photo: e.target.value })
-
   choose = e =>
     helper.setQuery('id', e.target.closest('button')?.id)
       && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
@@ -267,8 +263,8 @@ export default class Chats extends Component {
     <div className={`col-info ${this.state.new || !this.state.info ? 'd-none' : 'd-flex'} col-md-${this.state.new || !this.state.info ? '0' : '3'}`}>
       <Avatar avatar={this.state.photo || this.state.chat?.photo} name={this.state.chat?.title} width="80px" height="80px" fontSize="60px" />
       <form className="form-only" onSubmit={e => e.preventDefault() || this.state.edit ? this.save(e) : this.edit(e)}>
-        {this.state.edit ? <input className="input-title" value={this.state.title} type="text" name="Title input" onChange={this.setTitle} /> : <div className="box-title"><strong>{this.state.chat?.group ? this.state.chat?.title : <a href={'/' + this.state.chat?.members?.find(m => helper.getId() !== m._id?.['$oid'])?._id?.['$oid']} target="_blank" rel="noopener noreferrer">{this.state.chat?.title}</a>}</strong></div>}
-        {this.state.edit && <input className="input-photo" value={this.state.photo} type="color" name="Photo input" onChange={this.setPhoto} />}
+        {this.state.edit ? <input className="input-title" value={this.state.title} type="text" name="title" onChange={this.setValue} /> : <div className="box-title"><strong>{this.state.chat?.group ? this.state.chat?.title : <a href={'/' + this.state.chat?.members?.find(m => helper.getId() !== m._id?.['$oid'])?._id?.['$oid']} target="_blank" rel="noopener noreferrer">{this.state.chat?.title}</a>}</strong></div>}
+        {this.state.edit && <input className="input-photo" value={this.state.photo} type="color" name="photo" onChange={this.setValue} />}
       </form>
       {this.state.chat?.group && <details className="details-customize" open>
         <summary><strong>Customize</strong></summary>
