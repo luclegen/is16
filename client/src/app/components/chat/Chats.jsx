@@ -35,9 +35,9 @@ export default class Chats extends Component {
           && setTimeout(() => this.scroll())
           && this.setState({ chat: chat.data })))
 
-  connect = () => this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+  connect = (id = helper.getQuery('id')) => this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
     channel: 'MessagesChannel',
-    cid: helper.getQuery('id')
+    cid: id
   }, {
     received: chat => this.refresh(chat.id)
   })
@@ -48,8 +48,7 @@ export default class Chats extends Component {
       this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid'])
 
       setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus()
-        && helper.getQuery('id')
-        && this.connect(), 1000)
+        || this.connect(), 1000)
     }, 500))
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
@@ -187,7 +186,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => helper.setQuery('id', res.data) || (this.refresh(res.data) && (this.reset() || e.target.reset() || this.connect()))))
+      .then(res => helper.setQuery('id', res.data) || (this.refresh(res.data) && (this.reset() || e.target.reset() || this.connect(res.data)))))
 
   render = () => <section className="section-chats">
     <div className="col-chats">
