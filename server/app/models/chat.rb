@@ -3,6 +3,8 @@ class Chat
   include Mongoid::Timestamps
 
   include CryptoHelper
+  
+  default_scope { order(updated_at: :desc) }
 
   field :photo, type: String
   field :title, type: String
