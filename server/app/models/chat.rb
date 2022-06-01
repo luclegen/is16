@@ -22,7 +22,7 @@ class Chat
     self[:message] ? decrypt(self[:message]) : nil
   end
 
-  def message=message
+  def message=(message)
     self[:message] = message ? encrypt(message) : nil
   end
 end
