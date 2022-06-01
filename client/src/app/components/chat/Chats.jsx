@@ -58,7 +58,7 @@ export default class Chats extends Component {
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
-  choose = e => (helper.setQuery('id', e.target.closest('button')?.id)
+  choose = e => (this.connect(e.target.closest('button')?.id)
     && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
     : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false })))
