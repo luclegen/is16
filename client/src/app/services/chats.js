@@ -1,6 +1,6 @@
 import PR from '../apis/private'
 
-const URL = `${process.env.REACT_APP_API}chats/`
+const URL = `${process.env.REACT_APP_API}/chats/`
 
 class ChatsService {
   read = id => PR.get(`${URL}${id}`)
