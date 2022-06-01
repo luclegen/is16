@@ -22,7 +22,7 @@ export default class Header extends Component {
 
   toggleDropdown = () => this.setState({ dropdownOpened: !this.state.dropdownOpened })
 
-  componentDidMount = () => helper.loggedIn()
+  componentDidMount = () => helper.isLogin()
 
   componentDidUpdate = () => window.onresize = () => this.setState({ width: window.innerWidth })
 
@@ -34,7 +34,7 @@ export default class Header extends Component {
       <img className={`logo-img ${this.state.width > 560 && 'mr-1'}`} src="logo.hover.svg" alt="Hover logo" hidden={!this.state.isHover} />
     </a>
     <Dropdown className="dropdown-avatar" isOpen={this.state.dropdownOpened} toggle={this.toggleDropdown}>
-      {helper.loggedIn()
+      {helper.isLogin()
         ? <DropdownToggle className="dropdown-toggle-avatar" title={helper.getCookie('name') + ' ' + helper.getCookie('surname')}><Avatar avatar={decodeURIComponent(helper.getCookie('avatar'))} name={helper.getCookie('name')} width="44px" height="44px" fontSize="33px" /></DropdownToggle>
         : <a className="link-help" href="/help" target="_blank"><i className="material-icons">help_outline</i></a>}
       <DropdownMenu className="dropdown-menu-avatar">

@@ -70,11 +70,11 @@ class Helper {
   }
 
   getId = () =>
-    this.loggedIn()
+    this.isLogin()
       ? JSON.parse(atob(this.getCookie('token')?.split('.')[1])).id['$oid']
       : null
 
-  loggedIn = () => Boolean(this.getCookie('name'))
+  isLogin = () => Boolean(this.getCookie('name'))
 
   getOffset = element => {
     const rect = element.getBoundingClientRect(),
