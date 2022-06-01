@@ -1,7 +1,7 @@
 import './App.sass'
 import { Component, Suspense, lazy } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import Header from './components/header/Header'
+import Header from './components/layouts/header/Header'
 import Loader from './components/others/Loader'
 
 const Home = lazy(() => import('./components/home/Home'))
