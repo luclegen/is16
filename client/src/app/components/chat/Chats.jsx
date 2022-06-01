@@ -31,25 +31,25 @@ export default class Chats extends Component {
     }
   }
 
-  componentDidMount = () => (this.setChats()
+  refresh = id =>
+    chatsService.list()
+      .then(chats => this.setState({ chats: chats.data }) || chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
+        .then(chat => (!this.state.chat || chat.data?._id?.['$oid'] === helper.getQuery('id'))
+          && setTimeout(() => this.scroll())
+          && this.setState({ chat: chat.data })))
+
+  componentDidMount = () => (this.refresh()
     && setTimeout(() =>
       this.setState({ new: !this.state.chat })
       || (this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid']))
       || setTimeout(() =>
         document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000), 500))
 
-  componentDidUpdate = () => setTimeout(() => this.setChats()) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
+  componentDidUpdate = () => setTimeout(() => this.refresh()) || (window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined)
 
   setMessage = e => this.setState({ message: e.target.value })
 
   setName = e => this.setState({ name: e.target.value })
-
-  setChats = id =>
-    chatsService.list()
-      .then(chats => this.setState({ chats: chats.data }) || chatsService.read(id || this.state.chat?._id?.['$oid'] || null)
-        .then(chat => (!this.state.chat || chat.data?._id?.['$oid'] === helper.getQuery('id'))
-          && setTimeout(() => this.scroll())
-          && this.setState({ chat: chat.data })))
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
@@ -60,8 +60,8 @@ export default class Chats extends Component {
   choose = e =>
     helper.setQuery('id', e.target.closest('button')?.id)
       && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
-      : this.setChats(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
@@ -77,7 +77,7 @@ export default class Chats extends Component {
       photo: this.state.photo,
       title: this.state.title,
     })
-      .then(() => this.setChats() && this.setState({ edit: false, photo: '', title: '' }))
+      .then(() => this.refresh() && this.setState({ edit: false, photo: '', title: '' }))
 
   enter = e =>
     (e.keyCode === 8 &&
@@ -109,7 +109,7 @@ export default class Chats extends Component {
     window.confirm('Do you sure to ' + (e.target.closest('.container-message')?.getAttribute('unsent') === 'true' ? 'delete' : 'unsent') + ' the message?')
     && messagesService
       .delete(e.target.closest('.container-message')?.id)
-      .then(() => this.setChats())
+      .then(() => this.refresh())
 
   send = (e, user = e.target?.closest('.list-group-item')) =>
     setTimeout(() => document.querySelector('.input-user')?.focus())
@@ -127,7 +127,7 @@ export default class Chats extends Component {
           user?.id
         ]
       })
-      .then(() => this.setChats())
+      .then(() => this.refresh())
 
   removeAdmin = (e, user = e.target?.closest('.list-group-item')) =>
     window.confirm(`Remove as Admin?\n${user?.getAttribute('name')} cannot manage in ${this.state.chat?.title}.`)
@@ -138,7 +138,7 @@ export default class Chats extends Component {
           .filter(m => ['Creator', 'Admin'].includes(m.role))
           .map(m => m._id?.['$oid']).filter(m => m !== user?.id)
       })
-      .then(() => this.setChats())
+      .then(() => this.refresh())
 
   removeMember = (e, user = e.target?.closest('.list-group-item')) => window.confirm(`Remove?\n${user?.getAttribute('name')} was removed from ${this.state.chat?.title}.`)
     && chatsService
@@ -148,7 +148,7 @@ export default class Chats extends Component {
           .map(m => m._id?.['$oid'])
           .filter(m => m !== user?.id)
       })
-      .then(() => this.setChats())
+      .then(() => this.refresh())
 
   addMember = () =>
     window.confirm(`Add?\n${this.state.users?.map(u => u.name).join(', ')} was added to ${this.state.chat?.title}.`)
@@ -159,7 +159,7 @@ export default class Chats extends Component {
           .map(m => m._id?.['$oid'])
           .concat(this.state.users.map(m => m.id))
       })
-      .then(() => this.setChats() && this.setState({ name: '', users: [] }))
+      .then(() => this.refresh() && this.setState({ name: '', users: [] }))
 
   admin = () =>
     this.state.chat?.members
@@ -186,7 +186,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => helper.setQuery('id', res.data) || (this.setChats(res.data) && (this.reset() || e.target.reset()))))
+      .then(res => helper.setQuery('id', res.data) || (this.refresh(res.data) && (this.reset() || e.target.reset()))))
 
   render = () => <section className="section-chats">
     <div className="col-chats">
