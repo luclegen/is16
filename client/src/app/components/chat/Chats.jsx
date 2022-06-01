@@ -46,10 +46,9 @@ export default class Chats extends Component {
   componentDidMount = () => (this.refresh()
     && setTimeout(() => {
       this.setState({ new: !this.state.chat })
-      this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid'])
+      this.state.chat && this.connect(this.state.chat?._id?.['$oid'])
 
-      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus()
-        || this.connect(), 1000)
+      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
     }, 500))
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
