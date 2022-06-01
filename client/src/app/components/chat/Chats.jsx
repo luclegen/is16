@@ -43,10 +43,10 @@ export default class Chats extends Component {
       received: chat => this.refresh(chat.id)
     }))
 
-  componentDidMount = () => (this.refresh()
+  componentDidMount = () => (this.refresh(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
     && setTimeout(() => {
       this.setState({ new: !this.state.chat })
-      this.state.chat && this.connect(this.state.chat?._id?.['$oid'])
+      this.state.chat && this.connect(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
 
       setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
     }, 500))
