@@ -58,7 +58,7 @@ class MessagesController < ApplicationController
     if @chat.save
       @message.chat = @chat
       if @message.save
-        ChatsChannel.broadcast_to(@chat, { id: @chat._id.to_s })
+        MessagesChannel.broadcast_to(@chat, { id: @chat._id.to_s })
         render plain: @chat._id.to_s, status: :created
       else
         render json: @message.errors, status: :unprocessable_entity
@@ -85,7 +85,7 @@ class MessagesController < ApplicationController
         end
 
         if @chat.save && @message.destroy
-          ChatsChannel.broadcast_to(@chat, { id: @chat._id.to_s })
+          MessagesChannel.broadcast_to(@chat, { id: @chat._id.to_s })
           render nothing: true
         else
           render json: @chat.errors, status: :unprocessable_entity
@@ -94,7 +94,7 @@ class MessagesController < ApplicationController
         @chat.message = @message.body = ' unsent a message'
         @message.unsent = true
         if @chat.save && @message.save
-          ChatsChannel.broadcast_to(@chat, { id: @chat._id.to_s })
+          MessagesChannel.broadcast_to(@chat, { id: @chat._id.to_s })
           render nothing: true
         else
           render status: :expectation_failed
