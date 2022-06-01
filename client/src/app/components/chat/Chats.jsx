@@ -35,21 +35,21 @@ export default class Chats extends Component {
           && setTimeout(() => this.scroll())
           && this.setState({ chat: chat.data })))
 
+  connect = () => this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+    channel: 'ChatsChannel',
+    cid: helper.getQuery('id')
+  }, {
+    received: chat => this.refresh(chat.id)
+  })
+
   componentDidMount = () => (this.refresh()
     && setTimeout(() => {
       this.setState({ new: !this.state.chat })
       this.state.chat && helper.setQuery('id', this.state.chat?._id?.['$oid'])
 
-      setTimeout(() => {
-        document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus()
-
-        this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
-          channel: 'ChatsChannel',
-          cid: helper.getQuery('id')
-        }, {
-          received: chat => this.refresh(chat.id)
-        })
-      }, 1000)
+      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus()
+        && helper.getQuery('id')
+        && this.connect(), 1000)
     }, 500))
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
