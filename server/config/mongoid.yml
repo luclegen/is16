@@ -1,14 +1,14 @@
 production:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] %>
+      uri: <%= ENV['MONGODB'] %>
       options:
         server_selection_timeout: 5
 
 development:
   clients:
     default:
-      uri: <%= ENV['MONGODB_URI'] %>
+      uri: <%= ENV['MONGODB'] %>
       options:
         server_selection_timeout: 5
 
