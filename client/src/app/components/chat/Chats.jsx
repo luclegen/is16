@@ -187,7 +187,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => helper.setQuery('id', res.data) || (this.refresh(res.data) && (this.reset() || e.target.reset() || this.connect(res.data)))))
+      .then(res => this.connect(res.data) && this.refresh(res.data) && (this.reset() || e.target.reset())))
 
   render = () => <section className="section-chats">
     <div className="col-chats">
