@@ -3,6 +3,8 @@ import PR from '../apis/private'
 const URL = `${process.env.REACT_APP_API}/chats/`
 
 class ChatsService {
+  view = id => PR.post(`${URL}${id}`)
+
   read = id => PR.get(`${URL}${id}`)
 
   update = chat => PR.put(`${URL}${chat?.id}`, chat)
