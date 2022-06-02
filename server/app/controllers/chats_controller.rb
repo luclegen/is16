@@ -1,6 +1,18 @@
 class ChatsController < ApplicationController
-  before_action :authorize, only: [:show, :update, :index]
-  before_action :set_chat, only: [:show, :update]
+  before_action :authorize, only: [:view, :show, :update, :index]
+  before_action :set_chat, only: [:view, :show, :update]
+
+  def view
+    unless @chat._vids.include?(@user._id)
+      @chat._vids.push(@user._id)
+    end
+
+    if @chat.save
+      render nothing: true
+    else
+      render json: @chat.errors, status: unprocessable_entity
+    end
+  end
 
   def show
     @users = @chat._uids
