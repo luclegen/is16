@@ -10,6 +10,7 @@ class Chat
   field :title, type: String
   field :group, type: Boolean, default: false
   field :message, type: String
+  field :unsent, type: BSON::ObjectId, default: nil
   field :_mids, type: Array, default: []
   field :_uids, type: Array, default: []
   field :_aids, type: Array, default: []
