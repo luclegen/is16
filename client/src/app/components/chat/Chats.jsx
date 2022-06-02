@@ -37,7 +37,7 @@ export default class Chats extends Component {
 
   connect = (id = helper.getQuery('id')) => helper.setQuery('id', id)
     || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
-      channel: 'MessagesChannel',
+      channel: 'ChatChannel',
       cid: id
     }, {
       received: chat => this.refresh(chat.id)
