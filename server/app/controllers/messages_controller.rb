@@ -55,6 +55,10 @@ class MessagesController < ApplicationController
       end
     end
 
+    if @chat.new
+      @chat.new = false
+    end
+
     if @chat.save
       @message.chat = @chat
       if @message.save
