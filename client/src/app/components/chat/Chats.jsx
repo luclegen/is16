@@ -48,6 +48,13 @@ export default class Chats extends Component {
       this.setState({ new: !this.state.chat })
       this.state.chat && this.connect(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
 
+      this.props.cableApp.id = this.props.cableApp.cable.subscriptions.create({
+        channel: 'TopChannel',
+        id: 'top'
+      }, {
+        received: top => top._uids?.length && top._uids.map(v => v?.['$oid']).includes(helper.getCookie('id')) && this.refresh()
+      })
+
       setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
     }, 500))
 
@@ -237,7 +244,7 @@ export default class Chats extends Component {
           {this.state.chat && <button className={`btn-chat-info ${this.state.info && 'border-primary'}`} type="button" onClick={this.toggle}><i className="material-icons">info</i></button>}
         </div>}
       <div className="chat-body">
-        {this.state.chat?.messages?.length > 0 && this.state.chat?.messages.map((v, i, a) => <div className="container-message" id={v._id?.['$oid']} unsent={v.unsent.toString()} key={i}>
+        {this.state.chat?._id?.['$oid'] === helper.getQuery('id') && this.state.chat?.messages?.length > 0 && this.state.chat?.messages.map((v, i, a) => <div className="container-message" id={v._id?.['$oid']} unsent={v.unsent.toString()} key={i}>
           <div className="row">
             <div className={`col-${v._uid['$oid'] !== helper.getId() ? '8' : '4'} col-message justify-content-${v._uid['$oid'] !== helper.getId() ? 'start' : 'end'}`}>
               {v._uid['$oid'] !== helper.getId() && (i === 0 || (a.length > 1 && i > 0 && a[i]._uid['$oid'] !== a[i - 1]._uid['$oid'])) ? <Avatar avatar={v.avatar} name={v.name} width="40px" height="40px" fontSize="30px" /> : <div style={{ 'width': '40px', 'height': '40px' }}></div>}
