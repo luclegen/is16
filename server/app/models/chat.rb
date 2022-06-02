@@ -13,6 +13,7 @@ class Chat
   field :_mids, type: Array, default: []
   field :_uids, type: Array, default: []
   field :_aids, type: Array, default: []
+  field :_vids, type: Array, default: []
 
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
