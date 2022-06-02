@@ -82,6 +82,7 @@ class MessagesController < ApplicationController
     if (@chat = Chat.find(@message._cid.to_s))
       if @message.unsent
         @chat._mids.delete(@message._id)
+        @chat.unsent = nil
 
         if @chat._mids.last
           if (@chat_message = Message.find(@chat._mids.last.to_s))
@@ -102,6 +103,7 @@ class MessagesController < ApplicationController
       else
         @chat.message = @message.body = ' unsent a message'
         @chat.unsent = @user._id
+        @chat._vids = [@user._id]
         @message.unsent = true
 
         if @chat.save && @message.save
