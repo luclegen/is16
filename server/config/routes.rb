@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :chats, only: [:show, :update, :destroy, :index]
+  post 'chats/:id', to: 'chats#view'
   resources :messages, only: [:create, :destroy]
   resources :codes, only: [:create]
   resources :users, only: [:create, :show, :update, :index]
