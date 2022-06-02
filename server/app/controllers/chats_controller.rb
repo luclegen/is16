@@ -155,6 +155,25 @@ class ChatsController < ApplicationController
       end
       c
     end
+    @chats = @chats.map do |c|
+      if c.unsent
+        @sender = User.find(c.unsent)
+      end
+
+      {
+        _id: c._id,
+        _mids: c._mids,
+        _aids: c._aids,
+        _vids: c._vids,
+        _uid: c._uid,
+        group: c.group,
+        message: c.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + c.message : c.message,
+        unsent: c.unsent,
+        photo: c.photo,
+        title: c.title
+      }
+    end
+
     render json: @chats
   end
 
