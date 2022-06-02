@@ -57,6 +57,19 @@ class MessagesController < ApplicationController
     end
 
     if @chat.save
+      unless @top = Top.first
+        @top = Top.new
+        @top._cid = @chat
+      end
+
+      if is_new
+        @top._uids = @chat._uids
+      end
+
+      unless Top.first
+        TopChannel.broadcast_to(@top, { _cid: @top._cid, _uids: @top._uids })
+      end
+
       @message.chat = @chat
       if @message.save
         ChatChannel.broadcast_to(@chat, { id: @chat._id.to_s })
