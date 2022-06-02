@@ -57,10 +57,11 @@ export default class Chats extends Component {
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
-  choose = e => (this.connect(e.target.closest('button')?.id)
-    && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-    ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
-    : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false })))
+  choose = e => (e.target.closest('button')?.id !== helper.getQuery('id') && chatsService.view(e.target.closest('button')?.id).then(() => this.refresh(e.target.closest('button')?.id))
+    && (this.connect(e.target.closest('button')?.id)
+      && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
+      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))))
     || this.connect()
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
@@ -209,6 +210,7 @@ export default class Chats extends Component {
             <p className="fs-5">{v.title}</p>
             <p className="text-truncate">{v.message}</p>
           </div>
+          {!v._vids.map(v => v?.['$oid']).includes(helper.getCookie('id')) && <span className="new-message"><i className="material-icons">fiber_manual_record</i></span>}
         </button>)}
       </div>
     </div>
