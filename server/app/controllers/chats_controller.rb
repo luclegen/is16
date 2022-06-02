@@ -57,6 +57,7 @@ class ChatsController < ApplicationController
           return render plain: 'Message not found!', status: :not_found
         end
       end,
+      message: @chat.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @chat.message : @chat.message,
       members: @chat._uids.map do |uid|
         begin
           @member = User.find(uid.to_s)
