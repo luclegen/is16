@@ -215,7 +215,7 @@ export default class Chats extends Component {
           <Avatar avatar={v.photo} name={v.title} width="60px" height="60px" fontSize="45px" />
           <div className="user-info">
             <p className="fs-5">{v.title}</p>
-            <p className="text-truncate">{v.message}</p>
+            <p className={`${!v._vids.map(v => v?.['$oid']).includes(helper.getCookie('id')) ? 'text-primary' : 'text-truncate'}`}>{v.message}</p>
           </div>
           {!v._vids.map(v => v?.['$oid']).includes(helper.getCookie('id')) && <span className="new-message"><i className="material-icons">fiber_manual_record</i></span>}
         </button>)}
