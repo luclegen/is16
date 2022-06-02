@@ -16,6 +16,7 @@ class Chat
   field :_vids, type: Array, default: []
 
   validates :_uids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
+  validates :_vids, length: { minimum: 1, message: 'The chat must have a minimum of users!' }
 
   belongs_to :user, foreign_key: :_uid
 
