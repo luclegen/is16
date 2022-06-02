@@ -100,7 +100,9 @@ class MessagesController < ApplicationController
         end
       else
         @chat.message = @message.body = ' unsent a message'
+        @chat.unsent = @user._id
         @message.unsent = true
+
         if @chat.save && @message.save
           ChatChannel.broadcast_to(@chat, { id: @chat._id.to_s })
           render nothing: true
