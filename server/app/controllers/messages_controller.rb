@@ -36,8 +36,7 @@ class MessagesController < ApplicationController
     @message.user = @chat.user = @user
     @chat.message = params[:body]
     @chat._mids.push(@message._id)
-    @chat._vids = []
-    @chat._vids.push(@user._id)
+    @chat._vids = [@user._id]
 
     if is_new
       if params[:users].kind_of?(Array)
