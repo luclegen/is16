@@ -1,4 +1,4 @@
-class ChatsController < ApplicationController
+class Api::ChatsController < ApplicationController
   before_action :authorize, only: [:view, :show, :update, :index]
   before_action :set_chat, only: [:view, :show, :update]
 

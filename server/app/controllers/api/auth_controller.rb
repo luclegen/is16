@@ -1,4 +1,4 @@
-class AuthController < ApplicationController
+class Api::AuthController < ApplicationController
   before_action :verify, only: [:login, :available]
   before_action :authorize, only: [:logout]
 

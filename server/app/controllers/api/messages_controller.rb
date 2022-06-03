@@ -1,4 +1,4 @@
-class MessagesController < ApplicationController
+class Api::MessagesController < ApplicationController
   before_action :authorize, only: [:create, :destroy]
   before_action :set_message, only: [:destroy]
 

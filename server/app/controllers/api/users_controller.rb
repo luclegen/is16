@@ -1,5 +1,6 @@
 require 'date'
-class UsersController < ApplicationController
+
+class Api::UsersController < ApplicationController
   before_action :set_user, only: [:show]
   before_action :authorize, only: [:update]
 

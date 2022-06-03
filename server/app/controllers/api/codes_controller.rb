@@ -1,6 +1,6 @@
 require 'rest-client'
 
-class CodesController < ApplicationController
+class Api::CodesController < ApplicationController
   include GeneratorHelper
 
   def create
