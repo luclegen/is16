@@ -60,7 +60,7 @@ content-type: application/json
 ###
 
 # @name login
-POST {{baseUrl}}/auth HTTP/1.1
+POST {{baseUrl}}/auth/ HTTP/1.1
 content-type: application/json
 
 {
