@@ -103,7 +103,6 @@ class MessagesController < ApplicationController
       else
         @chat.message = @message.body = ' unsent a message'
         @chat.unsent = @user._id
-        @chat._vids = [@user._id]
         @message.unsent = true
 
         if @chat.save && @message.save
