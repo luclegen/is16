@@ -25,6 +25,7 @@ module Server
     config.api_only = true
     config.autoload_paths += %W( lib/ )
     config.middleware.use ActionDispatch::Cookies
+    config.middleware.use ActionDispatch::Session::CookieStore
     require Rails.root.join "lib", "regexes.rb"
   end
 end
