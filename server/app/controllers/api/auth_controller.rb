@@ -5,9 +5,10 @@ class Api::AuthController < ApplicationController
   def login
     if @user
       if @user.authenticate(params[:password])
+        session[:token] = @user.sign
+
         render json: {
           id: @user._id.to_s,
-          token: @user.sign,
           avatar: @user.avatar,
           name: @user.name,
           surname: @user.surname
@@ -22,11 +23,6 @@ class Api::AuthController < ApplicationController
 
   def available
     render status: @user ? :non_authoritative_information : :ok
-  end
-
-  def logout
-    cookies.delete :token
-    render nothing: true
   end
 
   private
