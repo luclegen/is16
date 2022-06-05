@@ -1,6 +1,6 @@
 import PR from '../apis/private'
 
-const URL = `${process.env.REACT_APP_API}/chats/`
+const URL = `${process.env.NODE_ENV === 'production' ? window.location.origin + '/api' : process.env.REACT_APP_API}/chats/`
 
 class ChatsService {
   view = id => PR.post(`${URL}${id}`)
