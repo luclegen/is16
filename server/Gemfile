@@ -31,6 +31,9 @@ gem 'rails_same_site_cookie'
 # Use MongoDB database
 gem 'mongoid', '~> 7.0.5'
 
+# Use Rails session stores for Mongoid
+gem 'mongo_session_store', '~> 3.2'
+
 # REST client
 gem 'rest-client'
 

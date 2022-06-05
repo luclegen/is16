@@ -97,6 +97,9 @@ GEM
     minitest (5.14.4)
     mongo (2.17.0)
       bson (>= 4.8.2, < 5.0.0)
+    mongo_session_store (3.2.1)
+      actionpack (>= 4.0)
+      mongo (~> 2.0)
     mongoid (7.0.13)
       activemodel (>= 5.1, < 6.2)
       mongo (>= 2.7.0, < 3.0.0)
@@ -185,6 +188,7 @@ DEPENDENCIES
   dotenv-rails
   jwt
   listen (~> 3.2)
+  mongo_session_store (~> 3.2)
   mongoid (~> 7.0.5)
   puma (~> 4.1)
   rack-cors
@@ -196,7 +200,7 @@ DEPENDENCIES
   tzinfo-data
 
 RUBY VERSION
-   ruby 3.0.3p157
+   ruby 3.0.4p208
 
 BUNDLED WITH
-   2.2.32
+   2.2.33
