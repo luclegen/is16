@@ -74,7 +74,7 @@ class Helper {
       ? this.getCookie('id')
       : null
 
-  isLogin = () => Boolean(this.getCookie('name'))
+  isLogin = () => !!this.getCookie('id')
 
   getOffset = element => {
     const rect = element.getBoundingClientRect(),
