@@ -71,7 +71,7 @@ class Helper {
 
   getId = () =>
     this.isLogin()
-      ? JSON.parse(atob(this.getCookie('token')?.split('.')[1])).id['$oid']
+      ? this.getCookie('id')
       : null
 
   isLogin = () => Boolean(this.getCookie('name'))
