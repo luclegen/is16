@@ -71,6 +71,7 @@ content-type: application/json
 ###
 
 @token = {{login.response.body.token}}
+@cookie = {{login.response.headers.set-cookie}}
 
 # @name available
 GET {{baseUrl}}/auth/?email={{email}} HTTP/1.1
@@ -81,7 +82,7 @@ content-type: application/json
 # @name logout
 DELETE {{baseUrl}}/auth HTTP/1.1
 content-type: application/json
-Authorization: Bearer {{token}}
+Cookie: {{cookie}}
 
 ###
 
