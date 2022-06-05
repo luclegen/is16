@@ -6,6 +6,8 @@ class AuthService {
   login = user => API.post(URL, user)
 
   available = email => API.get(`${URL}?email=${email}`)
+
+  logout = () => API.delete(URL)
 }
 
 export default new AuthService()
