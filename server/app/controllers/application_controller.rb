@@ -6,8 +6,8 @@ class ApplicationController < ActionController::API
   end
 
   def authorize
-    begin
-      if session[:token]
+    if session[:token]
+      begin
         id = JWT.decode(session[:token], ENV['SECRET'], true)[0]['id']
 
         if !params[:id].to_s.strip.empty? && id == params[:id]
@@ -15,11 +15,13 @@ class ApplicationController < ActionController::API
         end
 
         @user = User.find(id)
-        @profile = Profile.where(_uid: @user).first  
-      else
+        @profile = Profile.where(_uid: @user).first
+      rescue => e
+        clear_session
         render status: :unauthorized
       end
-    rescue => e
+    else
+      clear_session
       render status: :unauthorized
     end
   end
