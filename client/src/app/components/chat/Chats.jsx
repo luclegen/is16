@@ -301,11 +301,11 @@ export default class Chats extends Component {
                 </DropdownMenu>
               </Dropdown>
             </li>)}
-          <button type="button" className="list-group-item list-group-item-action" onClick={this.addMember} disabled={this.state.users.length === 0}>
+          {this.admin() && <button type="button" className="list-group-item list-group-item-action" onClick={this.addMember} disabled={this.state.users.length === 0}>
             <i className="add-member material-icons">person_add</i>
             <p className="list-group-item-name">Add</p>
-          </button>
-          <li className="list-group-item">
+          </button>}
+          {this.admin() && <li className="list-group-item">
             <div className="input-group-user">
               <label className="label-user" htmlFor="userInput">Add: &nbsp;</label>
               {this.state.name && <div className="list-group-users">
@@ -319,7 +319,7 @@ export default class Chats extends Component {
               </span>)}
               <input type="text" className="input-user" id="userInput" onInput={this.enter} onKeyUp={this.enter} onChange={this.setName} />
             </div>
-          </li>
+          </li>}
         </ul>
       </details>}
     </div>
