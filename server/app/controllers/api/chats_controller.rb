@@ -118,6 +118,13 @@ class Api::ChatsController < ApplicationController
     end
 
     if @chat.update
+      @top = Top.new
+
+      @top._cid = @chat
+      @top._uids = @chat._uids
+
+      TopChannel.broadcast_to(@top, { _cid: @top._cid, _uids: @top._uids })
+
       render json: @chat
     else
       render json: @chat.errors, status: :unprocessable_entity
