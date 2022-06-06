@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get '*path', to: 'application#index', constraints: lambda { |request|
+    !request.xhr? && request.format.html?
+  }
+
   namespace :api do
     resources :chats, only: [:show, :update, :destroy, :index]
     post 'chats/:id', to: 'chats#view'
