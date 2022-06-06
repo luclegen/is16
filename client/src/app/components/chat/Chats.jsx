@@ -53,9 +53,7 @@ export default class Chats extends Component {
         channel: 'TopChannel',
         id: 'top'
       }, {
-        received: top => top._uids?.length
-          && top._uids.map(v => v?.['$oid']).includes(helper.getCookie('id'))
-          && this.refresh()
+        received: () => this.refresh()
       })
 
       setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
