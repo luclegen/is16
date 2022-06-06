@@ -156,7 +156,7 @@ export default class Chats extends Component {
           .map(m => m._id?.['$oid'])
           .filter(m => m !== user?.id)
       })
-      .then(() => this.refresh())
+      .then(() => this.refresh().catch(() => window.location.href = '/'))
 
   addMember = () =>
     window.confirm(`Add?\n${this.state.users?.map(u => u.name).join(', ')} was added to ${this.state.chat?.title}.`)
