@@ -25,6 +25,12 @@ class Api::AuthController < ApplicationController
     render status: @user ? :non_authoritative_information : :ok
   end
 
+  def logout
+    clear_session
+
+    render nothing: true
+  end
+
   private
    def verify
      @user = User.where(email: params[:email]).first
