@@ -72,8 +72,8 @@ export default class Register extends Component {
       ? helper.isEmail(e.target.value)
         ? available
           ? ''
-          : 'Email is duplicate.'
-        : 'Invalid email.'
+          : 'Email is duplicate!'
+        : 'Invalid email!'
       : 'This field is required.')
   }
 
