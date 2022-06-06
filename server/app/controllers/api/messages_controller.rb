@@ -40,6 +40,8 @@ class Api::MessagesController < ApplicationController
     @chat.unsent = nil
 
     if is_new
+      @chat.user = @user
+
       if params[:users].kind_of?(Array)
         params[:users].each do |u|
           begin
@@ -47,7 +49,7 @@ class Api::MessagesController < ApplicationController
             unless @chat._uids.include?(@receiver._id)
               @chat.photo = params[:users].length === 1 ? nil : @user.avatar
               @chat.title = params[:users].length === 1 ? nil : @user.name + "'s group"
-               s.push(@receiver._id)
+              @chat._uids.push(@receiver._id)
             end
             @chat.group = @chat._uids.length > 2
           rescue => e
