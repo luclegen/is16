@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   include ActionController::Cookies
 
+  def index
+    render file: 'public/index.html'
+  end
+
   def clear_session
     session.delete(:token)
     cookies.delete :id
