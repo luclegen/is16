@@ -73,7 +73,7 @@ export default class Chats extends Component {
     || this.connect()
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-    ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
+    ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
     : (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
 
   edit = () => setTimeout((titleWith = (document.querySelector('.box-title').clientWidth + 26) + 'px') => setTimeout(() => document.querySelector('.input-title').style.setProperty('width', titleWith, 'important'))
