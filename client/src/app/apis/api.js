@@ -1,4 +1,6 @@
 import axios from 'axios'
+import authService from '../services/auth'
+import helper from '../services/helper'
 
 const API = axios.create({
   withCredentials: true,
@@ -9,14 +11,14 @@ const API = axios.create({
   },
 })
 
-API.interceptors.response.use(res => res, err => {
-  err.response
-    ? alert(typeof err.response?.data === 'object'
-      ? JSON.stringify(err.response?.data)
-      : err.response?.data || err.response?.statusText)
-    || (err.response.status === 401 && (window.location.href = '/'))
+API.interceptors.response.use(res => res, async err => {
+  if (err.response && err.response.status === 440 && window.confirm(err.response.data)) {
+    authService.logout().then(() => window.location.pathname !== '/' && window.open('/'))
+  } else err.response
+    ? alert(typeof err.response.data === 'object'
+      ? err.response.data?.error || Object.entries(err.response.data).map((v, i) => (i + 1) + '. ' + helper.toCapitalize(v[0] + ' ' + v[1])).join('\n')
+      : err.response.data.trim() || err.response.statusText)
     : console.error(err)
-
   return Promise.reject(err)
 })
 
