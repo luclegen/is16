@@ -56,7 +56,7 @@ export default class Chats extends Component {
         received: () => this.refresh()
       })
 
-      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 1000)
+      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 500)
     })
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
@@ -74,7 +74,7 @@ export default class Chats extends Component {
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }))
-    : (this.reset() || this.setState({ chat: null, new: true }))
+    : (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
 
   edit = () => setTimeout((titleWith = (document.querySelector('.box-title').clientWidth + 26) + 'px') => setTimeout(() => document.querySelector('.input-title').style.setProperty('width', titleWith, 'important'))
     && this.setState({ edit: !this.state.edit }))
