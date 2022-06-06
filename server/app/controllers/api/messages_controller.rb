@@ -33,7 +33,7 @@ class Api::MessagesController < ApplicationController
     end
 
     @message = Message.new(message_params)
-    @message.user = @chat.user = @user
+    @message.user = @user
     @chat.message = params[:body]
     @chat._mids.push(@message._id)
     @chat._vids = [@user._id]
@@ -47,7 +47,7 @@ class Api::MessagesController < ApplicationController
             unless @chat._uids.include?(@receiver._id)
               @chat.photo = params[:users].length === 1 ? nil : @user.avatar
               @chat.title = params[:users].length === 1 ? nil : @user.name + "'s group"
-              @chat._uids.push(@receiver._id)
+               s.push(@receiver._id)
             end
             @chat.group = @chat._uids.length > 2
           rescue => e
