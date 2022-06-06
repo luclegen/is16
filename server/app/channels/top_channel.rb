@@ -4,7 +4,7 @@ class TopChannel < ApplicationCable::Channel
   end
 
   def received(data)
-    ChatChannel.broadcast_to(@top, { _cid: @top._cid, _uids: @top._uids })
+    TopChannel.broadcast_to(@top, { _cid: @top._cid, _uids: @top._uids })
   end
 
   def unsubscribed
