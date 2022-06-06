@@ -164,7 +164,7 @@ export default class Register extends Component {
       .querySelector('#femaleRegister')
       .setCustomValidity(this.state.sex
         ? ''
-        : 'Please select one of these options')
+        : 'Please select one of these options.')
 
   getIsValidDob = () => (this.state.submitted
     || this.state.day !== (new Date()).getDate()
@@ -200,13 +200,13 @@ export default class Register extends Component {
         .setCustomValidity(
           this.state.sex
             ? ''
-            : 'Please select one of these options')
+            : 'Please select one of these options.')
       document
         .querySelector('#yearRegister')
         .setCustomValidity(
           helper.isOldEnough(this.state.year)
             ? ''
-            : 'You must be 5 years or older')
+            : 'You must be 5 years or older!')
 
       usersService.create(this.state)
         .then(res => {

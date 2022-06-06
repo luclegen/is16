@@ -29,7 +29,7 @@ export default class Login extends Component {
         .setCustomValidity(helper
           .isEmail(e.target.value)
           ? available
-            ? 'Email not registered'
+            ? 'Email not registered!'
             : ''
           : 'Invalid email!')
       this.setState({ available: available, visible: false, password: '' })
