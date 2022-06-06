@@ -1,13 +1,13 @@
-import PR from '../apis/private'
+import API from '../apis/api'
 
 const URL = `${process.env.NODE_ENV === 'production' ? window.location.origin + '/api' : process.env.REACT_APP_API}/messages/`
 
 class MessagesService {
-  create = message => PR.post(URL, message)
+  create = message => API.post(URL, message)
 
-  delete = id => PR.delete(`${URL}${id}`)
+  delete = id => API.delete(`${URL}${id}`)
 
-  list = name => PR.get(`${URL}?name=${name}`)
+  list = name => API.get(`${URL}?name=${name}`)
 }
 
 export default new MessagesService()

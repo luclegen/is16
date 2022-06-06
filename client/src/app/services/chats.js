@@ -1,15 +1,15 @@
-import PR from '../apis/private'
+import API from '../apis/api'
 
 const URL = `${process.env.NODE_ENV === 'production' ? window.location.origin + '/api' : process.env.REACT_APP_API}/chats/`
 
 class ChatsService {
-  view = id => PR.post(`${URL}${id}`)
+  view = id => API.post(`${URL}${id}`)
 
-  read = id => PR.get(`${URL}${id}`)
+  read = id => API.get(`${URL}${id}`)
 
-  update = chat => PR.put(`${URL}${chat?.id}`, chat)
+  update = chat => API.put(`${URL}${chat?.id}`, chat)
 
-  list = () => PR.get(URL)
+  list = () => API.get(URL)
 }
 
 export default new ChatsService()
