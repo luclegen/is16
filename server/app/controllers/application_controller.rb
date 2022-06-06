@@ -5,6 +5,14 @@ class ApplicationController < ActionController::API
     redirect_to ENV['WEB']
   end
 
+  def clear_session
+    session.delete(:token)
+    cookies.delete :id
+    cookies.delete :avatar
+    cookies.delete :name
+    cookies.delete :surname
+  end
+
   def authorize
     if session[:token]
       begin
