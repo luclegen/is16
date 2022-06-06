@@ -7,7 +7,7 @@ import reportWebVitals from './reportWebVitals'
 
 const CableApp = {}
 
-CableApp.cable = actionCable.createConsumer(process.env.REACT_APP_CABLE)
+CableApp.cable = actionCable.createConsumer(`${window.location.protocol === 'http:' ? 'ws' : 'wss'}${process.env.REACT_APP_CABLE}`)
 
 ReactDOM.render(
   <React.StrictMode>
