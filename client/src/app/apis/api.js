@@ -18,7 +18,6 @@ API.interceptors.response.use(res => res, async err => {
     ? alert(typeof err.response.data === 'object'
       ? err.response.data?.error || Object.entries(err.response.data).map((v, i) => (i + 1) + '. ' + helper.toCapitalize(v[0] + ' ' + v[1])).join('\n')
       : err.response.data.trim() || err.response.statusText)
-    || ((err.response.status === 401) && (window.location.href = '/'))
     : console.error(err)
   return Promise.reject(err)
 })
