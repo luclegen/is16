@@ -274,7 +274,7 @@ export default class Chats extends Component {
         {this.state.edit ? <input className="input-title" value={this.state.title} type="text" name="title" onChange={this.setValue} /> : <div className="box-title"><strong>{this.state.chat?.group ? this.state.chat?.title : <a href={'/' + this.state.chat?.members?.find(m => helper.getId() !== m._id?.['$oid'])?._id?.['$oid']} target="_blank" rel="noopener noreferrer">{this.state.chat?.title}</a>}</strong></div>}
         {this.state.edit && <input className="input-photo" value={this.state.photo} type="color" name="photo" onChange={this.setValue} />}
       </form>
-      {this.state.chat?.group && <details className="details-customize" open>
+      {this.admin() && this.state.chat?.group && <details className="details-customize" open>
         <summary><strong>Customize</strong></summary>
         <div className="list-group">
           <button type="button" className="list-group-item list-group-item-action" onClick={this.state.edit ? this.save : this.edit}>
