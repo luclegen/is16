@@ -68,8 +68,8 @@ export default class Chats extends Component {
   choose = e => (e.target.closest('button')?.id !== helper.getQuery('id') && chatsService.view(e.target.closest('button')?.id).then(() => this.refresh(e.target.closest('button')?.id))
     && (this.connect(e.target.closest('button')?.id)
       && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))
-      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }))))
+      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))
+      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))))
     || this.connect()
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
