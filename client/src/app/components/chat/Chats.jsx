@@ -65,12 +65,18 @@ export default class Chats extends Component {
 
   setMessages = id => chatsService.read(id).then(res => this.setState({ messages: res.data.messages }))
 
-  choose = e => (e.target.closest('button')?.id !== helper.getQuery('id') && chatsService.view(e.target.closest('button')?.id).then(() => this.refresh(e.target.closest('button')?.id))
-    && (this.connect(e.target.closest('button')?.id)
-      && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-      ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))
-      : this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))))
-    || this.connect()
+  choose = e => {
+    const item = e.target.closest('.list-group-item')
+
+    item.style.cursor = 'wait';
+
+    (e.target.closest('button')?.id !== helper.getQuery('id') && chatsService.view(e.target.closest('button')?.id).then(() => this.refresh(e.target.closest('button')?.id).then(() => item.style.cursor = 'pointer'))
+      && (this.connect(e.target.closest('button')?.id)
+        && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+        ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))
+        : this.refresh(e.target.closest('button')?.id).then(() => item.style.cursor = 'pointer') && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))))
+      || this.connect()
+  }
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
     ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
