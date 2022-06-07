@@ -162,7 +162,8 @@ class Api::ChatsController < ApplicationController
       end
       c
     end
-    @chats = @chats.map do |c|
+
+    render json: @chats.map do |c|
       if c.unsent
         @sender = User.find(c.unsent)
       end
@@ -180,8 +181,6 @@ class Api::ChatsController < ApplicationController
         title: c.title
       }
     end
-
-    render json: @chats
   end
 
   private
