@@ -34,7 +34,7 @@ export default class Chats extends Component {
         .then(chat => (!this.state.chat || chat.data?._id?.['$oid'] === helper.getQuery('id'))
           && setTimeout(() => this.scroll())
           && this.setState({ chat: chat.data }))
-        .catch(err => err.response.status === 404 && (window.location.href = '/')))
+        .catch(err => err.response?.status === 404 && (window.location.href = '/')))
 
   connect = (id = helper.getQuery('id')) => helper.setQuery('id', id)
     || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
