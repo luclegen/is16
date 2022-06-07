@@ -1,5 +1,5 @@
 class Api::ChatsController < ApplicationController
-  before_action :authorize, only: [:view, :show, :update, :index]
+  before_action :authorize, only: [:view, :show, :update, :destroy, :index]
   before_action :set_chat, only: [:view, :show, :update]
 
   def view
@@ -33,44 +33,79 @@ class Api::ChatsController < ApplicationController
       end
     end
 
-    render json: {
-      _id: @chat._id,
-      group: @chat.group,
-      photo: @chat.photo || (@receiver.nil? ? nil : @receiver.avatar),
-      title: @chat.title || (@profile.nil? ? nil : @profile.name),
-      messages: @chat._mids.map do |mid|
+    @chats = Array(Chat.where(_uids: { '$in': [@user._id] }))
+    @chats = @chats.map do |c|
+      if c._uids.length > 0
         begin
-          @message = Message.find(mid)
-          begin
-            @sender = User.find(@message._uid)
-            { _id: @message._id,
-              avatar: @sender.avatar,
-              name: @sender.name,
-              unsent: @message.unsent,
-              body: @message.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @message.body : @message.body,
-              time: @message.created_at,
-              _uid: @sender._id }
-          rescue => e
-            return render plain: 'Sender not found!', status: :not_found
-          end
+          @receiver = User.find(c._uids.length == 1 ? c._uids.first : (c._uids - [@user._id]).first)
+          @profile = Profile.where(_uid: @receiver).first
+          c.photo = c.photo || @receiver.avatar
+          c.title = c.title || @profile.name
         rescue => e
-          return render plain: 'Message not found!', status: :not_found
-        end
-      end,
-      message: @chat.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @chat.message : @chat.message,
-      members: @chat._uids.map do |uid|
-        begin
-          @member = User.find(uid.to_s)
-          {
-            _id: @member._id,
-            avatar: @member.avatar,
-            name: (@member.name + ' ' + @member.surname),
-            role: @member._id.to_s == @chat._uid.to_s ? 'Creator' : @chat._aids.include?(@member._id) ? 'Admin' : '',
-          }
-        rescue => e
-          return render plain: 'Member not found!', status: :not_found
+          return render plain: 'Receiver not found!', status: :not_found
         end
       end
+      c
+    end
+
+    render json: {
+      chats: @chats.map do |c|
+        if c.unsent
+          @sender = User.find(c.unsent)
+        end
+
+        {
+          _id: c._id,
+          _mids: c._mids,
+          _aids: c._aids,
+          _vids: c._vids,
+          _uid: c._uid,
+          group: c.group,
+          message: c.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + c.message : c.message,
+          unsent: c.unsent,
+          photo: c.photo,
+          title: c.title
+        }
+      end,
+      chat: {
+        _id: @chat._id,
+        group: @chat.group,
+        photo: @chat.photo || (@receiver.nil? ? nil : @receiver.avatar),
+        title: @chat.title || (@profile.nil? ? nil : @profile.name),
+        messages: @chat._mids.map do |mid|
+          begin
+            @message = Message.find(mid)
+            begin
+              @sender = User.find(@message._uid)
+              { _id: @message._id,
+                avatar: @sender.avatar,
+                name: @sender.name,
+                unsent: @message.unsent,
+                body: @message.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @message.body : @message.body,
+                time: @message.created_at,
+                _uid: @sender._id }
+            rescue => e
+              return render plain: 'Sender not found!', status: :not_found
+            end
+          rescue => e
+            return render plain: 'Message not found!', status: :not_found
+          end
+        end,
+        message: @chat.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + @chat.message : @chat.message,
+        members: @chat._uids.map do |uid|
+          begin
+            @member = User.find(uid.to_s)
+            {
+              _id: @member._id,
+              avatar: @member.avatar,
+              name: (@member.name + ' ' + @member.surname),
+              role: @member._id.to_s == @chat._uid.to_s ? 'Creator' : @chat._aids.include?(@member._id) ? 'Admin' : '',
+            }
+          rescue => e
+            return render plain: 'Member not found!', status: :not_found
+          end
+        end
+      }
     }
   end
 
