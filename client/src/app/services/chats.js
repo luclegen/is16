@@ -9,7 +9,7 @@ class ChatsService {
 
   update = chat => API.put(`${URL}${chat?.id}`, chat)
 
-  list = () => API.get(URL)
+  list = name => API.get(`${URL}?name=${name}`)
 }
 
 export default new ChatsService()
