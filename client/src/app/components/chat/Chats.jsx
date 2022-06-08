@@ -13,6 +13,7 @@ export default class Chats extends Component {
     this.state = {
       users: [],
       foundUsers: [],
+      foundChats: [],
       chats: [],
       chat: null,
       new: false,
@@ -34,28 +35,24 @@ export default class Chats extends Component {
       && this.setState({ chats: res.data?.chats, chat: res.data?.chat }))
     .catch(err => err.response?.status === 404 && (window.location.href = '/'))
 
-  connect = (id = helper.getQuery('id')) => helper.setQuery('id', id)
-    || (this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
+  connect = (id = helper.getQuery('id')) => new Promise(resolve => helper.setQuery('id', id)
+    || ((this.props.cableApp.cid = this.props.cableApp.cable.subscriptions.create({
       channel: 'ChatChannel',
       cid: id
     }, {
       received: chat => this.refresh(chat.id)
-    }))
+    })) && resolve()))
 
   componentDidMount = () => this.refresh(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
-    .then(() => {
-      this.setState({ new: !this.state.chat })
-      this.state.chat && this.connect(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
-
-      this.props.cableApp.id = this.props.cableApp.cable.subscriptions.create({
-        channel: 'TopChannel',
-        id: 'top'
-      }, {
-        received: () => this.refresh()
-      })
-
-      setTimeout(() => document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus(), 500)
-    })
+    .then(() => this.setState({ new: !this.state.chat }) ||
+      (this.state.chat
+        && this.connect(helper.getQuery('id') || this.state.chat?._id?.['$oid'])
+          .then(() => this.props.cableApp.id = this.props.cableApp.cable.subscriptions.create({
+            channel: 'TopChannel',
+            id: 'top'
+          }, {
+            received: () => this.refresh()
+          }) && document.querySelector(`.input-${this.state.new ? 'user' : 'message'}`)?.focus())))
 
   componentDidUpdate = () => window.onbeforeunload = () => this.state.message || this.state.name || this.state.users?.length || this.state.title || this.state.photo ? true : undefined
 
@@ -66,14 +63,27 @@ export default class Chats extends Component {
   choose = e => {
     const item = e.target.closest('.list-group-item')
 
-    item.style.cursor = 'wait';
+    item.style.cursor = 'wait'
 
-    (e.target.closest('button')?.id !== helper.getQuery('id') && chatsService.view(e.target.closest('button')?.id).then(() => this.refresh(e.target.closest('button')?.id).then(() => item.style.cursor = 'pointer'))
-      && (this.connect(e.target.closest('button')?.id)
-        && (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-        ? window.confirm('Discard?\nChanges you made may not be saved.') && this.refresh(e.target.closest('button')?.id) && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))
-        : this.refresh(e.target.closest('button')?.id).then(() => item.style.cursor = 'pointer') && (this.reset() || this.setState({ new: false }) || setTimeout(() => document.querySelector('.input-message')?.focus(), 500))))
-      || this.connect()
+    const todo = () => chatsService
+      .view(e.target.closest('button')?.id)
+      .then(() => this.connect(e.target.closest('button')?.id)
+        .then(() => this.refresh(e.target.closest('button')?.id)
+          .then(() => new Promise(resolve => {
+            (item.style.cursor = 'pointer')
+              && this.reset()
+              && this.setState({ new: false })
+
+            resolve()
+          }).then(() => document.querySelector('.input-message')?.focus()))));
+
+    (this.state.name
+      || this.state.users?.length
+      || this.state.photo
+      || this.state.title)
+      ? window.confirm('Discard?\nChanges you made may not be saved.')
+      && todo()
+      : todo()
   }
 
   create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
@@ -108,9 +118,38 @@ export default class Chats extends Component {
             && (list.style.left = (input.left - label.left) + 'px'))))
       && usersService.list(e.target.value).then(res => this.setState({ name: e.target.value, foundUsers: res.data })))
 
+  search = e => e.preventDefault() || e.target.value
+    ? chatsService.list(e.target.value).then(res => this.setState({ foundChats: res.data }))
+    : this.setState({ foundChats: [] })
+
+  access = e => {
+    const item = e.target.closest('.list-group-item')
+
+    item.style.cursor = 'wait'
+
+    const todo = () => chatsService
+      .view(e.target.id)
+      .then(() => this.connect(e.target.id)
+        .then(() => this.refresh(e.target.id)
+          .then(() => new Promise(resolve => {
+            ((item.style.cursor = 'pointer')
+              && this.reset())
+              || this.setState({ new: false, foundChats: [] })
+            resolve()
+          }).then(() => document.querySelector('.input-message')?.focus()))));
+
+    (this.state.name
+      || this.state.users?.length
+      || this.state.photo
+      || this.state.title)
+      ? window.confirm('Discard?\nChanges you made may not be saved.')
+      && todo()
+      : todo()
+  }
+
   add = e => setTimeout((input = document.querySelector('.input-user')) => (input.value = '') || input?.focus())
     && !this.state.users?.find(u => u.id === e.target.id)
-    && this.state.users?.push({ id: e.target.id, name: e.target.name })
+    && this.state.users?.push({ id: e.target.id, name: e.target.name, avatar: e.target.value })
     && this.setState({ users: this.state.users, prename: '', name: '', foundUsers: [] })
 
   remove = e =>
@@ -204,7 +243,7 @@ export default class Chats extends Component {
           id: this.state.chat?._id?.['$oid'],
           body: this.state.message
         })
-      .then(res => this.connect(res.data) && this.refresh(res.data) && (this.reset() || e.target.reset())))
+      .then(res => this.connect(res.data).then(() => this.refresh(res.data) && (this.reset() || e.target.reset()))))
 
   render = () => <section className="section-chats">
     <div className="col-chats">
@@ -213,12 +252,18 @@ export default class Chats extends Component {
         <button className="btn-write" type="button" onClick={this.create}><i className="material-icons">create</i></button>
       </div>
       <div className="search-bar" onMouseEnter={this.coloring} onMouseLeave={this.coloring}>
-        <form className="form-search">
+        <form className="form-search" onSubmit={this.search}>
           <button className="btn-search" type={this.state.width > 800 ? 'submit' : this.state.opened && this.state.keyword ? 'submit' : 'button'} disabled={this.state.width > 800 && !this.state.keyword} onClick={this.open}>
             <i className="material-icons">search</i>
           </button>
-          <input className="input-search" type="search" placeholder="Search for anything" onSelect={this.coloring} onBlur={this.coloring} onInput={this.setKeyword} />
+          <input className="input-search" type="search" placeholder="Search chat" onInput={this.search} />
         </form>
+      </div>
+      <div className="list-group-chats">
+        {this.state.foundChats?.map((v, i) => <button type="button" className="list-group-item list-group-item-action" id={v.id} key={i} onClick={this.access}>
+          <Avatar avatar={v.avatar} name={v.title} width="60px" height="60px" fontSize="45px" />
+          &nbsp;&nbsp;{v.title}
+        </button>)}
       </div>
       <div className="list-group">
         {this.state.chats?.length > 0 && this.state.chats.map((v, i) => <button className={`list-group-item list-group-item-action ${v._id?.['$oid'] === this.state.chat?._id?.['$oid'] && 'active'}`} id={v._id?.['$oid']} type="button" key={i} onClick={this.choose}>
@@ -237,12 +282,14 @@ export default class Chats extends Component {
           <div className="input-group-user">
             <label className="label-user" htmlFor="userInput">To: &nbsp;</label>
             {this.state.name && <div className="list-group-users">
-              {this.state.foundUsers.map((v, i) => <button type="button" className="list-group-item list-group-item-action" id={v._id?.['$oid']} name={v.name} key={i} onClick={this.add}>
-                {v.name}
+              {this.state.foundUsers.map((v, i) => <button type="button" className="list-group-item list-group-item-action" id={v._id?.['$oid']} name={v.name} value={v.avatar} key={i} onClick={this.add}>
+                <Avatar avatar={v.avatar} name={v.name} width="40px" height="40px" fontSize="30px" />
+                &nbsp;&nbsp;{v.name}
               </button>)}
             </div>}
             {this.state.users?.map((v, i) => <span type="button" className="tag" id={v.id} key={i}>
-              {v.name}
+              <Avatar avatar={v.avatar} name={v.name} width="28px" height="28px" fontSize="21px" />
+              &nbsp;&nbsp;{v.name}
               <button className="btn-tag-close" type="button" onClick={this.remove}><i className="material-icons">close</i></button>
             </span>)}
             <input type="text" className="input-user" id="userInput" name="name" onInput={this.enter} onKeyUp={this.enter} onChange={this.setValue} />
@@ -319,12 +366,14 @@ export default class Chats extends Component {
             <div className="input-group-user">
               <label className="label-user" htmlFor="userInput">Add: &nbsp;</label>
               {this.state.name && <div className="list-group-users">
-                {this.state.foundUsers.map((v, i) => <button type="button" className="list-group-item list-group-item-action" id={v._id?.['$oid']} name={v.name} key={i} onClick={this.add}>
-                  {v.name}
+                {this.state.foundUsers.map((v, i) => <button type="button" className="list-group-item list-group-item-action" id={v._id?.['$oid']} name={v.name} value={v.avatar} key={i} onClick={this.add}>
+                  <Avatar avatar={v.avatar} name={v.name} width="40px" height="40px" fontSize="30px" />
+                  &nbsp;&nbsp;{v.name}
                 </button>)}
               </div>}
               {this.state.users?.map((v, i) => <span type="button" className="tag" id={v.id} key={i}>
-                {v.name}
+                <Avatar avatar={v.avatar} name={v.name} width="28px" height="28px" fontSize="21px" />
+                &nbsp;&nbsp;{v.name}
                 <button className="btn-tag-close" type="button" onClick={this.remove}><i className="material-icons">close</i></button>
               </span>)}
               <input type="text" className="input-user" id="userInput" onInput={this.enter} onKeyUp={this.enter} onChange={this.setName} />
