@@ -37,10 +37,10 @@ class Api::ChatsController < ApplicationController
     @chats = @chats.map do |c|
       if c._uids.length > 0
         begin
-          @receiver = User.find(c._uids.length == 1 ? c._uids.first : (c._uids - [@user._id]).first)
-          @profile = Profile.where(_uid: @receiver).first
-          c.photo = c.photo || @receiver.avatar
-          c.title = c.title || @profile.name
+          @receiver1 = User.find(c._uids.length == 1 ? c._uids.first : (c._uids - [@user._id]).first)
+          @profile1 = Profile.where(_uid: @receiver1).first
+          c.photo = c.photo || @receiver1.avatar
+          c.title = c.title || @profile1.name
         rescue => e
           return render plain: 'Receiver not found!', status: :not_found
         end
@@ -183,39 +183,29 @@ class Api::ChatsController < ApplicationController
   end
 
   def index
-    @chats = Array(Chat.where(_uids: { '$in': [@user._id] }))
+    # @profiles = Profile.where(name: Regexp.new(params[:name], Regexp::IGNORECASE)).map do |p|
+    #   { _id: p._uid, name: p.name }
+    # end
+    @chats = Array(Chat.all)
+
+    @chats = @chats.select do |c|
+      if c.title
+        c.title.match?(Regexp.new(params[:name], Regexp::IGNORECASE)) || c._uids.any? { |u| User.find(u).name.match?(Regexp.new(params[:name], Regexp::IGNORECASE)) }
+      else
+        c._uids.any? { |u| User.find(u).name.match?(Regexp.new(params[:name], Regexp::IGNORECASE)) }
+      end
+    end.uniq
+
     @chats = @chats.map do |c|
-      if c._uids.length > 0
-        begin
-          @receiver = User.find(c._uids.length == 1 ? c._uids.first : (c._uids - [@user._id]).first)
-          @profile = Profile.where(_uid: @receiver).first
-          c.photo = c.photo || @receiver.avatar
-          c.title = c.title || @profile.name
-        rescue => e
-          return render plain: 'Receiver not found!', status: :not_found
-        end
-      end
-      c
-    end
-
-    render json: @chats.map do |c|
-      if c.unsent
-        @sender = User.find(c.unsent)
+      if c._uids.length == 2
+        @rid = (c._uids - [@user._id])[0].to_s
+        @profile = Profile.where(_uid: @rid).first
       end
 
-      {
-        _id: c._id,
-        _mids: c._mids,
-        _aids: c._aids,
-        _vids: c._vids,
-        _uid: c._uid,
-        group: c.group,
-        message: c.unsent ? (@sender._id == @user._id ? 'You' : @sender.name) + c.message : c.message,
-        unsent: c.unsent,
-        photo: c.photo,
-        title: c.title
-      }
+      { id: c._id.to_s, title: c.title || @profile.name, avatar: c.photo || User.find(@rid).avatar }
     end
+
+    render json: @chats
   end
 
   private
