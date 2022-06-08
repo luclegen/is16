@@ -94,7 +94,7 @@ class Api::UsersController < ApplicationController
   end
 
   def index
-    render json: Profile.where(name: Regexp.new(params[:name], Regexp::IGNORECASE)).map { |p| { _id: p._uid, name: p.name } }
+    render json: Profile.where(name: Regexp.new(params[:name], Regexp::IGNORECASE)).map { |p| { _id: p._uid, name: p.name, avatar: User.find(p._uid).avatar } }
   end
 
   private
