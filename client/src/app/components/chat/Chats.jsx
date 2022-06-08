@@ -86,9 +86,17 @@ export default class Chats extends Component {
       : todo()
   }
 
-  create = () => (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
-    ? window.confirm('Discard?\nChanges you made may not be saved.') && (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
-    : (this.reset() || this.setState({ chat: null, new: true }) || setTimeout(() => document.querySelector('.input-user')?.focus(), 500))
+  create = () => {
+    const todo = () => new Promise(resolve => {
+      this.reset() || this.setState({ chat: null, new: true })
+      resolve()
+    }).then(() => document.querySelector('.input-user')?.focus());
+
+    (this.state.name || this.state.users?.length || this.state.photo || this.state.title)
+      ? window.confirm('Discard?\nChanges you made may not be saved.')
+      && todo()
+      : todo()
+  }
 
   edit = () => setTimeout((titleWith = (document.querySelector('.box-title').clientWidth + 26) + 'px') => setTimeout(() => document.querySelector('.input-title').style.setProperty('width', titleWith, 'important'))
     && this.setState({ edit: !this.state.edit }))
