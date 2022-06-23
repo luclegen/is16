@@ -1,6 +1,6 @@
 <mxfile host="65bd71144e">
     <diagram id="2PQ823QY1O-aF-mZ_UV8" name="Class">
-        <mxGraphModel dx="1205" dy="616" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+        <mxGraphModel dx="1166" dy="616" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
             <root>
                 <mxCell id="-ZBkc9HrPNcbRklsNLLS-0"/>
                 <mxCell id="-ZBkc9HrPNcbRklsNLLS-1" parent="-ZBkc9HrPNcbRklsNLLS-0"/>
@@ -19,16 +19,16 @@
                     <mxGeometry y="32" width="339" height="67" as="geometry"/>
                 </mxCell>
                 <mxCell id="n1byCESBEf7-ky6JErqu-15" value="User" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;gradientColor=#ffd966;" parent="-ZBkc9HrPNcbRklsNLLS-1" vertex="1">
-                    <mxGeometry x="112" y="133" width="339" height="259" as="geometry"/>
+                    <mxGeometry x="112" y="132" width="339" height="261" as="geometry"/>
                 </mxCell>
-                <mxCell id="n1byCESBEf7-ky6JErqu-16" value="+ _id: String {id}&#10;- avatar: String&#10;- name: String&#10;- surname: String&#10;- email: String {unique}&#10;- password: String" style="text;strokeColor=#d79b00;fillColor=#ffe6cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="n1byCESBEf7-ky6JErqu-15" vertex="1">
-                    <mxGeometry y="26" width="339" height="90" as="geometry"/>
+                <mxCell id="n1byCESBEf7-ky6JErqu-16" value="+ _id: String {id}&#10;- avatar: String&#10;- name: String&#10;- surname: String&#10;- email: String {unique}&#10;- password_digest: String" style="text;strokeColor=#d79b00;fillColor=#ffe6cc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="n1byCESBEf7-ky6JErqu-15" vertex="1">
+                    <mxGeometry y="26" width="339" height="92" as="geometry"/>
                 </mxCell>
                 <mxCell id="n1byCESBEf7-ky6JErqu-17" value="" style="line;strokeWidth=1;fillColor=none;align=left;verticalAlign=middle;spacingTop=-1;spacingLeft=3;spacingRight=3;rotatable=0;labelPosition=right;points=[];portConstraint=eastwest;" parent="n1byCESBEf7-ky6JErqu-15" vertex="1">
-                    <mxGeometry y="116" width="339" height="8" as="geometry"/>
+                    <mxGeometry y="118" width="339" height="8" as="geometry"/>
                 </mxCell>
                 <mxCell id="n1byCESBEf7-ky6JErqu-18" value="+ User(String, String)&#10;+ logout(): boolean&#10;+ changePassword: boolean&#10;- authentication(): boolean&#10;+ viewProfile(): void&#10;+ editProfile(): boolean&#10;+ sendMessage(): boolean&#10;+ receiveMessage(): void&#10;+ searchUser(): boolean" style="text;strokeColor=#6c8ebf;fillColor=#dae8fc;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;" parent="n1byCESBEf7-ky6JErqu-15" vertex="1">
-                    <mxGeometry y="124" width="339" height="135" as="geometry"/>
+                    <mxGeometry y="126" width="339" height="135" as="geometry"/>
                 </mxCell>
                 <mxCell id="n1byCESBEf7-ky6JErqu-19" value="Profile" style="swimlane;fontStyle=1;align=center;verticalAlign=top;childLayout=stackLayout;horizontal=1;startSize=26;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=1;marginBottom=0;fillColor=#fff2cc;strokeColor=#d6b656;gradientColor=#ffd966;" parent="-ZBkc9HrPNcbRklsNLLS-1" vertex="1">
                     <mxGeometry x="529" y="192.5" width="122" height="140" as="geometry"/>
