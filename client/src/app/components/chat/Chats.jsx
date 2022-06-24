@@ -316,7 +316,7 @@ export default class Chats extends Component {
               {v._uid['$oid'] !== helper.getId() && <div className={`box-receiver-message ${i > 0 && a[i]._uid['$oid'] === a[i - 1]._uid['$oid'] && 'tl'} ${i < a.length - 1 && a[i]._uid['$oid'] === a[i + 1]._uid['$oid'] && 'bl'} ms-2`}>{v.body}</div>}
             </div>
             <div className={`col-${v._uid['$oid'] === helper.getId() ? '8' : '4'} col-message justify-content-${v._uid['$oid'] !== helper.getId() ? 'start' : 'end'}`}>
-              {v._uid['$oid'] === helper.getId() && <button className="btn-delete" type="button" onClick={this.delete}><i className="material-icons">delete</i></button>}
+              {v._uid['$oid'] === helper.getId() && <button className="btn-delete" type="button" title="Delete" onClick={this.delete}><i className="material-icons">delete</i></button>}
               {v._uid['$oid'] === helper.getId() && <div className={`box-sender-message ${i > 0 && a[i]._uid['$oid'] === a[i - 1]._uid['$oid'] && 'tr'} ${i < a.length - 1 && a[i]._uid['$oid'] === a[i + 1]._uid['$oid'] && 'br'}`}>{v.body}</div>}
             </div>
           </div>
