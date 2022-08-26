@@ -334,7 +334,7 @@ export default class Register extends Component {
           </div>
         </div>
       </div>
-      <label className="label-group" htmlFor="genderRegister">Code</label>
+      <label className="label-group" htmlFor="codeRegister">Code</label>
       <div className="row-code" id="codeRegister">
         {'0'.repeat(6).split('').map((v, i) => <div className="col-md" key={i}>
           <input className="input-digit" type="number" maxLength="1" onClick={e => e.target.select()} onInput={this.enterDigit} onDrop={this.enterDigit} onKeyUp={this.clearDigit} onKeyDown={this.clearDigit} onPaste={this.pasteDigit} required />
